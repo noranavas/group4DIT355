@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\OneDrive\Projects\Fabian\group4DIT355\modeler\resources\code_samples\CategoryController.java"><package>package <name>code_files</name>;</package>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\OneDrive\Projects\Fabian\group4DIT355\source-code-modeler\resources\code_samples\CategoryController.java"><package>package <name>code_files</name>;</package>
 
 <import>import <name><name>com</name><operator>.</operator><name>teamtreehouse</name><operator>.</operator><name>giflib</name><operator>.</operator><name>data</name><operator>.</operator><name>CategoryRepository</name></name>;</import>
 <import>import <name><name>com</name><operator>.</operator><name>teamtreehouse</name><operator>.</operator><name>giflib</name><operator>.</operator><name>data</name><operator>.</operator><name>GifRepository</name></name>;</import>

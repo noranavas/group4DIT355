@@ -5,10 +5,10 @@
 <VBox stylesheets="/css/main.css"
       xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="modeler.controllers.Home"
+      fx:controller="sourcecodemodeler.view.Home"
       fx:id="container">
     <children>
-        <Label fx:id="title" text="Modeler"/>
+        <Label fx:id="title" text="Source Code Modeler"/>
         <HBox styleClass="buttons">
             <children>
                 <StackPane>

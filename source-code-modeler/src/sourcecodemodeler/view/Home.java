@@ -1,10 +1,12 @@
-package sourcecodemodeler.controller;
+package sourcecodemodeler.view;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.FileChooser;
+import sourcecodemodeler.controller.SourceCodeConverter;
+import sourcecodemodeler.controller.XMLIterator;
 
 import java.io.File;
 
@@ -63,7 +65,11 @@ public class Home {
 
     // Uses SourceCodeConverter class to convert selected file to XML.
     public void convertToXML(ActionEvent actionEvent) {
-        sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
+        try {
+            sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     // For TESTING.

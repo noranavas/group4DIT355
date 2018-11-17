@@ -47,7 +47,7 @@ public class XMLIterator {
         }
     }
 
-    // Creates a class that only contains the data displayed in a class of a class diagram.
+    // Creates a class (XMLClass) that only contains the data displayed in a class of a class diagram.
     public void createXMLClass(String name) {
         XMLClass xmlClass = new XMLClass();
         xmlClass.setName(name
@@ -61,10 +61,7 @@ public class XMLIterator {
         System.out.println("Attributes: ");
         // TODO: Exclude local attributes inside methods.
         for (String attribute : xmlClass.getAttributes()) {
-            System.out.println(attribute
-                    .replace("public", "+")
-                    .replace("private", "-")
-            );
+            System.out.println(attribute);
         }
         System.out.println("Methods: ");
         // TODO: Filter out everything except access modifier, return type, method name and parameters.
@@ -76,26 +73,30 @@ public class XMLIterator {
         }
     }
 
-
+    // Iterates through the XML document to retrieve attributes.
     private void setAttributes(String xmlFileName, XMLClass xmlClass) {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(new File(pathToXMLDirectory + xmlFileName));
 
-            NodeList nodeList = doc.getElementsByTagName("function");
+            NodeList nodeList = doc.getElementsByTagName("decl_stmt"); // Tag for attributes.
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    xmlClass.addAttribute(node.getTextContent()
+                            .replace("public", "+")
+                            .replace("private", "-")
+                    );
+                }
+            }
+
+            // Move to separate function for method retrieval.
+            nodeList = doc.getElementsByTagName("function"); // Tag for methods.
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     xmlClass.addMethod(node.getTextContent());
-                }
-            }
-
-            nodeList = doc.getElementsByTagName("decl_stmt"); // Tag for attributes.
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    xmlClass.addAttribute(node.getTextContent());
                 }
             }
 
