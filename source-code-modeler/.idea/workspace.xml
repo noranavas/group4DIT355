@@ -62,43 +62,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/Main.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#632#633#0" expanded="true" />
-                <element signature="e#660#661#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Home.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/view/Home.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="7" column="37" lean-forward="true" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
-              <folding>
-                <element signature="method#selectFile#0;class#Home#0" />
-                <element signature="method#convertToXML#0;class#Home#0" />
-                <element signature="e#2639#2640#0" expanded="true" />
-                <element signature="e#2712#2713#0" expanded="true" />
-                <element signature="method#printFormattedXML#0;class#Home#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SourceCodeConverter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SourceCodeConverter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/controller/SourceCodeConverter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="17" column="91" selection-start-line="17" selection-start-column="91" selection-end-line="17" selection-end-column="91" />
+            <state relative-caret-position="-460">
+              <caret line="7" column="47" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
               <folding>
-                <element signature="method#convertToXML#0;class#SourceCodeConverter#0" />
+                <element signature="imports" expanded="true" />
+                <element signature="method#getFileExtension#0;class#SourceCodeConverter#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Home.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/view/Home.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="410">
+              <caret line="67" column="57" selection-start-line="67" selection-start-column="57" selection-end-line="67" selection-end-column="57" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#selectFile#0;class#Home#0" />
+                <element signature="method#selectDirectory#0;class#Home#0" />
+                <element signature="method#convertToXML#0;class#Home#0" />
+                <element signature="method#printXMLContent#0;class#Home#0" />
+                <element signature="method#printFormattedXML#0;class#Home#0" />
               </folding>
             </state>
           </provider>
@@ -107,36 +95,11 @@
       <file leaf-file-name="home.fxml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/fxml/home.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+            <state relative-caret-position="320">
+              <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
             </state>
           </provider>
           <provider editor-type-id="JavaFX-Scene-Builder" />
-        </entry>
-      </file>
-      <file leaf-file-name="XMLIterator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/controller/XMLIterator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="860">
-              <caret line="63" column="40" selection-start-line="63" selection-start-column="40" selection-end-line="63" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#printXMLFile#0;class#XMLIterator#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XMLClass.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/model/XMLClass.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
         </entry>
       </file>
     </leaf>
@@ -326,7 +289,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="6169810743593" />
+        <entry key="$PROJECT_DIR$" value="6169820356768" />
         <entry key="$PROJECT_DIR$/.gradle" value="0" />
         <entry key="$PROJECT_DIR$/build.gradle" value="4079335420" />
         <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="1741342742" />
@@ -453,13 +416,14 @@
         <option value="$PROJECT_DIR$/src/source-code-modeler/Main.java" />
         <option value="$PROJECT_DIR$/src/source-code-modeler/controller/Home.java" />
         <option value="$PROJECT_DIR$/src/source-code-modeler/controller/XMLIterator.java" />
-        <option value="$PROJECT_DIR$/src/sourcecodemodeler/controller/SourceCodeConverter.java" />
         <option value="$PROJECT_DIR$/src/sourcecodemodeler/model/XMLClass.java" />
         <option value="$PROJECT_DIR$/src/sourcecodemodeler/controller/Home.java" />
         <option value="$PROJECT_DIR$/src/sourcecodemodeler/view/JFXEventHandler.java" />
         <option value="$PROJECT_DIR$/src/sourcecodemodeler/controller/XMLIterator.java" />
-        <option value="$PROJECT_DIR$/resources/fxml/home.fxml" />
+        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/sourcecodemodeler/view/Home.java" />
+        <option value="$PROJECT_DIR$/resources/fxml/home.fxml" />
+        <option value="$PROJECT_DIR$/src/sourcecodemodeler/controller/SourceCodeConverter.java" />
       </list>
     </option>
   </component>
@@ -469,7 +433,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="width" value="975" />
     <option name="height" value="1050" />
@@ -492,6 +456,31 @@
               <item name="source-code-modeler" type="b2602c69:ProjectViewProjectNode" />
               <item name="source-code-modeler" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="source-code-modeler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="source-code-modeler" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="code_samples" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="source-code-modeler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="source-code-modeler" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="code_samples" type="462c0819:PsiDirectoryNode" />
+              <item name="subdirectory_test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="source-code-modeler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="source-code-modeler" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="converted_xml" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="source-code-modeler" type="b2602c69:ProjectViewProjectNode" />
+              <item name="source-code-modeler" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="source-code-modeler" type="b2602c69:ProjectViewProjectNode" />
@@ -630,15 +619,15 @@
       <workItem from="1542450749039" duration="899000" />
       <workItem from="1542451814473" duration="37000" />
       <workItem from="1542452030323" duration="326000" />
-      <workItem from="1542453040192" duration="1543000" />
+      <workItem from="1542453040192" duration="10023000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2796000" />
+    <option name="totallyTimeSpent" value="11276000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="848" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -651,11 +640,11 @@
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3286517" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3286517" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="2" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26308724" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26308724" />
       <window_info anchor="bottom" id="Build" order="7" weight="0.3286517" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="Gradle" order="3" weight="0.3295302" />
@@ -685,10 +674,11 @@
         <state relative-caret-position="300">
           <caret line="15" column="58" selection-start-line="15" selection-start-column="58" selection-end-line="15" selection-end-column="58" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#selectFile#0;class#Home#0" />
+            <element signature="method#selectDirectory#0;class#Home#0" />
             <element signature="method#convertToXML#0;class#Home#0" />
-            <element signature="e#2639#2640#0" expanded="true" />
-            <element signature="e#2712#2713#0" expanded="true" />
+            <element signature="method#printXMLContent#0;class#Home#0" />
             <element signature="method#printFormattedXML#0;class#Home#0" />
           </folding>
         </state>
@@ -699,7 +689,8 @@
         <state relative-caret-position="140">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding>
-            <element signature="method#convertToXML#0;class#SourceCodeConverter#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#getFileExtension#0;class#SourceCodeConverter#0" />
           </folding>
         </state>
       </provider>
@@ -711,6 +702,8 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#printXMLFile#0;class#XMLIterator#0" />
+            <element signature="method#createXMLClass#0;class#XMLIterator#0" />
+            <element signature="method#setAttributes#0;class#XMLIterator#0" />
           </folding>
         </state>
       </provider>
@@ -746,9 +739,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/gradlew">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-128" />
@@ -756,14 +746,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/fxml/home.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/Main.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -789,35 +771,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/controller/XMLIterator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="860">
-          <caret line="63" column="40" selection-start-line="63" selection-start-column="40" selection-end-line="63" selection-end-column="40" />
+        <state relative-caret-position="600">
+          <caret line="50" column="44" selection-start-line="50" selection-start-column="44" selection-end-line="50" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#printXMLFile#0;class#XMLIterator#0" />
+            <element signature="method#createXMLClass#0;class#XMLIterator#0" />
+            <element signature="method#setAttributes#0;class#XMLIterator#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/controller/SourceCodeConverter.java">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="17" column="91" selection-start-line="17" selection-start-column="91" selection-end-line="17" selection-end-column="91" />
-          <folding>
-            <element signature="method#convertToXML#0;class#SourceCodeConverter#0" />
-          </folding>
+        <state relative-caret-position="240">
+          <caret line="12" column="62" selection-start-line="12" selection-start-column="62" selection-end-line="12" selection-end-column="62" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/view/Home.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="37" lean-forward="true" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
+        <state relative-caret-position="410">
+          <caret line="67" column="57" selection-start-line="67" selection-start-column="57" selection-end-line="67" selection-end-column="57" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#selectFile#0;class#Home#0" />
+            <element signature="method#selectDirectory#0;class#Home#0" />
             <element signature="method#convertToXML#0;class#Home#0" />
-            <element signature="e#2639#2640#0" expanded="true" />
-            <element signature="e#2712#2713#0" expanded="true" />
+            <element signature="method#printXMLContent#0;class#Home#0" />
             <element signature="method#printFormattedXML#0;class#Home#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/fxml/home.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sourcecodemodeler/controller/SourceCodeConverter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-460">
+          <caret line="7" column="47" selection-start-line="7" selection-start-column="47" selection-end-line="7" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getFileExtension#0;class#SourceCodeConverter#0" />
           </folding>
         </state>
       </provider>

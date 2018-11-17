@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import sourcecodemodeler.controller.SourceCodeConverter;
 import sourcecodemodeler.controller.XMLIterator;
@@ -39,7 +40,7 @@ public class Home {
     }
 
     //===== Methods =====//
-    // Allows a user to select a file.
+    // Allows the user to select a file.
     public void selectFile(ActionEvent actionEvent) {
         Node node = (Node)actionEvent.getSource();
         FileChooser fileChooser = new FileChooser();
@@ -63,10 +64,24 @@ public class Home {
 
     }
 
-    // Uses SourceCodeConverter class to convert selected file to XML.
+    // Allows the user to select a directory.
+    public void selectDirectory(ActionEvent actionEvent) {
+        Node node = (Node)actionEvent.getSource();
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Select a directory");
+
+        selectedFile = directoryChooser.showDialog(node.getScene().getWindow());
+        setFileName(selectedFile.getName());
+    }
+
+    // Uses SourceCodeConverter class to convert selected file/directory to XML.
     public void convertToXML(ActionEvent actionEvent) {
         try {
-            sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
+            if (selectedFile.isDirectory()) {
+                sourceCodeConverter.convertDirectoryToXML(selectedFile.getPath());
+            } else {
+                sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
+            }
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -75,12 +90,20 @@ public class Home {
     // For TESTING.
     // Prints the content of the latest converted file to the console.
     public void printXMLContent(ActionEvent actionEvent) {
-        xmlIterator.printXMLFile(selectedFile.getName() + ".xml");
+        if (selectedFile.isDirectory()) {
+            System.out.println("Can not print a directory."); // TEST Placeholder.
+        } else {
+            xmlIterator.printXMLFile(selectedFile.getName() + ".xml");
+        }
     }
 
     // For TESTING.
     public void printFormattedXML(ActionEvent actionEvent) {
-        xmlIterator.createXMLClass(selectedFile.getName() + ".xml");
+        if (selectedFile.isDirectory()) {
+            System.out.println("Can not print a directory."); // TEST Placeholder.
+        } else {
+            xmlIterator.createXMLClass(selectedFile.getName() + ".xml");
+        }
     }
 
 }
