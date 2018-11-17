@@ -10,13 +10,14 @@ import java.util.Optional;
 public class SourceCodeConverter {
     // Path to srcML.
     private final String pathToSrcML = "resources\\srcML-Win\\bin\\srcml";
-    // Path to directory where the created XML files are stored.
-    private final String pathToXMLDirectory = "resources\\converted_xml\\";
+    // Path to directory where the converted XML files should be created.
+    private final String outputDirectory = "resources\\converted_xml\\";
 
     //===== Constructor(s) =====//
     public SourceCodeConverter() {}
 
     //===== Methods =====//
+    // Converts a selected file to a XML document in the same directory.
     public void convertToXML(String fileName, String filePath) throws NullPointerException {
         /*
          Creates a process builder that contains the command prompt script
@@ -25,7 +26,7 @@ public class SourceCodeConverter {
         ProcessBuilder pb = new ProcessBuilder(
                 "cmd.exe",
                 "/c",
-                pathToSrcML + " " + filePath + " -o " + pathToXMLDirectory + fileName + ".xml"
+                pathToSrcML + " " + filePath + " -o " + outputDirectory + fileName + ".xml"
         );
         pb.redirectErrorStream(true); // Not sure. Some kind of error handler for streams.
         try {
@@ -35,22 +36,22 @@ public class SourceCodeConverter {
         }
     }
 
+    // Creates a copy of the selected directory and converts all found files to XML documents.
     public void convertDirectoryToXML(String directoryPath) throws NullPointerException {
-        // Create a file array for all files in the directory passed as parameter.
+        // Create a file array for all files in the selected directory.
         File[] files = new File(directoryPath).listFiles();
 
-        // Iterate through all the files and filter out unsupported file extensions.
+        // Iterate through all the files and convert files with supported file extension to XML.
         for (int i = 0; i < files.length; i++) {
 
             // If the file is a directory, call this method recursively.
             if (files[i].isDirectory()) {
                 convertDirectoryToXML(files[i].getPath());
             } else {
-                String filter = getFileExtension(files[i].getName()).get();
-                if (
-                        filter.equalsIgnoreCase("c") ||
-                                filter.equalsIgnoreCase("cpp") ||
-                                filter.equalsIgnoreCase("java"))
+                String filter = getFileExtension(files[i].getName()).get(); // Get string value of 'Optional'.
+                if (filter.equalsIgnoreCase("c") ||
+                        filter.equalsIgnoreCase("cpp") ||
+                        filter.equalsIgnoreCase("java"))
                 {
                     convertToXML(files[i].getName(), files[i].getPath());
                 }
@@ -59,10 +60,18 @@ public class SourceCodeConverter {
 
     }
 
+    // Get file extension by String Handling: https://www.baeldung.com/java-file-extension
     private Optional<String> getFileExtension(String filename) {
         return Optional.ofNullable(filename)
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1));
+    }
+
+    public void clearOutputDirectory() {
+        File[] files = new File(outputDirectory).listFiles();
+        for (int i = 0; i < files.length; i++) {
+            files[i].delete();
+        }
     }
 
 }

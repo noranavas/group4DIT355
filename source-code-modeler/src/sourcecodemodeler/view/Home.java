@@ -42,65 +42,64 @@ public class Home {
     //===== Methods =====//
     // Allows the user to select a file.
     public void selectFile(ActionEvent actionEvent) {
-        Node node = (Node)actionEvent.getSource();
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select a code file"); // Title of the window in which the user selects the file.
+        fileChooser.setTitle("Select a code file"); // Title of the JavaFX window.
 
         // Defines selectable file extensions. Should be file extensions supported by srcML.
         // TODO: Add all file extensions supported by srcML.
-        FileChooser.ExtensionFilter extFilters =
-                new FileChooser.ExtensionFilter(
-                        "Code files",
+        FileChooser.ExtensionFilter extFilters = new FileChooser.ExtensionFilter
+                ("Code files",
                         "*.c",
                         "*.cpp",
-                        "*.java");
+                        "*.java"
+                );
 
         // Apply filters to the file chooser.
         fileChooser.getExtensionFilters().addAll(extFilters);
-        // Open the window in which the user can select a file.
+        // Open the JavaFX window.
+        Node node = (Node)actionEvent.getSource();
         selectedFile = fileChooser.showOpenDialog(node.getScene().getWindow());
         // Update JavaFX to display name of selected file.
         setFileName(selectedFile.getName());
-
     }
 
     // Allows the user to select a directory.
     public void selectDirectory(ActionEvent actionEvent) {
-        Node node = (Node)actionEvent.getSource();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select a directory");
-
+        Node node = (Node)actionEvent.getSource();
         selectedFile = directoryChooser.showDialog(node.getScene().getWindow());
         setFileName(selectedFile.getName());
     }
 
     // Uses SourceCodeConverter class to convert selected file/directory to XML.
     public void convertToXML(ActionEvent actionEvent) {
+        sourceCodeConverter.clearOutputDirectory();
         try {
             if (selectedFile.isDirectory()) {
-                sourceCodeConverter.convertDirectoryToXML(selectedFile.getPath());
+                sourceCodeConverter.convertDirectoryToXML(selectedFile.getParent());
             } else {
                 sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
             }
         } catch (NullPointerException e) {
+            System.out.println("No file or directory selected.");
             e.printStackTrace();
         }
     }
 
-    // For TESTING.
+    //===== Temporary Test Methods =====//
     // Prints the content of the latest converted file to the console.
     public void printXMLContent(ActionEvent actionEvent) {
         if (selectedFile.isDirectory()) {
-            System.out.println("Can not print a directory."); // TEST Placeholder.
+            System.out.println("Can not print a directory.");
         } else {
             xmlIterator.printXMLFile(selectedFile.getName() + ".xml");
         }
     }
 
-    // For TESTING.
     public void printFormattedXML(ActionEvent actionEvent) {
         if (selectedFile.isDirectory()) {
-            System.out.println("Can not print a directory."); // TEST Placeholder.
+            System.out.println("Can not print a directory.");
         } else {
             xmlIterator.createXMLClass(selectedFile.getName() + ".xml");
         }
