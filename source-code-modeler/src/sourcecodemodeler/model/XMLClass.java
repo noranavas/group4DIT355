@@ -6,8 +6,8 @@ import java.util.List;
 public class XMLClass {
     private String name;
     private List<String> attributes;
-    private List methods;
-    private List relationships;
+    private List<String> methods;
+    private List<String> relationships;
 
     //===== Constructor(s) =====//
     public XMLClass() {
