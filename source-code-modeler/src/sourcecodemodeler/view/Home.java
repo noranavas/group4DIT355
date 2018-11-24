@@ -74,7 +74,7 @@ public class Home {
 
     // Uses SourceCodeConverter class to convert selected file/directory to XML.
     public void convertToXML(ActionEvent actionEvent) {
-        sourceCodeConverter.clearOutputDirectory();
+        //sourceCodeConverter.clearOutputDirectory();
         try {
             if (selectedFile.isDirectory()) {
                 sourceCodeConverter.convertDirectoryToXML(selectedFile.getParent());
@@ -90,10 +90,11 @@ public class Home {
     //===== Temporary Test Methods =====//
     // Prints the content of the latest converted file to the console.
     public void printXMLContent(ActionEvent actionEvent) {
+        System.out.println("PATH " +selectedFile.getPath());
         if (selectedFile.isDirectory()) {
             System.out.println("Can not print a directory.");
         } else {
-            xmlIterator.printXMLFile(selectedFile.getName() + ".xml");
+            xmlIterator.printXMLFile( selectedFile.getName() + ".xml");
         }
     }
 

@@ -18,7 +18,7 @@ import java.io.InputStreamReader;
     The data is then used to create classes that can later be displayed in the produced class diagram.
  */
 public class XMLIterator {
-    private final String pathToXMLDirectory = "resources\\converted_xml\\";
+    private final String pathToXMLDirectory = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\";
 
     //===== Constructor(s) =====//
     public XMLIterator() {}

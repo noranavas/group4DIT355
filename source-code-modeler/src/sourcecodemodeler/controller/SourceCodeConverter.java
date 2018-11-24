@@ -9,9 +9,10 @@ import java.util.Optional;
  */
 public class SourceCodeConverter {
     // Path to srcML.
-    private final String pathToSrcML = "resources\\srcML-Win\\bin\\srcml";
+    private final String pathToSrcML = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\srcML-Win\\bin\\srcml.exe";
     // Path to directory where the converted XML files should be created.
-    private final String outputDirectory = "resources\\converted_xml\\";
+    private final String outputDirectory = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\";
+
 
     //===== Constructor(s) =====//
     public SourceCodeConverter() {}
@@ -19,6 +20,15 @@ public class SourceCodeConverter {
     //===== Methods =====//
     // Converts a selected file to a XML document in the same directory.
     public void convertToXML(String fileName, String filePath) throws NullPointerException {
+
+        //DEBUGGING STUFF
+        /*
+        System.out.println(filePath + " filePath");
+        System.out.println(pathToSrcML + " scrML");
+        System.out.println(outputDirectory + " output");
+        System.out.println(System.getProperty("user.dir") + " PROJECT DIR");
+        */
+        
         /*
          Creates a process builder that contains the command prompt script
          that calls srcML to convert a code file to an XML document.
@@ -31,6 +41,7 @@ public class SourceCodeConverter {
         pb.redirectErrorStream(true); // Not sure. Some kind of error handler for streams.
         try {
             pb.start(); // Run the script.
+            System.out.println("SCRIPT WAS RUN");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
