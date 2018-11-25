@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\x220\Desktop\PROJ\group4DIT355\source-code-modeler\src\sourcecodemodeler\Main.java"><package>package <name>sourcecodemodeler</name>;</package>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\x220\Desktop\Main.java"><package>package <name>sourcecodemodeler</name>;</package>
 
 <import>import <name><name>javafx</name><operator>.</operator><name>application</name><operator>.</operator><name>Application</name></name>;</import>
 <import>import <name><name>javafx</name><operator>.</operator><name>fxml</name><operator>.</operator><name>FXMLLoader</name></name>;</import>

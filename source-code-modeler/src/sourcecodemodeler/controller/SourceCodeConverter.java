@@ -28,7 +28,7 @@ public class SourceCodeConverter {
         System.out.println(outputDirectory + " output");
         System.out.println(System.getProperty("user.dir") + " PROJECT DIR");
         */
-        
+
         /*
          Creates a process builder that contains the command prompt script
          that calls srcML to convert a code file to an XML document.

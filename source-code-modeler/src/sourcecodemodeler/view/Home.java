@@ -6,10 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import sourcecodemodeler.controller.Client;
 import sourcecodemodeler.controller.SourceCodeConverter;
 import sourcecodemodeler.controller.XMLIterator;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.Socket;
 
 /*
     This class handles the communication between JavaFX and the rest of the system.
@@ -38,6 +41,12 @@ public class Home {
     public void setFileName(String text) {
         fileName.set(text);
     }
+    private final String folderPath=System.getProperty("user.dir")+"\\source-code-modeler\\resources\\converted_xml\\";
+    private final String ip="192.168.1.110"; //replace with your remote host static IP address.
+    private final int port=5991;
+
+    Client client= new Client();
+    Socket socket= client.createSocket(ip,port);
 
     //===== Methods =====//
     // Allows the user to select a file.
@@ -81,6 +90,8 @@ public class Home {
             } else {
                 sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
             }
+            client.sendFiles(folderPath,socket);
+            client.closeSocket(socket);
         } catch (NullPointerException e) {
             System.out.println("No file or directory selected.");
             e.printStackTrace();
