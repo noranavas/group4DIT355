@@ -17,6 +17,7 @@ public class Client {
         try {
             clientSocket = new Socket(IP,PORT);
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Error while creating the client socket");
         }
         return clientSocket;
@@ -25,6 +26,7 @@ public class Client {
     public void sendFiles(String folderPath, Socket socket) {
         File myFile = new File(folderPath);
         File[] Files = myFile.listFiles();
+
         try{
         //Path to the files the client is sending. Adds them in a Files array
         //output data stream on the socket

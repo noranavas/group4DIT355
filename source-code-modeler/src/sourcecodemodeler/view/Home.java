@@ -42,7 +42,8 @@ public class Home {
         fileName.set(text);
     }
     private final String folderPath=System.getProperty("user.dir")+"\\source-code-modeler\\resources\\converted_xml\\";
-    private final String ip="192.168.1.110"; //replace with your remote host static IP address.
+    //private final String ip="10.132.178.107"; //replace with your remote host static IP address.
+    private final String ip = "127.0.0.1";
     private final int port=5991;
 
     Client client= new Client();
