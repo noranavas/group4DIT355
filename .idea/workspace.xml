@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cddf23ba-2667-4c3f-8adf-9b9191d3549d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/Server.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SocketNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Home.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Main.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/SourceCodeConverter.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/XMLClass.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/XMLIterator.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/view/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/view/Home.java" afterDir="false" />
-    </list>
+    <list default="true" id="cddf23ba-2667-4c3f-8adf-9b9191d3549d" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,8 +36,8 @@
       <file leaf-file-name="SocketNode.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SocketNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+            <state relative-caret-position="132">
+              <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#207#208#0" expanded="true" />
@@ -345,12 +334,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1543228846130</updated>
-      <workItem from="1543228852074" duration="5718000" />
+      <workItem from="1543228852074" duration="5975000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5718000" />
+    <option name="totallyTimeSpent" value="5975000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="7" />
@@ -457,8 +446,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SocketNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+        <state relative-caret-position="132">
+          <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#207#208#0" expanded="true" />
