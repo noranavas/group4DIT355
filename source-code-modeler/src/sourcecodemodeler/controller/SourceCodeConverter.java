@@ -41,7 +41,7 @@ public class SourceCodeConverter {
         pb.redirectErrorStream(true); // Not sure. Some kind of error handler for streams.
         try {
             pb.start(); // Run the script.
-            System.out.println("SCRIPT WAS RUN");
+            System.out.println(fileName + " was converted");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }

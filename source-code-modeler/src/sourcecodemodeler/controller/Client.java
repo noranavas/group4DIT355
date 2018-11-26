@@ -2,6 +2,7 @@ package sourcecodemodeler.controller;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.URL;
 
 public class Client {
     /*The code sends data in this order:

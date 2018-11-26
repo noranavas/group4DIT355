@@ -42,7 +42,7 @@ public class Home {
         fileName.set(text);
     }
     private final String folderPath=System.getProperty("user.dir")+"\\source-code-modeler\\resources\\converted_xml\\";
-    private final String ip="192.168.1.110"; //replace with your remote host static IP address.
+    private final String ip="localhost"; //replace with your remote host static IP address.
     private final int port=5991;
 
     Client client= new Client();
@@ -83,17 +83,21 @@ public class Home {
 
     // Uses SourceCodeConverter class to convert selected file/directory to XML.
     public void convertToXML(ActionEvent actionEvent) {
-        //sourceCodeConverter.clearOutputDirectory();
+        sourceCodeConverter.clearOutputDirectory();
         try {
             if (selectedFile.isDirectory()) {
-                sourceCodeConverter.convertDirectoryToXML(selectedFile.getParent());
+                sourceCodeConverter.convertDirectoryToXML(selectedFile.getPath());
             } else {
                 sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
             }
             client.sendFiles(folderPath,socket);
+            Thread.sleep(4000);
+
             client.closeSocket(socket);
         } catch (NullPointerException e) {
             System.out.println("No file or directory selected.");
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
