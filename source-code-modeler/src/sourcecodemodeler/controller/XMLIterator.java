@@ -58,6 +58,7 @@ public class XMLIterator {
         );
         System.out.println("Class name: " + xmlClass.getName());
         setAttributes(name, xmlClass);
+        setMethods(name, xmlClass);
         System.out.println("Attributes: ");
         // TODO: Exclude local attributes inside methods.
         for (String attribute : xmlClass.getAttributes()) {
@@ -91,18 +92,37 @@ public class XMLIterator {
                 }
             }
 
-            // Move to separate function for method retrieval.
-            nodeList = doc.getElementsByTagName("function"); // Tag for methods.
+        } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void setMethods(String xmlFileName, XMLClass xmlClass) {
+        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(new File(pathToXMLDirectory + xmlFileName));
+
+            NodeList nodeList = doc.getElementsByTagName("function"); // Tag for methods.
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    xmlClass.addMethod(node.getTextContent());
+                // skip nodes that are chiled of expression nodes - overridden method will be excluded
+                if (node.getParentNode().getParentNode().getParentNode().getNodeName() != "expr") {
+                    String s = node.getTextContent();
+                    String body = s.substring(s.indexOf('{'), s.length());
+                    if (!body.isEmpty()) {
+                        s = s.replace(body, "");
+                    }
+                    xmlClass.addMethod(s);
                 }
             }
 
         } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
             e.printStackTrace();
         }
+
     }
+
 
 }
