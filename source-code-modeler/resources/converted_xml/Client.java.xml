@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\socket_stuff\Client.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>network</name></name>;</package>
+
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>BufferedReader</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>IOException</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>InputStreamReader</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>PrintWriter</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>net</name><operator>.</operator><name>InetAddress</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>net</name><operator>.</operator><name>Socket</name></name>;</import>
+
+<class><specifier>public</specifier> class <name>Client</name> <block>{
+    <decl_stmt><decl><specifier>private</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>int</name></type> <name>PORT</name> <init>= <expr><literal type="number">6666</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>IP_ADDRESS</name> <init>= <expr><literal type="string">"95.80.14.65"</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name>Socket</name></type> <name>clientSocket</name></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name>PrintWriter</name></type> <name>out</name></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name>BufferedReader</name></type> <name>in</name></decl>;</decl_stmt>
+
+    <comment type="line">//===== Constructor(s) =====//</comment>
+    <constructor><specifier>public</specifier> <name>Client</name><parameter_list>()</parameter_list> <block>{}</block></constructor>
+
+    <comment type="line">//===== Methods =====//</comment>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>startConnection</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>ip</name></decl></parameter>, <parameter><decl><type><name>int</name></type> <name>port</name></decl></parameter>)</parameter_list> <block>{
+        <try>try <block>{
+            <decl_stmt><decl><type><name>Socket</name></type> <name>socket</name> <init>= <expr><operator>new</operator> <call><name>Socket</name><argument_list>(<argument><expr><call><name><name>InetAddress</name><operator>.</operator><name>getByName</name></name><argument_list>(<argument><expr><name>IP_ADDRESS</name></expr></argument>)</argument_list></call></expr></argument>, <argument><expr><name>PORT</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+            <decl_stmt><decl><type><name>BufferedReader</name></type> <name>input</name> <init>= <expr><operator>new</operator> <call><name>BufferedReader</name><argument_list>(<argument><expr><operator>new</operator> <call><name>InputStreamReader</name><argument_list>(<argument><expr><call><name><name>socket</name><operator>.</operator><name>getInputStream</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><call><name><name>input</name><operator>.</operator><name>readLine</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>IOException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+            <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block></catch></try>
+    }</block></function>
+
+    <function><specifier>public</specifier> <type><name>String</name></type> <name>sendMessage</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>msg</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><call><name><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><name>msg</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <decl_stmt><decl><type><name>String</name></type> <name>resp</name> <init>= <expr><literal type="string">""</literal></expr></init></decl>;</decl_stmt>
+        <try>try <block>{
+            <expr_stmt><expr><name>resp</name> <operator>=</operator> <call><name><name>in</name><operator>.</operator><name>readLine</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>IOException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+            <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block></catch></try>
+        <return>return <expr><name>resp</name></expr>;</return>
+    }</block></function>
+
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>stopConnection</name><parameter_list>()</parameter_list> <block>{
+        <try>try <block>{
+            <expr_stmt><expr><call><name><name>in</name><operator>.</operator><name>close</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>out</name><operator>.</operator><name>close</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>clientSocket</name><operator>.</operator><name>close</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>IOException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+            <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block></catch></try>
+
+    }</block></function>
+
+    <comment type="line">//===== Main =====//</comment>
+    <function><specifier>public</specifier> <specifier>static</specifier> <type><name>void</name></type> <name>main</name><parameter_list>(<parameter><decl><type><name><name>String</name><index>[]</index></name></type> <name>args</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name>Client</name></type> <name>client</name> <init>= <expr><operator>new</operator> <call><name>Client</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>client</name><operator>.</operator><name>startConnection</name></name><argument_list>(<argument><expr><name>IP_ADDRESS</name></expr></argument>, <argument><expr><name>PORT</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+}</block></class>
+</unit>

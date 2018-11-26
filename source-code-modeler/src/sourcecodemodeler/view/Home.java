@@ -6,13 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import sourcecodemodeler.controller.Client;
+import sourcecodemodeler.controller.SocketNode;
 import sourcecodemodeler.controller.SourceCodeConverter;
 import sourcecodemodeler.controller.XMLIterator;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.Socket;
 
 /*
     This class handles the communication between JavaFX and the rest of the system.
@@ -24,6 +22,8 @@ public class Home {
 
     private File selectedFile;
     private StringProperty fileName;
+
+    SocketNode socketNode = new SocketNode();
 
     //===== Constructor(s) =====//
     public Home() {
@@ -41,13 +41,6 @@ public class Home {
     public void setFileName(String text) {
         fileName.set(text);
     }
-    private final String folderPath=System.getProperty("user.dir")+"\\source-code-modeler\\resources\\converted_xml\\";
-    //private final String ip="10.132.178.107"; //replace with your remote host static IP address.
-    private final String ip = "127.0.0.1";
-    private final int port=5991;
-
-    Client client= new Client();
-    Socket socket= client.createSocket(ip,port);
 
     //===== Methods =====//
     // Allows the user to select a file.
@@ -55,20 +48,16 @@ public class Home {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select a code file"); // Title of the JavaFX window.
 
-        // Defines selectable file extensions. Should be file extensions supported by srcML.
-        // TODO: Add all file extensions supported by srcML.
-        FileChooser.ExtensionFilter extFilters = new FileChooser.ExtensionFilter
-                ("Code files",
-                        "*.c",
-                        "*.cpp",
-                        "*.java"
-                );
+        // Defines selectable file extensions. In this case .java files.
+        FileChooser.ExtensionFilter extFilters = new FileChooser.ExtensionFilter("Code files", "*.java");
 
         // Apply filters to the file chooser.
         fileChooser.getExtensionFilters().addAll(extFilters);
+
         // Open the JavaFX window.
         Node node = (Node)actionEvent.getSource();
         selectedFile = fileChooser.showOpenDialog(node.getScene().getWindow());
+
         // Update JavaFX to display name of selected file.
         setFileName(selectedFile.getName());
     }
@@ -82,27 +71,28 @@ public class Home {
         setFileName(selectedFile.getName());
     }
 
-    // Uses SourceCodeConverter class to convert selected file/directory to XML.
+    // Calls the conversion methods from the SourceCodeConverterClass.
     public void convertToXML(ActionEvent actionEvent) {
-        //sourceCodeConverter.clearOutputDirectory();
+        sourceCodeConverter.clearOutputDirectory();
         try {
             if (selectedFile.isDirectory()) {
-                sourceCodeConverter.convertDirectoryToXML(selectedFile.getParent());
+                sourceCodeConverter.convertDirectoryToXML(selectedFile.getPath());
             } else {
                 sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
             }
-            client.sendFiles(folderPath,socket);
-            client.closeSocket(socket);
         } catch (NullPointerException e) {
             System.out.println("No file or directory selected.");
             e.printStackTrace();
         }
+
+        socketNode.startServer();
+        socketNode.stopServer();
+
     }
 
     //===== Temporary Test Methods =====//
     // Prints the content of the latest converted file to the console.
     public void printXMLContent(ActionEvent actionEvent) {
-        System.out.println("PATH " +selectedFile.getPath());
         if (selectedFile.isDirectory()) {
             System.out.println("Can not print a directory.");
         } else {

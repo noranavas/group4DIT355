@@ -21,7 +21,6 @@ public class Server {
         System.out.println("Starting...");
         System.out.println("Waiting for a connection.");
 
-        FileOutputStream fos;
         BufferedOutputStream bos;
         OutputStream output;
         DataOutputStream dos;
@@ -46,7 +45,6 @@ public class Server {
                     in = clientSocket.getInputStream(); //used
                     clientData = new DataInputStream(in); //use
                     clientBuff = new BufferedInputStream(in); //use
-
 
                     fileSize = clientData.read();
 
@@ -73,7 +71,7 @@ public class Server {
 
                         System.out.println("File Size =" + len);
 
-                        output = new FileOutputStream(System.getProperty("user.dir") + "\\resources\\" + files.get(count));
+                        output = new FileOutputStream(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\" + files.get(count));
                         dos = new DataOutputStream(output);
                         bos = new BufferedOutputStream(output);
 

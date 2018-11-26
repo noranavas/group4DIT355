@@ -10,9 +10,16 @@ public class Client {
     3) Size of the files in bytes
     4) The files
     */
+    private static final String[] IP_ADDRESSES = {
+            "10.0.30.202",
+            "10.132.178.107",
+            "PC3",
+            "PC4",
+            "127.0.0.1"
+    };
 
 
-    public Socket createSocket(String IP, int PORT){
+    public static Socket createSocket(String IP, int PORT){
         Socket clientSocket= null;
         try {
             clientSocket = new Socket(IP,PORT);
@@ -23,7 +30,7 @@ public class Client {
         return clientSocket;
     }
 
-    public void sendFiles(String folderPath, Socket socket) {
+    public static void sendFiles(String folderPath, Socket socket) {
         File myFile = new File(folderPath);
         File[] Files = myFile.listFiles();
 
@@ -71,20 +78,24 @@ public class Client {
             else System.out.println("An error has occured");
         }
     }
-        public void closeSocket(Socket socket) {
-            //Closing socket
-            //dos.close();
-            System.out.println("Closing the socket. Transfer done");
-            //close the socket when done
-            try {
-                socket.close();
-            } catch (IOException exc2) {
-                System.out.println("Error closing the socket");
-            }
+
+    public static void closeSocket(Socket socket) {
+        //Closing socket
+        //dos.close();
+        System.out.println("Closing the socket. Transfer done");
+        //close the socket when done
+        try {
+            socket.close();
+        } catch (IOException exc2) {
+            System.out.println("Error closing the socket");
         }
+    }
 
     public static void main(String[] args) {
         System.out.println("Connecting.........");
-        }
-
+        Socket s = createSocket(IP_ADDRESSES[4], 5991);
+        sendFiles(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\", s);
+        closeSocket(s);
     }
+
+}
