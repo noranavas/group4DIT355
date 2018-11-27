@@ -13,8 +13,6 @@ public class SourceCodeConverter {
     // Path to directory where the converted XML files should be created.
     private final String outputDirectory = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\";
 
-    private SocketNode socketNode = new SocketNode();
-
     //===== Constructor(s) =====//
     public SourceCodeConverter() {}
 

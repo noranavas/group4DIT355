@@ -13,7 +13,7 @@ public class Client {
     private static final String[] IP_ADDRESSES = {
             "10.0.30.202",
             "10.132.178.107",
-            "PC3",
+            "46.239.116.168",
             "PC4",
             "127.0.0.1"
     };
@@ -93,7 +93,7 @@ public class Client {
 
     public static void main(String[] args) {
         System.out.println("Connecting.........");
-        Socket s = createSocket(IP_ADDRESSES[4], 5991);
+        Socket s = createSocket(IP_ADDRESSES[2], 5991);
         sendFiles(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\", s);
         closeSocket(s);
     }

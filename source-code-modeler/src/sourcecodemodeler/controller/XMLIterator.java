@@ -48,27 +48,15 @@ public class XMLIterator {
     }
 
     // Creates a class (XMLClass) that only contains the data displayed in a class of a class diagram.
-    public void createXMLClass(String name) {
+    public XMLClass createXMLClass(String name) {
         XMLClass xmlClass = new XMLClass();
         xmlClass.setName(name
                 .replace(".xml", "")
                 .replace(".java", "")
         );
-        System.out.println("Class name: " + xmlClass.getName());
-        setAttributes(name, xmlClass);
-        System.out.println("Attributes: ");
-        // TODO: Exclude local attributes inside methods.
-        for (String attribute : xmlClass.getAttributes()) {
-            System.out.println(attribute);
-        }
-        System.out.println("Methods: ");
-        // TODO: Filter out everything except access modifier, return type, method name and parameters.
-        for (String method : xmlClass.getMethods()) {
-            System.out.println(method
-                    .replace("public", "+")
-                    .replace("private", "-")
-            );
-        }
+        //setAttributes(name, xmlClass);
+        setMethods(name, xmlClass);
+        return xmlClass;
     }
 
     // Iterates through the XML document to retrieve attributes.
@@ -78,29 +66,79 @@ public class XMLIterator {
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(new File(pathToXMLDirectory + xmlFileName));
 
-            NodeList nodeList = doc.getElementsByTagName("decl_stmt"); // Tag for attributes.
+            NodeList nodeList = doc.getElementsByTagName("decl"); // Tag for attributes.
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    xmlClass.addAttribute(node.getTextContent()
-                            .replace("public", "+")
-                            .replace("private", "-")
-                    );
-                }
-            }
+                node = removeAnnotations(node);
+                node = removeExceptions(node);
 
-            // Move to separate function for method retrieval.
-            nodeList = doc.getElementsByTagName("function"); // Tag for methods.
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    xmlClass.addMethod(node.getTextContent());
-                }
-            }
 
+            }
         } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Iterates through a XML document to retrieve methods.
+    private void setMethods(String xmlFileName, XMLClass xmlClass) {
+        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(new File(pathToXMLDirectory + xmlFileName));
+            NodeList nodeList = doc.getElementsByTagName("function"); // Tag for methods.
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                node = removeAnnotations(node);
+                node = removeExceptions(node);
+                // Skip nodes that are children of expression nodes - overridden methods will be excluded.
+                if (node.getParentNode().getParentNode().getParentNode().getNodeName() != "expr") {
+                    String s = node.getTextContent();
+                    String body = s.substring(s.indexOf('{'), s.length());
+                    if (!body.isEmpty()) {
+                        s = s.replace(body, "");
+                    }
+                    s = prettyString(s);
+                    xmlClass.addMethod(s);
+                }
+            }
+        } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
+            e.printStackTrace();
+            System.out.println("Problem parsing XML file: " + xmlFileName);
+        }
+    }
+
+    //----- Remove Specific Tags -----//
+    private Node removeAnnotations(Node node) {
+        NodeList childNodes = node.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            String childNodeName = childNodes.item(i).getNodeName();
+            if (childNodeName.equalsIgnoreCase("annotation")) {
+                childNodes.item(i).setTextContent("");
+            }
+        }
+        return node;
+    }
+    private Node removeExceptions(Node node) {
+        NodeList childNodes = node.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            String childNodeName = childNodes.item(i).getNodeName();
+            if (childNodeName.equalsIgnoreCase("throws")) {
+                childNodes.item(i).setTextContent("");
+            }
+        }
+        return node;
+    }
+
+    private String prettyString(String s) {
+        s = s.trim()
+                .replace("public", "+")
+                .replace("private", "-")
+                .replace("protected", "#")
+                .replace("void", "")
+                .replace("static", "")
+                .replace("   ", " ")
+                .replace("  ", " ");
+        return s;
     }
 
 }

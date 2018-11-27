@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import sourcecodemodeler.controller.SocketNode;
 import sourcecodemodeler.controller.SourceCodeConverter;
 import sourcecodemodeler.controller.XMLIterator;
 
@@ -22,8 +21,6 @@ public class Home {
 
     private File selectedFile;
     private StringProperty fileName;
-
-    SocketNode socketNode = new SocketNode();
 
     //===== Constructor(s) =====//
     public Home() {
@@ -84,10 +81,6 @@ public class Home {
             System.out.println("No file or directory selected.");
             e.printStackTrace();
         }
-
-        socketNode.startServer();
-        socketNode.stopServer();
-
     }
 
     //===== Temporary Test Methods =====//
@@ -100,11 +93,13 @@ public class Home {
         }
     }
 
+    // Prints the formatted versions of all the files in the converted_xml folder. For testing.
     public void printFormattedXML(ActionEvent actionEvent) {
-        if (selectedFile.isDirectory()) {
-            System.out.println("Can not print a directory.");
-        } else {
-            xmlIterator.createXMLClass(selectedFile.getName() + ".xml");
+        File file = new File(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\");
+        File[] files = file.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            System.out.println(xmlIterator.createXMLClass(files[i].getName())
+                    .toString());
         }
     }
 

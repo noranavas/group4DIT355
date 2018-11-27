@@ -3,6 +3,10 @@ package sourcecodemodeler.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    This class is an information holder that stores parsed XML data.
+    The instances of these classes are temporary.
+ */
 public class XMLClass {
     private String name;
     private List<String> attributes;
@@ -38,4 +42,21 @@ public class XMLClass {
     public void addRelationship(String relationship) {
         this.relationships.add(relationship);
     }
+    public List<String> getRelationships() {
+        return this.relationships;
+    }
+
+    @Override
+    public String toString() {
+        String s = this.getName();
+        for (String attribute: this.getAttributes()) {
+            s += "\n" + attribute;
+        }
+        for (String method : this.getMethods()) {
+            s += "\n" + method;
+        }
+        s += "\n";
+        return s;
+    }
+
 }

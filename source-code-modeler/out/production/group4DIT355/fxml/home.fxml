@@ -19,7 +19,6 @@
         </HBox>
             <Label text="${controller.fileName}" />
            <Button onAction="#convertToXML" text="Convert to XML" />
-           <Button onAction="#printXMLContent" text="Print XML Content (TEST, Only works for single file)" />
-           <Button onAction="#printFormattedXML" text="Print formatted XML (TEST, Only works for single file)" />
+           <Button onAction="#printFormattedXML" text="Print formatted XML (TESTING)" />
     </children>
 </VBox>
