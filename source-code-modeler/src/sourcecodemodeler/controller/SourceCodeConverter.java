@@ -4,31 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+
 /*
     This class uses srcML to convert code files to XML documents.
  */
 public class SourceCodeConverter {
-    // Path to srcML.
-    private final String pathToSrcML = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\srcML-Win\\bin\\srcml.exe";
-    // Path to directory where the converted XML files should be created.
-    private final String outputDirectory = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\";
-
-
     //===== Constructor(s) =====//
     public SourceCodeConverter() {}
 
     //===== Methods =====//
-    // Converts a selected file to a XML document in the same directory.
-    public void convertToXML(String fileName, String filePath) throws NullPointerException {
-
-        //DEBUGGING STUFF
-        /*
-        System.out.println(filePath + " filePath");
-        System.out.println(pathToSrcML + " scrML");
-        System.out.println(outputDirectory + " output");
-        System.out.println(System.getProperty("user.dir") + " PROJECT DIR");
-        */
-
+    // Converts a selected file to a XML document in the resources/converted_xml folder.
+    public void convertToXML(String fileName, String filePath) {
         /*
          Creates a process builder that contains the command prompt script
          that calls srcML to convert a code file to an XML document.
@@ -36,21 +22,25 @@ public class SourceCodeConverter {
         ProcessBuilder pb = new ProcessBuilder(
                 "cmd.exe",
                 "/c",
-                pathToSrcML + " " + filePath + " -o " + outputDirectory + fileName + ".xml"
+                PublicData.pathToSrcML + " " + filePath + " -o " + PublicData.outputDirectory + fileName + ".xml"
         );
-        pb.redirectErrorStream(true); // Not sure. Some kind of error handler for streams.
+        pb.redirectErrorStream(true); // Some kind of error handler for streams.
         try {
             pb.start(); // Run the script.
-            System.out.println(fileName + " was converted");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         }
+
     }
 
     // Creates a copy of the selected directory and converts all found files to XML documents.
-    public void convertDirectoryToXML(String directoryPath) throws NullPointerException {
+    public void convertDirectoryToXML(String directoryPath) {
+        System.out.println(directoryPath);
         // Create a file array for all files in the selected directory.
         File[] files = new File(directoryPath).listFiles();
+        for (int i = 0; i < files.length; i++) {
+            System.out.println(files[i].getPath());
+        }
 
         // Iterate through all the files and convert files with supported file extension to XML.
         for (int i = 0; i < files.length; i++) {
@@ -59,11 +49,8 @@ public class SourceCodeConverter {
             if (files[i].isDirectory()) {
                 convertDirectoryToXML(files[i].getPath());
             } else {
-                String filter = getFileExtension(files[i].getName()).get(); // Get string value of 'Optional'.
-                if (filter.equalsIgnoreCase("c") ||
-                        filter.equalsIgnoreCase("cpp") ||
-                        filter.equalsIgnoreCase("java"))
-                {
+                String filter = getFileExtension(files[i].getName()).get(); // Get string value of 'Optional' object.
+                if (filter.equalsIgnoreCase("java")) {
                     convertToXML(files[i].getName(), files[i].getPath());
                 }
             }
@@ -79,7 +66,7 @@ public class SourceCodeConverter {
     }
 
     public void clearOutputDirectory() {
-        File[] files = new File(outputDirectory).listFiles();
+        File[] files = new File(PublicData.outputDirectory).listFiles();
         for (int i = 0; i < files.length; i++) {
             files[i].delete();
         }

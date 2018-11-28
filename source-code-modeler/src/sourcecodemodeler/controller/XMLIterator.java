@@ -52,8 +52,6 @@ public class XMLIterator {
         XMLClass xmlClass = new XMLClass();
         xmlClass.setName(name
                 .replace(".xml", "")
-                .replace(".c", "")
-                .replace(".cpp", "")
                 .replace(".java", "")
         );
         System.out.println("Class name: " + xmlClass.getName());
