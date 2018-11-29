@@ -58,7 +58,7 @@ public class Home {
                 System.out.println(i);
                 */
             sender.Connect(PublicData.IP_ADDRESSES[4],PublicData.PORT);
-            sender.sendFiles(PublicData.outputDirectory);
+            sender.sendFiles(PublicData.outputDirectory, sender.getSocket());
             //socketNode.sendFiles(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\", socketNode.getSocket());
             //socketNode.stopConnection();
             return null;
@@ -130,15 +130,14 @@ public class Home {
 
             //thread1.start();
             TimeUnit.SECONDS.sleep(4);
-            thread2.run(); //runs the thread
-            thread2.join(); //waits until this thread is done
+            sender.Connect(PublicData.IP_ADDRESSES[4],PublicData.PORT);
+            sender.sendFiles(PublicData.outputDirectory, sender.getSocket());
             thread3.run();
             thread3.join();
             thread4.run();
             thread4.join();
             thread4.interrupt(); //interrupts the thread. not sure it KILLS THE INSTANCE
             thread3.interrupt();
-            thread2.interrupt();
             //System.out.println("Thread3 is still running: " + thread2.isAlive());
             //thread2.join();
             // thread2.join();

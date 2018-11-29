@@ -1,5 +1,7 @@
 package sourcecodemodeler.controller;
 
+import javafx.concurrent.Task;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -22,6 +24,9 @@ public class Sender {
     public Sender(){
     }
 
+    public void setSocket(Socket socket){
+        this.senderSocket=socket;
+    }
     public Socket getSocket(){
         return this.senderSocket;
     }
@@ -36,14 +41,18 @@ public class Sender {
         //return senderSocket;
     }
 
-    public void sendFiles(String folderPath) {
+    public void sendFiles(String folderPath, Socket sendersocket) throws InterruptedException {
+        Task sendTask= new Task(){
+            @Override
+            protected Object call() throws Exception{ //start the sender and send files
+
         File myFile = new File(folderPath);
         File[] Files = myFile.listFiles();
 
         try{
         //Path to the files the client is sending. Adds them in a Files array
         //output data stream on the socket
-        OutputStream os = this.senderSocket.getOutputStream();
+        OutputStream os = sendersocket.getOutputStream();
         DataOutputStream dos = new DataOutputStream(os);
         //write the number of files as Integer on the data output stream
         if (Files.length <= 0) {
@@ -83,6 +92,14 @@ public class Sender {
                 System.out.println("The folder selected is empty");
             else System.out.println("An error has occured");
         }
+
+                return null;
+            }
+        };
+        Thread sendThread= new Thread(sendTask);
+        System.out.println("Thread ID: "+sendThread.getId());
+        sendThread.start();
+        sendThread.join();
     }
 
     public static void closeSocket(Socket socket) {
