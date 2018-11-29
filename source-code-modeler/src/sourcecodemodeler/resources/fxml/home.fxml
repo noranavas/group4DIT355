@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="container" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sourcecodemodeler.view.Home">
+<VBox fx:id="container" stylesheets="sourcecodemodeler/resources/css/main.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sourcecodemodeler.view.Home">
     <children>
-        <Label fx:id="title" text="Source Code Modeler" />
-        <HBox styleClass="buttons">
-            <children>
-                <StackPane>
-                    <Button onAction="#selectFile" text="Select File" />
-                </StackPane>
+        <HBox>
+        	<Label styleClass="title" fx:id="title" text="Source Code Modeler" />
+        </HBox>
+        <HBox>
+            
+                 <Button onAction="#selectFile" text="Select File" />
                  <Button onAction="#selectDirectory" text="Select Directory" />
-            </children>
+            
         </HBox>
             <Label text="${controller.fileName}" />
            <Button onAction="#convertToXML" text="Convert to XML" />
