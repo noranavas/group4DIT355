@@ -54,9 +54,20 @@ public class XMLIterator {
                 .replace(".xml", "")
                 .replace(".java", "")
         );
-        //setAttributes(name, xmlClass);
+        setAttributes(name, xmlClass);
         setMethods(name, xmlClass);
         return xmlClass;
+    }
+
+    private String GetClassName(Node node) {
+        NodeList childNodes = node.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node childNode = childNodes.item(i);
+            if (childNode.getNodeName() == "name") {
+                return childNode.getTextContent();
+            }
+        }
+        return "";
     }
 
     // Iterates through the XML document to retrieve attributes.
@@ -66,17 +77,44 @@ public class XMLIterator {
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(new File(pathToXMLDirectory + xmlFileName));
 
-            NodeList nodeList = doc.getElementsByTagName("decl"); // Tag for attributes.
+            NodeList nodeList = doc.getElementsByTagName("decl_stmt"); // Tag for attributes.
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
-                node = removeAnnotations(node);
-                node = removeExceptions(node);
+                Node secondParent = node.getParentNode().getParentNode();
+                if (secondParent.getNodeName() == "class"/* && GetClassName(secondParent) == xmlClass.getName()*/) {
+                    node = prettyAttribute(node);
+                    String s = node.getTextContent();
 
-
+                    s = prettyString(s);
+                    xmlClass.addAttribute(s);
+                }
             }
         } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private Node prettyAttribute(Node node)
+    {
+        node = removeTag(node, "init");
+        node = removeTag(node, "comment");
+        return node;
+    }
+
+    private Node removeTag(Node node, String tag) {
+        NodeList childNodes = node.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node childNode = childNodes.item(i);
+            String childNodeName = childNode.getNodeName();
+            // check if this child should be removed by checking its name
+            if (childNodeName.equalsIgnoreCase(tag)) {
+                childNodes.item(i).setTextContent("");
+            }
+            else {
+                childNode = removeTag(childNode, tag); // recursively call this function to remove children
+            }
+        }
+        return node;
     }
 
     // Iterates through a XML document to retrieve methods.
@@ -93,9 +131,10 @@ public class XMLIterator {
                 // Skip nodes that are children of expression nodes - overridden methods will be excluded.
                 if (node.getParentNode().getParentNode().getParentNode().getNodeName() != "expr") {
                     String s = node.getTextContent();
-                    String body = s.substring(s.indexOf('{'), s.length());
+                    String body = s.substring(s.indexOf('{'), s.length()); // Get methods body
+                    body = s.substring(s.indexOf('(') + 1, s.length() - 1); // remove arguments from methods
                     if (!body.isEmpty()) {
-                        s = s.replace(body, "");
+                        s = s.replace(body, ""); // remove body of methods
                     }
                     s = prettyString(s);
                     xmlClass.addMethod(s);
@@ -130,12 +169,21 @@ public class XMLIterator {
     }
 
     private String prettyString(String s) {
+        s = s.replaceAll("\\s\\s", " "); //remove double empty space
+        s = s.replaceAll("\\s,\\s+", ", "); //remove space before comma
+        s = s.replaceAll("\\s*;", ""); // remove semi-column,
+        if (!(s.contains("public") || s.contains("private") || s.contains("protected")))
+        {
+            s = "+ " + s.trim(); // set public as default visibility
+        }
+
         s = s.trim()
                 .replace("public", "+")
                 .replace("private", "-")
                 .replace("protected", "#")
                 .replace("void", "")
                 .replace("static", "")
+                .replace("final", "")
                 .replace("   ", " ")
                 .replace("  ", " ");
         return s;
