@@ -4,6 +4,7 @@ import javafx.concurrent.Task;
 import sourcecodemodeler.network.Receiver;
 import sourcecodemodeler.network.Sender;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class ThreadHandler {
@@ -17,81 +18,93 @@ public class ThreadHandler {
     public ThreadHandler() {}
 
     //===== Tasks =====//
-    // Start the sender and send files.
-    Task task2 = new Task(){
+    Task startReceiver = new Task() {
         @Override
-        protected Object call() throws Exception{
-            System.out.println("Task 2 started");
-           /* for (int i=10; i>0; i--)
-                System.out.println(i);
-                */
-           receiver.start(5991);
-            sender.connect(IP_ADDRESS[0], PORT);
-            sender.sendFiles(PATH_TO_XML_FILES);
-            //socketNode.sendFiles(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\", socketNode.getSocket());
-            //socketNode.stopConnection();
+        protected Object call() throws Exception {
+            System.out.println("startReceiver task started.");
+            receiver.start(PORT);
             return null;
         }
     };
 
-    Task task3 = new Task(){
+    Task connectSender = new Task() {
         @Override
-        protected Object call() throws Exception{ //start the sender and send files
-            System.out.println("Task 3 started");
-            receiver.receiveFiles();
+        protected Object call() {
+            System.out.println("connectSender task started.");
+            sender.connect(IP_ADDRESS[0], PORT);
             return null;
         }
     };
-    Task task4 = new Task(){
+
+    Task sendFiles = new Task() {
         @Override
-        protected Object call() throws Exception{ //start the sender and send files
-            System.out.println("Task 4 started");
+        protected Object call() {
+            sender.sendFiles(PATH_TO_XML_FILES);
+            return null;
+        }
+    };
+
+    Task receiveFiles = new Task() {
+      @Override
+      protected Object call() {
+          try {
+              receiver.receiveFiles();
+          } catch (IOException e) {
+              e.printStackTrace();
+              System.out.println("Error in task to receive files.");
+          }
+          return null;
+      }
+    };
+
+    Task closeSender = new Task(){
+        @Override
+        protected Object call() {
             sender.close();
             return null;
         }
     };
 
-    public Task getTask2() {
-        return task2;
-    }
-    public Task getTask3() {
-        return task3;
-    }
-    public Task getTask4() {
-        return task4;
-    }
-
+    //===== Methods =====//
     public void runThreads() {
-        //===== Threads =====//
-        //Thread thread1 = new Thread(task1);
-        Thread thread2 = new Thread(task2);
-        Thread thread3 = new Thread(task3);
-        Thread thread4 = new Thread(task4);
+        Thread startReceiverThread = new Thread(startReceiver);
+        Thread connectSenderThread = new Thread(connectSender);
+        Thread sendFilesThread = new Thread(sendFiles);
+        Thread receiveFilesThread = new Thread(receiveFiles);
+        Thread closeSenderThread = new Thread(closeSender);
 
         try {
-            //thread1.start();
-            TimeUnit.SECONDS.sleep(4);
-            thread2.run(); //runs the thread
-            thread2.join(); //waits until this thread is done
-            thread3.run();
-            thread3.join();
-            thread4.run();
-            thread4.join();
-            thread4.interrupt(); //interrupts the thread. not sure it KILLS THE INSTANCE
-            thread3.interrupt();
-            thread2.interrupt();
-            //System.out.println("Thread3 is still running: " + thread2.isAlive());
-            //thread2.join();
-            //thread2.join();
-        /*
-        synchronized (thread5) {
-            thread5.start();
-        }
-        */
+            TimeUnit.SECONDS.sleep(1);
+
+            // Executes thread.
+            startReceiverThread.run();
+
+            // Waits until thread is done.
+            startReceiverThread.join();
+
+            connectSenderThread.run();
+            connectSenderThread.join();
+
+            sendFilesThread.run();
+            sendFilesThread.join();
+
+            receiveFilesThread.run();
+            receiveFilesThread.join();
+
+            //closeSenderThread.run();
+            //closeSenderThread.join();
+
+            // Interrupts the thread. Not sure. KILLS INSTANCE?
+            startReceiverThread.interrupt();
+            connectSenderThread.interrupt();
+            sendFilesThread.interrupt();
+            receiveFilesThread.interrupt();
+            //closeSenderThread.interrupt();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
             System.out.println("Problem running threads.");
         }
-
     }
+
 }

@@ -1,5 +1,7 @@
 package sourcecodemodeler.controller;
 
+import sourcecodemodeler.Globals;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
@@ -8,10 +10,8 @@ import java.util.Optional;
     This class uses srcML to convert code files to XML documents.
  */
 public class SourceCodeConverter {
-    // Path to srcML.
-    private final String pathToSrcML = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\srcML-Win\\bin\\srcml.exe";
-    // Path to directory where the converted XML files should be created.
-    private final String outputDirectory = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\";
+    private final String pathToSrcML = Globals.PATH_TO_SRCML;
+    private final String outputDirectory = Globals.PATH_TO_XML_FILES;
 
     //===== Constructor(s) =====//
     public SourceCodeConverter() {}
@@ -21,7 +21,7 @@ public class SourceCodeConverter {
     public void convertToXML(String fileName, String filePath) {
         /*
          Creates a process builder that contains the command prompt script
-         that calls srcML to convert a code file to an XML document.
+         that calls srcML to convert a code file to a XML document.
           */
         ProcessBuilder pb = new ProcessBuilder(
                 "cmd.exe",
@@ -37,14 +37,10 @@ public class SourceCodeConverter {
 
     }
 
-    // Creates a copy of the selected directory and converts all found files to XML documents.
+    // Converts all found files in a directory to XML documents.
     public void convertDirectoryToXML(String directoryPath) {
-        System.out.println(directoryPath);
         // Create a file array for all files in the selected directory.
         File[] files = new File(directoryPath).listFiles();
-        for (int i = 0; i < files.length; i++) {
-            System.out.println(files[i].getPath());
-        }
 
         // Iterate through all the files and convert files with supported file extension to XML.
         for (int i = 0; i < files.length; i++) {
@@ -53,7 +49,8 @@ public class SourceCodeConverter {
             if (files[i].isDirectory()) {
                 convertDirectoryToXML(files[i].getPath());
             } else {
-                String filter = getFileExtension(files[i].getName()).get(); // Get string value of 'Optional' object.
+                // Get string value of 'Optional' object.
+                String filter = getFileExtension(files[i].getName()).get();
                 if (filter.equalsIgnoreCase("java")) {
                     convertToXML(files[i].getName(), files[i].getPath());
                 }
@@ -69,6 +66,7 @@ public class SourceCodeConverter {
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1));
     }
 
+    // Clears the output directory to prevent files from previous conversions to be included in the current process.
     public void clearOutputDirectory() {
         File[] files = new File(outputDirectory).listFiles();
         for (int i = 0; i < files.length; i++) {

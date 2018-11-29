@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\salvatore_threads\ResourceLock.java"><package>package <name>sourcecodemodeler</name>;</package>
-
-<class><specifier>public</specifier> class <name>ResourceLock</name><block>{
-    <decl_stmt><decl><specifier>public</specifier> <type><specifier>volatile</specifier> <name>int</name></type> <name>flag</name> <init>= <expr><literal type="number">1</literal></expr></init></decl>;</decl_stmt>
-}</block></class></unit>

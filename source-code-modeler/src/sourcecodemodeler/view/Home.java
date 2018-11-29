@@ -84,20 +84,11 @@ public class Home {
             e.printStackTrace();
         }
 
-        threadHandler.runThreads();
+        //threadHandler.runThreads();
 
     }
 
     //===== Temporary Test Methods =====//
-    // Prints the content of the latest converted file to the console.
-    public void printXMLContent(ActionEvent actionEvent) {
-        if (selectedFile.isDirectory()) {
-            System.out.println("Can not print a directory.");
-        } else {
-            xmlIterator.printXMLFile( selectedFile.getName() + ".xml");
-        }
-    }
-
     // Prints the formatted versions of all the files in the converted_xml folder.
     public void printFormattedXML(ActionEvent actionEvent) {
         File file = new File(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\");

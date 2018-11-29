@@ -1,13 +1,18 @@
 package sourcecodemodeler;
 
 public class Globals {
+    // Port that the nodes(PCs) communicates through.
     public static final int PORT = 5991;
+
+    // Indexer to keep track of the nodes(PCs).
     public static final int[] NODE_NUMBER = {
-            1, //main
-            2, //xml parser
-            3, //xml formatter
-            4 //visualization maker"
+            1,  // Main.
+            2,  // XML Parser.
+            3,  // XML Formatter.
+            4   // Visualizer.
     };
+
+    // A list of ip addresses belonging to the different nodes(PCs).
     public static final String[] IP_ADDRESS = {
             "95.80.14.65",
             "PC2",

@@ -1,5 +1,6 @@
 package sourcecodemodeler.controller;
 
+import sourcecodemodeler.Globals;
 import sourcecodemodeler.model.XMLClass;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -18,36 +19,13 @@ import java.io.InputStreamReader;
     The data is then used to create classes that can later be displayed in the produced class diagram.
  */
 public class XMLIterator {
-    private final String pathToXMLDirectory = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\";
+    private final String pathToXMLDirectory = Globals.PATH_TO_XML_FILES;
 
     //===== Constructor(s) =====//
     public XMLIterator() {}
 
     //===== Methods =====//
-    // This method prints the raw content of the latest converted file.
-    public void printXMLFile(String fileName) {
-        String pathToXMLFile = pathToXMLDirectory + fileName;
-        ProcessBuilder pb = new ProcessBuilder(
-                "cmd.exe",
-                "/c",
-                "more " + pathToXMLFile
-        );
-        pb.redirectErrorStream(true);
-        try {
-            Process p = pb.start();
-            BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while (true) {
-                line = br.readLine();
-                if (line == null) { break; }
-                System.out.println(line);
-            }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-    }
-
-    // Creates a class (XMLClass) that only contains the data displayed in a class of a class diagram.
+    // Creates a class (XMLClass) that will hold the data for th visualization.
     public XMLClass createXMLClass(String name) {
         XMLClass xmlClass = new XMLClass();
         xmlClass.setName(name
@@ -56,6 +34,7 @@ public class XMLIterator {
         );
         //setAttributes(name, xmlClass);
         setMethods(name, xmlClass);
+        //setRelationships();
         return xmlClass;
     }
 
