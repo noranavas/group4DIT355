@@ -17,8 +17,10 @@
                  <Button onAction="#selectDirectory" text="Select Directory" />
             
         </HBox>
+         <HBox>
             <Label text="${controller.fileName}" />
            <Button onAction="#convertToXML" text="Convert to XML" />
            <Button onAction="#printFormattedXML" text="Print formatted XML (TESTING)" />
+         </HBox>
     </children>
 </VBox>
