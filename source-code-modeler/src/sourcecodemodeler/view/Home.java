@@ -12,6 +12,7 @@ import sourcecodemodeler.controller.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 /*
     This class handles the communication between JavaFX and the rest of the system.
@@ -48,22 +49,6 @@ public class Home {
 
     //===== Methods =====//
 
-
-    Task task1 = new Task(){
-        @Override
-        protected Object call() throws Exception { //start the receiver
-            System.out.println("Task 1 started");
-            receiver.startServer();
-           /* for (int i=0; i<=10; i++){
-                System.out.println(i);
-
-            }*/
-           // socketNode.startConnection("localhost",socketNode.PORT);
-           // socketNode.stopConnection();
-           // socketNode.stopServer();
-            return null;
-
-        }};
 
     Task task2= new Task(){
         @Override
@@ -130,7 +115,7 @@ public class Home {
 
     // Calls the conversion methods from the SourceCodeConverterClass.
     public void convertToXML(ActionEvent actionEvent) {
-        //sourceCodeConverter.clearOutputDirectory();
+        sourceCodeConverter.clearOutputDirectory();
         try {
             if (selectedFile.isDirectory()) {
                 sourceCodeConverter.convertDirectoryToXML(selectedFile.getPath());
@@ -144,6 +129,7 @@ public class Home {
 
 
             //thread1.start();
+            TimeUnit.SECONDS.sleep(4);
             thread2.run(); //runs the thread
             thread2.join(); //waits until this thread is done
             thread3.run();

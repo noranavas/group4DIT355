@@ -1,5 +1,7 @@
 package sourcecodemodeler.controller;
 
+import javafx.concurrent.Task;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
@@ -14,27 +16,36 @@ public class SourceCodeConverter {
 
     //===== Methods =====//
     // Converts a selected file to a XML document in the resources/converted_xml folder.
-    public void convertToXML(String fileName, String filePath) {
-        /*
-         Creates a process builder that contains the command prompt script
-         that calls srcML to convert a code file to an XML document.
-          */
-        ProcessBuilder pb = new ProcessBuilder(
-                "cmd.exe",
-                "/c",
-                PublicData.pathToSrcML + " " + filePath + " -o " + PublicData.outputDirectory + fileName + ".xml"
-        );
-        pb.redirectErrorStream(true); // Some kind of error handler for streams.
-        try {
-            pb.start(); // Run the script.
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
+    public void convertToXML(String fileName, String filePath) throws InterruptedException {
+        //create a new runnable task
+        Task srcmlTask = new Task(){
+            /*Creates a process builder that contains the command prompt script
+            that calls srcML to convert a code file to an XML document.*/
+            @Override
+            protected Object call() throws Exception { //start the receiver
+                ProcessBuilder pb = new ProcessBuilder(
+                        "cmd.exe",
+                        "/c",
+                        PublicData.pathToSrcML + " " + filePath + " -o " + PublicData.outputDirectory + fileName + ".xml"
+                );
+                pb.redirectErrorStream(true); // Some kind of error handler for streams.
+                try {
+                    pb.start(); // Run the script.
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
 
+            return null;}};
+
+        //assign the task to a thread. run it and wait until it finishes
+        Thread thread1= new Thread(srcmlTask);
+        thread1.run();
+        thread1.join();
+        thread1.interrupt();
     }
 
     // Creates a copy of the selected directory and converts all found files to XML documents.
-    public void convertDirectoryToXML(String directoryPath) {
+    public void convertDirectoryToXML(String directoryPath) throws InterruptedException {
         System.out.println(directoryPath);
         // Create a file array for all files in the selected directory.
         File[] files = new File(directoryPath).listFiles();
