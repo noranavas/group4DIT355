@@ -93,7 +93,7 @@ public class Client {
 
     public static void main(String[] args) {
         System.out.println("Connecting.........");
-        Socket s = createSocket(IP_ADDRESSES[2], 5991);
+        Socket s = createSocket(IP_ADDRESSES[1], 5991);
         sendFiles(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\", s);
         closeSocket(s);
     }
