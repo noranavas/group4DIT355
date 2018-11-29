@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import sourcecodemodeler.ThreadHandler;
 import sourcecodemodeler.controller.SourceCodeConverter;
 import sourcecodemodeler.controller.XMLIterator;
 
@@ -18,6 +19,7 @@ import java.io.File;
 public class Home {
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
+    private ThreadHandler threadHandler = new ThreadHandler();
 
     private File selectedFile;
     private StringProperty fileName;
@@ -81,6 +83,9 @@ public class Home {
             System.out.println("No file or directory selected.");
             e.printStackTrace();
         }
+
+        threadHandler.runThreads();
+
     }
 
     //===== Temporary Test Methods =====//
@@ -93,7 +98,7 @@ public class Home {
         }
     }
 
-    // Prints the formatted versions of all the files in the converted_xml folder. For testing.
+    // Prints the formatted versions of all the files in the converted_xml folder.
     public void printFormattedXML(ActionEvent actionEvent) {
         File file = new File(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\");
         File[] files = file.listFiles();

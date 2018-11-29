@@ -11,7 +11,7 @@ public class XMLClass {
     private String name;
     private List<String> attributes;
     private List<String> methods;
-    private List<String> relationships;
+    private List<XMLClass> relationships;
 
     //===== Constructor(s) =====//
     public XMLClass() {
@@ -39,10 +39,10 @@ public class XMLClass {
     public List<String> getMethods() {
         return this.methods;
     }
-    public void addRelationship(String relationship) {
+    public void addRelationship(XMLClass relationship) {
         this.relationships.add(relationship);
     }
-    public List<String> getRelationships() {
+    public List<XMLClass> getRelationships() {
         return this.relationships;
     }
 
