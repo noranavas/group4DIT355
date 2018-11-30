@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\socket_stuff\Home.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>view</name></name>;</package>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\latest0\view\Home.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>view</name></name>;</package>
 
 <import>import <name><name>javafx</name><operator>.</operator><name>beans</name><operator>.</operator><name>property</name><operator>.</operator><name>SimpleStringProperty</name></name>;</import>
 <import>import <name><name>javafx</name><operator>.</operator><name>beans</name><operator>.</operator><name>property</name><operator>.</operator><name>StringProperty</name></name>;</import>
@@ -7,10 +7,13 @@
 <import>import <name><name>javafx</name><operator>.</operator><name>scene</name><operator>.</operator><name>Node</name></name>;</import>
 <import>import <name><name>javafx</name><operator>.</operator><name>stage</name><operator>.</operator><name>DirectoryChooser</name></name>;</import>
 <import>import <name><name>javafx</name><operator>.</operator><name>stage</name><operator>.</operator><name>FileChooser</name></name>;</import>
+<import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name><operator>.</operator><name>Client</name></name>;</import>
 <import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name><operator>.</operator><name>SourceCodeConverter</name></name>;</import>
 <import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name><operator>.</operator><name>XMLIterator</name></name>;</import>
 
 <import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>File</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>IOException</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>net</name><operator>.</operator><name>Socket</name></name>;</import>
 
 <comment type="block">/*
     This class handles the communication between JavaFX and the rest of the system.
@@ -39,6 +42,13 @@
     <function><specifier>public</specifier> <type><name>void</name></type> <name>setFileName</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>text</name></decl></parameter>)</parameter_list> <block>{
         <expr_stmt><expr><call><name><name>fileName</name><operator>.</operator><name>set</name></name><argument_list>(<argument><expr><name>text</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
     }</block></function>
+    <decl_stmt><decl><specifier>private</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>folderPath</name><init>=<expr><call><name><name>System</name><operator>.</operator><name>getProperty</name></name><argument_list>(<argument><expr><literal type="string">"user.dir"</literal></expr></argument>)</argument_list></call><operator>+</operator><literal type="string">"\\source-code-modeler\\resources\\converted_xml\\"</literal></expr></init></decl>;</decl_stmt>
+    <comment type="line">//private final String ip="10.132.178.107"; //replace with your remote host static IP address.</comment>
+    <decl_stmt><decl><specifier>private</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>ip</name> <init>= <expr><literal type="string">"127.0.0.1"</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><specifier>final</specifier> <name>int</name></type> <name>port</name><init>=<expr><literal type="number">5991</literal></expr></init></decl>;</decl_stmt>
+
+    <decl_stmt><decl><type><name>Client</name></type> <name>client</name><init>= <expr><operator>new</operator> <call><name>Client</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>Socket</name></type> <name>socket</name><init>= <expr><call><name><name>client</name><operator>.</operator><name>createSocket</name></name><argument_list>(<argument><expr><name>ip</name></expr></argument>,<argument><expr><name>port</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
 
     <comment type="line">//===== Methods =====//</comment>
     <comment type="line">// Allows the user to select a file.</comment>
@@ -75,13 +85,15 @@
 
     <comment type="line">// Uses SourceCodeConverter class to convert selected file/directory to XML.</comment>
     <function><specifier>public</specifier> <type><name>void</name></type> <name>convertToXML</name><parameter_list>(<parameter><decl><type><name>ActionEvent</name></type> <name>actionEvent</name></decl></parameter>)</parameter_list> <block>{
-        <expr_stmt><expr><call><name><name>sourceCodeConverter</name><operator>.</operator><name>clearOutputDirectory</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        <comment type="line">//sourceCodeConverter.clearOutputDirectory();</comment>
         <try>try <block>{
             <if>if <condition>(<expr><call><name><name>selectedFile</name><operator>.</operator><name>isDirectory</name></name><argument_list>()</argument_list></call></expr>)</condition><then> <block>{
                 <expr_stmt><expr><call><name><name>sourceCodeConverter</name><operator>.</operator><name>convertDirectoryToXML</name></name><argument_list>(<argument><expr><call><name><name>selectedFile</name><operator>.</operator><name>getParent</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
             }</block></then> <else>else <block>{
                 <expr_stmt><expr><call><name><name>sourceCodeConverter</name><operator>.</operator><name>convertToXML</name></name><argument_list>(<argument><expr><call><name><name>selectedFile</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><call><name><name>selectedFile</name><operator>.</operator><name>getPath</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
             }</block></else></if>
+            <expr_stmt><expr><call><name><name>client</name><operator>.</operator><name>sendFiles</name></name><argument_list>(<argument><expr><name>folderPath</name></expr></argument>,<argument><expr><name>socket</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>client</name><operator>.</operator><name>closeSocket</name></name><argument_list>(<argument><expr><name>socket</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
         }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>NullPointerException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
             <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"No file or directory selected."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
             <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
@@ -91,10 +103,11 @@
     <comment type="line">//===== Temporary Test Methods =====//</comment>
     <comment type="line">// Prints the content of the latest converted file to the console.</comment>
     <function><specifier>public</specifier> <type><name>void</name></type> <name>printXMLContent</name><parameter_list>(<parameter><decl><type><name>ActionEvent</name></type> <name>actionEvent</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"PATH "</literal> <operator>+</operator><call><name><name>selectedFile</name><operator>.</operator><name>getPath</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
         <if>if <condition>(<expr><call><name><name>selectedFile</name><operator>.</operator><name>isDirectory</name></name><argument_list>()</argument_list></call></expr>)</condition><then> <block>{
             <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Can not print a directory."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
         }</block></then> <else>else <block>{
-            <expr_stmt><expr><call><name><name>xmlIterator</name><operator>.</operator><name>printXMLFile</name></name><argument_list>(<argument><expr><call><name><name>selectedFile</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call> <operator>+</operator> <literal type="string">".xml"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>xmlIterator</name><operator>.</operator><name>printXMLFile</name></name><argument_list>( <argument><expr><call><name><name>selectedFile</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call> <operator>+</operator> <literal type="string">".xml"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
         }</block></else></if>
     }</block></function>
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\socket_stuff\XMLIterator.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name></name>;</package>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\latest0\controller\XMLIterator.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name></name>;</package>
 
 <import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>model</name><operator>.</operator><name>XMLClass</name></name>;</import>
 <import>import <name><name>org</name><operator>.</operator><name>w3c</name><operator>.</operator><name>dom</name><operator>.</operator><name>Document</name></name>;</import>
@@ -19,7 +19,7 @@
     The data is then used to create classes that can later be displayed in the produced class diagram.
  */</comment>
 <class><specifier>public</specifier> class <name>XMLIterator</name> <block>{
-    <decl_stmt><decl><specifier>private</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>pathToXMLDirectory</name> <init>= <expr><literal type="string">"resources\\converted_xml\\"</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>pathToXMLDirectory</name> <init>= <expr><call><name><name>System</name><operator>.</operator><name>getProperty</name></name><argument_list>(<argument><expr><literal type="string">"user.dir"</literal></expr></argument>)</argument_list></call> <operator>+</operator> <literal type="string">"\\source-code-modeler\\resources\\converted_xml\\"</literal></expr></init></decl>;</decl_stmt>
 
     <comment type="line">//===== Constructor(s) =====//</comment>
     <constructor><specifier>public</specifier> <name>XMLIterator</name><parameter_list>()</parameter_list> <block>{}</block></constructor>

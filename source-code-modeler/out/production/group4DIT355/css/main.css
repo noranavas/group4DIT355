@@ -1,8 +1,8 @@
 .root{
     -fx-font-size: 14pt;
     -fx-font-family: "Courier New";
-    -fx-base:  #FFFFFF;
-    -fx-background: #FFFFFF;
+    -fx-base:  #ADD8E6;
+    -fx-background-color: linear-gradient(#6495ED, #AFEEEE);
 }
 
 HBox {
@@ -12,8 +12,11 @@ HBox {
 }
 
 .title{
-    -fx-font-size: 20pt;
-    -fx-padding: 3 6 6 6;
+
+    -fx-font-family: "Arial Black", Gadget,sans-serif;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F5F5F5;
 }
 
 .button {
@@ -25,5 +28,5 @@ HBox {
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 .button:hover {
-    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+    -fx-background-color: linear-gradient(#4682B4, #48D1CC);
 }

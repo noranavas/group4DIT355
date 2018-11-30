@@ -3,22 +3,22 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox fx:id="container" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sourcecodemodeler.view.Home">
     <children>
-        <Label fx:id="title" text="Source Code Modeler" />
-        <HBox styleClass="buttons">
-            <children>
-                <StackPane>
-                    <Button onAction="#selectFile" text="Select File" />
-                </StackPane>
-                 <Button onAction="#selectDirectory" text="Select Directory" />
-            </children>
+        <HBox>
+            <Label styleClass="title" fx:id="title" text="SOURCE CODE MODELER" />
         </HBox>
+        <HBox>
+
+            <Button onAction="#selectFile" text="Select File" />
+            <Button onAction="#selectDirectory" text="Select Directory" />
+
+        </HBox>
+        <HBox>
             <Label text="${controller.fileName}" />
-           <Button onAction="#convertToXML" text="Convert to XML" />
-           <Button onAction="#printFormattedXML" text="Print formatted XML (TESTING)" />
+            <Button onAction="#convertToXML" text="Visualize" />
+        </HBox>
     </children>
 </VBox>
