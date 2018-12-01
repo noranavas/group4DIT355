@@ -27,7 +27,7 @@ public class SourceCodeConverter {
                 ProcessBuilder pb = new ProcessBuilder(
                         "cmd.exe",
                         "/c",
-                        Globals.pathToSrcML + " " + filePath + " -o " + Globals.outputDirectory + fileName + ".xml"
+                        Globals.PATH_TO_SRCML + " " + filePath + " -o " + Globals.PATH_TO_XML_FILES + fileName + ".xml"
                 );
                 pb.redirectErrorStream(true); // Some kind of error handler for streams.
                 try {
@@ -78,7 +78,7 @@ public class SourceCodeConverter {
     }
 
     public void clearOutputDirectory() {
-        File[] files = new File(Globals.outputDirectory).listFiles();
+        File[] files = new File(Globals.PATH_TO_XML_FILES).listFiles();
         for (int i = 0; i < files.length; i++) {
             files[i].delete();
         }

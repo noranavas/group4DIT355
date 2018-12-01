@@ -59,8 +59,8 @@ public class Home {
            /* for (int i=10; i>0; i--)
                 System.out.println(i);
                 */
-            sender.Connect(Globals.IP_ADDRESSES[4], Globals.PORT);
-            sender.sendFiles(Globals.outputDirectory);
+            sender.Connect(Globals.IP_ADDRESS[4], Globals.PORT);
+            sender.sendFiles(Globals.PATH_TO_XML_FILES);
             //socketNode.sendFiles(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\", socketNode.getSocket());
             //socketNode.stopConnection();
             return null;
@@ -125,8 +125,8 @@ public class Home {
                 sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
             }
             TimeUnit.SECONDS.sleep(4);
-            sender.Connect(Globals.IP_ADDRESSES[4], Globals.PORT);
-            sender.sendFiles(Globals.outputDirectory);
+            sender.Connect(Globals.IP_ADDRESS[4], Globals.PORT);
+            sender.sendFiles(Globals.PATH_TO_XML_FILES);
             sender.closeSocket();
         } catch (NullPointerException e) {
             System.out.println("No file or directory selected.");
