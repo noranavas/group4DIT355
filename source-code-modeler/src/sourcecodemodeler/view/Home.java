@@ -52,41 +52,6 @@ public class Home {
     //===== Methods =====//
 
 
-    Task task2= new Task(){
-        @Override
-        protected Object call() throws Exception{ //start the sender and send files
-            System.out.println("Task 2 started");
-           /* for (int i=10; i>0; i--)
-                System.out.println(i);
-                */
-            sender.Connect(Globals.IP_ADDRESS[4], Globals.PORT);
-            sender.sendFiles(Globals.PATH_TO_XML_FILES);
-            //socketNode.sendFiles(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\", socketNode.getSocket());
-            //socketNode.stopConnection();
-            return null;
-        }
-    };
-    Task task3= new Task(){
-        @Override
-        protected Object call() throws Exception{ //start the sender and send files
-            System.out.println("Task 3 started");
-            receiver.receiveFiles();
-            return null;
-        }
-    };
-    Task task4= new Task(){
-        @Override
-        protected Object call() throws Exception{ //start the sender and send files
-            System.out.println("Task 4 started");
-            sender.closeSocket();
-            return null;
-        }
-    };
-
-
-
-
-
     // Allows the user to select a file.
     public void selectFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -124,14 +89,18 @@ public class Home {
             } else {
                 sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
             }
+
             TimeUnit.SECONDS.sleep(4);
-            sender.Connect(Globals.IP_ADDRESS[4], Globals.PORT);
-            sender.sendFiles(Globals.PATH_TO_XML_FILES);
+            sender.connect();
+            sender.send();
             sender.closeSocket();
+
         } catch (NullPointerException e) {
             System.out.println("No file or directory selected.");
             e.printStackTrace();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

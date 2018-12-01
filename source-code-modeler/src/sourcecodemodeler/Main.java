@@ -11,7 +11,7 @@ import sourcecodemodeler.network.Receiver;
 import java.io.IOException;
 
 public class Main extends Application {
-    Receiver receiver = new Receiver();
+   /* Receiver receiver = new Receiver();
 
     Task task1 = new Task(){
         @Override
@@ -19,7 +19,7 @@ public class Main extends Application {
             System.out.println("Task 1 started");
             receiver.startServer();
             return null;
-        }};
+        }};*/
 
     public Main() throws IOException {
     }
@@ -28,8 +28,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         //start the server socket as very first thing
-        Thread thread1 = new Thread(task1);
-       // thread1.start();
+        //IT WILL BE A THREAD
+
 
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
