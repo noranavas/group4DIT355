@@ -18,8 +18,9 @@ public class Main extends Application {
         thread.start();
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
-        primaryStage.setScene(new Scene(root,500, 200));
+        primaryStage.setScene(new Scene(root,500, 225));
         primaryStage.setResizable(false);
+        primaryStage.setTitle("Source Code Modeler");
         primaryStage.show();
     }
 

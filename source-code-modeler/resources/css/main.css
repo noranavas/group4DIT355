@@ -2,7 +2,7 @@
     -fx-font-size: 14pt;
     -fx-font-family: "Courier New";
     -fx-base:  #ADD8E6;
-    -fx-background-color: linear-gradient(#6495ED, #AFEEEE);
+    -fx-background-color: linear-gradient(#6495ED, #43495a);
 }
 
 HBox {
@@ -29,4 +29,8 @@ HBox {
 }
 .button:hover {
     -fx-background-color: linear-gradient(#4682B4, #48D1CC);
+}
+
+.file {
+    -fx-text-fill: #F5F5F5;
 }

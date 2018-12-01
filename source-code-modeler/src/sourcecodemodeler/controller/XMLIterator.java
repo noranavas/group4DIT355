@@ -13,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
     This class iterates over the tags of XML documents to retrieve data (data selection).
@@ -20,9 +22,17 @@ import java.io.InputStreamReader;
  */
 public class XMLIterator {
     private final String pathToXMLDirectory = Globals.PATH_TO_XML_FILES;
+    private List<XMLClass> xmlClasses;
 
     //===== Constructor(s) =====//
-    public XMLIterator() {}
+    public XMLIterator() {
+        this.xmlClasses = new ArrayList<>();
+    }
+
+    //===== Getters & Setters =====//
+    public List<XMLClass> getXmlClasses() {
+        return xmlClasses;
+    }
 
     //===== Methods =====//
     // Creates a class (XMLClass) that will hold the data for th visualization.
@@ -49,8 +59,8 @@ public class XMLIterator {
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
                 Node secondParent = node.getParentNode().getParentNode();
-                if (secondParent.getNodeName() == "class"/* && GetClassName(secondParent) == xmlClass.getName()*/) {
-                    node = prettyAttribute(node);
+                if (secondParent.getNodeName() == "class" /* && GetClassName(secondParent) == xmlClass.getName()*/ ) {
+                    node = prettyNode(node);
                     String s = node.getTextContent();
 
                     s = prettyString(s);
@@ -59,6 +69,7 @@ public class XMLIterator {
             }
         } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
             e.printStackTrace();
+            System.out.println("Problem parsing XML file: " + xmlFileName);
         }
     }
 
@@ -71,8 +82,8 @@ public class XMLIterator {
             NodeList nodeList = doc.getElementsByTagName("function"); // Tag for methods.
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
-                node = removeAnnotations(node);
-                node = removeExceptions(node);
+                node = removeTag(node, "annotation");
+                node = removeTag(node, "throws");
                 // Skip nodes that are children of expression nodes - overridden methods will be excluded.
                 if (node.getParentNode().getParentNode().getParentNode().getNodeName() != "expr") {
                     String s = node.getTextContent();
@@ -94,51 +105,27 @@ public class XMLIterator {
     private Node removeTag(Node node, String tag) {
         NodeList childNodes = node.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
-            Node childNode = childNodes.item(i);
-            String childNodeName = childNode.getNodeName();
-            // Check if this child should be removed by checking its name.
+            String childNodeName = childNodes.item(i).getNodeName();
             if (childNodeName.equalsIgnoreCase(tag)) {
-                childNodes.item(i).setTextContent("");
-            }
-            else {
-                removeTag(childNode, tag); // Recursively call this function to remove children.
-            }
-        }
-        return node;
-    }
-    private Node removeAnnotations(Node node) {
-        NodeList childNodes = node.getChildNodes();
-        for (int i = 0; i < childNodes.getLength(); i++) {
-            String childNodeName = childNodes.item(i).getNodeName();
-            if (childNodeName.equalsIgnoreCase("annotation")) {
-                childNodes.item(i).setTextContent("");
-            }
-        }
-        return node;
-    }
-    private Node removeExceptions(Node node) {
-        NodeList childNodes = node.getChildNodes();
-        for (int i = 0; i < childNodes.getLength(); i++) {
-            String childNodeName = childNodes.item(i).getNodeName();
-            if (childNodeName.equalsIgnoreCase("throws")) {
                 childNodes.item(i).setTextContent("");
             }
         }
         return node;
     }
 
-    private Node prettyAttribute(Node node) {
-        node = removeTag(node, "init");
+    private Node prettyNode(Node node) {
+        node = removeTag(node,"init");
         node = removeTag(node, "comment");
         return node;
     }
     private String prettyString(String s) {
-        s = s.replaceAll("\\s\\s", " "); //remove double empty space
-        s = s.replaceAll("\\s,\\s+", ", "); //remove space before comma
-        s = s.replaceAll("\\s*;", ""); // remove semi-column,
-        if (!(s.contains("public") || s.contains("private") || s.contains("protected")))
-        {
-            s = "+ " + s.trim(); // set public as default visibility
+        // Remove double spaces, space before comma and semi-column.
+        s = s.replaceAll("\\s\\s", " ")
+                .replaceAll("\\s,\\s+", ", ")
+                .replaceAll("\\s*;", "");
+
+        if (!(s.contains("public") || s.contains("private") || s.contains("protected"))) {
+            s = "+ " + s.trim(); // Set public as default visibility.
         }
 
         s = s.trim()
