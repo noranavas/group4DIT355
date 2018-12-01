@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\x220\Desktop\oh\group4DIT355\source-code-modeler\src\sourcecodemodeler\controller\PublicData.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name></name>;</package>
+
+<class><specifier>public</specifier> class <name>PublicData</name> <block>{
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>int</name></type> <name>PORT</name> <init>= <expr><literal type="number">5991</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name><name>String</name><index>[]</index></name></type> <name>IP_ADDRESSES</name> <init>= <expr><block>{
+            <expr><literal type="string">"10.0.30.202"</literal></expr>,          <comment type="line">//0</comment>
+            <expr><literal type="string">"10.132.178.107"</literal></expr>,       <comment type="line">//1</comment>
+            <expr><literal type="string">"PC3"</literal></expr>,                  <comment type="line">//2</comment>
+            <expr><literal type="string">"PC4"</literal></expr>,                  <comment type="line">//3</comment>
+            <expr><literal type="string">"localhost"</literal></expr>             <comment type="line">//4</comment>
+    }</block></expr></init></decl>;</decl_stmt>
+    <comment type="line">// Path to srcML.</comment>
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>pathToSrcML</name> <init>= <expr><call><name><name>System</name><operator>.</operator><name>getProperty</name></name><argument_list>(<argument><expr><literal type="string">"user.dir"</literal></expr></argument>)</argument_list></call> <operator>+</operator> <literal type="string">"\\source-code-modeler\\resources\\srcML-Win\\bin\\srcml.exe"</literal></expr></init></decl>;</decl_stmt>
+    <comment type="line">// Path to directory where the converted XML files should be created.</comment>
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>outputDirectory</name> <init>= <expr><call><name><name>System</name><operator>.</operator><name>getProperty</name></name><argument_list>(<argument><expr><literal type="string">"user.dir"</literal></expr></argument>)</argument_list></call> <operator>+</operator> <literal type="string">"\\source-code-modeler\\resources\\converted_xml\\"</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name><name>int</name> <index>[]</index></name></type> <name>nodeNumber</name><init>=<expr><block>{
+            <expr><literal type="number">1</literal></expr>, <comment type="line">//main</comment>
+            <expr><literal type="number">2</literal></expr>, <comment type="line">//xml parser</comment>
+            <expr><literal type="number">3</literal></expr>, <comment type="line">//xml formatter</comment>
+            <expr><literal type="number">4</literal></expr> <comment type="line">//visualization maker"</comment>
+    }</block></expr></init></decl>;</decl_stmt>
+    <constructor><specifier>public</specifier> <name>PublicData</name><parameter_list>()</parameter_list><block>{}</block></constructor>
+}</block></class>
+</unit>

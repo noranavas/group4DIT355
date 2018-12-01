@@ -6,18 +6,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sourcecodemodeler.controller.SocketNode;
+import sourcecodemodeler.network.Receiver;
+
+import java.io.IOException;
 
 public class Main extends Application {
-    SocketNode socketNode = new SocketNode();
+    Receiver receiver = new Receiver();
 
     Task task1 = new Task(){
         @Override
         protected Object call() throws Exception { //start the server
             System.out.println("Task 1 started");
-            socketNode.startServer();
+            receiver.startServer();
             return null;
         }};
+
+    public Main() throws IOException {
+    }
 
     // Launches the interactive JavaFX window.
     @Override

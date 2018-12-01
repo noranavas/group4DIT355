@@ -1,6 +1,7 @@
 package sourcecodemodeler.controller;
 
 import javafx.concurrent.Task;
+import sourcecodemodeler.Globals;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class SourceCodeConverter {
                 ProcessBuilder pb = new ProcessBuilder(
                         "cmd.exe",
                         "/c",
-                        PublicData.pathToSrcML + " " + filePath + " -o " + PublicData.outputDirectory + fileName + ".xml"
+                        Globals.pathToSrcML + " " + filePath + " -o " + Globals.outputDirectory + fileName + ".xml"
                 );
                 pb.redirectErrorStream(true); // Some kind of error handler for streams.
                 try {
@@ -77,7 +78,7 @@ public class SourceCodeConverter {
     }
 
     public void clearOutputDirectory() {
-        File[] files = new File(PublicData.outputDirectory).listFiles();
+        File[] files = new File(Globals.outputDirectory).listFiles();
         for (int i = 0; i < files.length; i++) {
             files[i].delete();
         }

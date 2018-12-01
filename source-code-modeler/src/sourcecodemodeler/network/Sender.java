@@ -1,4 +1,4 @@
-package sourcecodemodeler.controller;
+package sourcecodemodeler.network;
 
 import javafx.concurrent.Task;
 
@@ -24,9 +24,6 @@ public class Sender {
     public Sender(){
     }
 
-    public void setSocket(Socket socket){
-        this.senderSocket=socket;
-    }
     public Socket getSocket(){
         return this.senderSocket;
     }
@@ -41,7 +38,7 @@ public class Sender {
         //return senderSocket;
     }
 
-    public void sendFiles(String folderPath, Socket sendersocket) throws InterruptedException {
+    public void sendFiles(String folderPath) throws InterruptedException {
         Task sendTask= new Task(){
             @Override
             protected Object call() throws Exception{ //start the sender and send files
@@ -52,7 +49,7 @@ public class Sender {
         try{
         //Path to the files the client is sending. Adds them in a Files array
         //output data stream on the socket
-        OutputStream os = sendersocket.getOutputStream();
+        OutputStream os = senderSocket.getOutputStream();
         DataOutputStream dos = new DataOutputStream(os);
         //write the number of files as Integer on the data output stream
         if (Files.length <= 0) {
@@ -100,15 +97,16 @@ public class Sender {
         System.out.println("Thread ID: "+sendThread.getId());
         sendThread.start();
         sendThread.join();
+        sendThread.interrupt();
     }
 
-    public static void closeSocket(Socket socket) {
+    public void closeSocket() {
         //Closing socket
         //dos.close();
         System.out.println("Closing the socket. Transfer done");
         //close the socket when done
         try {
-            socket.close();
+            senderSocket.close();
         } catch (IOException exc2) {
             System.out.println("Error closing the socket");
         }

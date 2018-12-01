@@ -7,11 +7,13 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import sourcecodemodeler.Globals;
 import sourcecodemodeler.controller.*;
+import sourcecodemodeler.network.Receiver;
+import sourcecodemodeler.network.Sender;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.concurrent.TimeUnit;
 
 /*
@@ -57,8 +59,8 @@ public class Home {
            /* for (int i=10; i>0; i--)
                 System.out.println(i);
                 */
-            sender.Connect(PublicData.IP_ADDRESSES[4],PublicData.PORT);
-            sender.sendFiles(PublicData.outputDirectory, sender.getSocket());
+            sender.Connect(Globals.IP_ADDRESSES[4], Globals.PORT);
+            sender.sendFiles(Globals.outputDirectory);
             //socketNode.sendFiles(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\", socketNode.getSocket());
             //socketNode.stopConnection();
             return null;
@@ -76,7 +78,7 @@ public class Home {
         @Override
         protected Object call() throws Exception{ //start the sender and send files
             System.out.println("Task 4 started");
-            sender.closeSocket(sender.getSocket());
+            sender.closeSocket();
             return null;
         }
     };
@@ -122,28 +124,10 @@ public class Home {
             } else {
                 sourceCodeConverter.convertToXML(selectedFile.getName(), selectedFile.getPath());
             }
-            //Thread thread1 = new Thread(task1);
-            Thread thread2=new Thread(task2);
-            Thread thread3=new Thread(task3);
-            Thread thread4= new Thread(task4);
-
-
-            //thread1.start();
             TimeUnit.SECONDS.sleep(4);
-            sender.Connect(PublicData.IP_ADDRESSES[4],PublicData.PORT);
-            sender.sendFiles(PublicData.outputDirectory, sender.getSocket());
-            thread3.run();
-            thread3.join();
-            thread4.run();
-            thread4.join();
-            thread4.interrupt(); //interrupts the thread. not sure it KILLS THE INSTANCE
-            thread3.interrupt();
-            //System.out.println("Thread3 is still running: " + thread2.isAlive());
-            //thread2.join();
-            // thread2.join();
-            /* synchronized (thread5){
-                thread5.start();
-            }*/
+            sender.Connect(Globals.IP_ADDRESSES[4], Globals.PORT);
+            sender.sendFiles(Globals.outputDirectory);
+            sender.closeSocket();
         } catch (NullPointerException e) {
             System.out.println("No file or directory selected.");
             e.printStackTrace();

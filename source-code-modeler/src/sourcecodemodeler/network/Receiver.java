@@ -1,4 +1,6 @@
-package sourcecodemodeler.controller;
+package sourcecodemodeler.network;
+
+import sourcecodemodeler.Globals;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -27,9 +29,9 @@ public class Receiver {
     public void startServer() throws IOException {
         senderSocket = receiverSocket.accept();
         fileSize=0;
-        System.out.println("Listening on port " + PublicData.PORT + "...");
+        System.out.println("Listening on port " + Globals.PORT + "...");
         try {
-            receiverSocket = new ServerSocket(PublicData.PORT);
+            receiverSocket = new ServerSocket(Globals.PORT);
             while (true) {
                 Socket socket = receiverSocket.accept();
                 System.out.println("Got a connection!");
