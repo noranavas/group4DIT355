@@ -1,129 +1,139 @@
 package sourcecodemodeler.network;
 
-import java.io.*;
+import sourcecodemodeler.Globals;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.zip.CRC32;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-public class Receiver {
-    private Socket senderSocket;
-    private ServerSocket receiverSocket;
-    private PrintWriter printWriter;
-    private InputStream inputStream;
+public class Receiver extends Thread {
+    private static final int MAX_READ_SIZE = 1024;
+    private static final int PORT = Globals.PORT;
+    private Socket socket;
 
     //===== Constructor(s) =====//
-    public Receiver() {}
+    public Receiver(Socket socket) {
+        this.socket = socket;
+    }
 
-    public void start(int port) throws IOException {
-        System.out.println("Listening on port " + port + "...");
-        senderSocket = receiverSocket.accept();
+    public void run() {
         try {
-            receiverSocket = new ServerSocket(port);
+            System.out.println("Connected");
+            BufferedInputStream bis = new BufferedInputStream(socket.getInputStream());
+            byte[] bytesToRead = new byte[MAX_READ_SIZE];
+            String copyFolder = "";
+            System.out.println("Reading");
+            int readLength = 0;
+            while (0 != (readLength = bis.read(bytesToRead))) {
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                bos.write(bytesToRead, 0, readLength);
+                System.out.println("Reading::"+new String(bos.toByteArray()));
+                copyFolder += new String(bos.toByteArray());
+                if (readLength < MAX_READ_SIZE) {
+                    break;
+                }
+            }
+
+            File readFile = new File(copyFolder);
+            if (readFile.exists()) {
+                System.out.println("Reading Folder::" + copyFolder);
+                ZipOutputStream zipOpStream = new ZipOutputStream(
+                        socket.getOutputStream());
+                sendFileOutput(zipOpStream, readFile);
+                zipOpStream.flush();
+                System.out.println("zipOpStream Flush");
+
+            } else {
+                System.out.println("Folder to read does not exist::["+readFile.getAbsolutePath()+"]");
+            }
+            socket.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Problem running Receiver.");
+        }
+    }
+
+    public void sendFileOutput(ZipOutputStream zipOpStream, File outFile) throws Exception {
+        String relativePath = outFile.getAbsoluteFile().getParentFile().getAbsolutePath();
+        System.out.println("relativePath[" + relativePath + "]");
+        outFile = outFile.getAbsoluteFile();
+        if (outFile.isDirectory()) {
+            sendFolder(zipOpStream, outFile, relativePath);
+        } else {
+            sendFolder(zipOpStream, outFile, relativePath);
+        }
+    }
+
+    public void sendFolder(ZipOutputStream zipOpStream, File folder, String relativePath) throws Exception {
+        File[] filesList = folder.listFiles();
+        for (File file : filesList) {
+            if (file.isDirectory()) {
+                sendFolder(zipOpStream, file, relativePath);
+            } else {
+                sendFile(zipOpStream, file, relativePath);
+            }
+        }
+    }
+
+    public void sendFile(ZipOutputStream zipOpStream, File file, String relativePath) throws Exception {
+        String absolutePath = file.getAbsolutePath();
+        String zipEntryFileName = absolutePath;
+        int index = absolutePath.indexOf(relativePath);
+        if (absolutePath.startsWith(relativePath)) {
+            zipEntryFileName = absolutePath.substring(relativePath.length());
+            if (zipEntryFileName.startsWith(File.separator)) {
+                zipEntryFileName = zipEntryFileName.substring(1);
+            }
+            System.out.println("zipEntryFileName:::"+relativePath.length()+"::"+zipEntryFileName);
+        } else {
+            throw new Exception("Invalid Absolute Path");
+        }
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
+        byte[] fileByte = new byte[MAX_READ_SIZE];
+        int readBytes = 0;
+        CRC32 crc = new CRC32();
+        while (0 != (readBytes = bis.read(fileByte))) {
+            if(-1 == readBytes){
+                break;
+            }
+            //System.out.println("length::"+readBytes);
+            crc.update(fileByte, 0, readBytes);
+        }
+        bis.close();
+        ZipEntry zipEntry = new ZipEntry(zipEntryFileName);
+        zipEntry.setMethod(ZipEntry.STORED);
+        zipEntry.setCompressedSize(file.length());
+        zipEntry.setSize(file.length());
+        zipEntry.setCrc(crc.getValue());
+        zipOpStream.putNextEntry(zipEntry);
+        bis = new BufferedInputStream(new FileInputStream(file));
+        //System.out.println("zipEntryFileName::"+zipEntryFileName);
+        while (0 != (readBytes = bis.read(fileByte))) {
+            if (-1 == readBytes) {
+                break;
+            }
+            zipOpStream.write(fileByte, 0, readBytes);
+        }
+        bis.close();
+    }
+
+    //===== Main =====//
+    public static void main(String[] args) {
+        try {
+            ServerSocket serverSocket = new ServerSocket(PORT);
             while (true) {
-                System.out.println("Got a connection!");
-                printWriter = new PrintWriter(receiverSocket.accept().getOutputStream(), true);
+                new Receiver(serverSocket.accept()).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error when starting receiver(socket).");
         }
-    }
-
-    public void stop() {
-        try {
-            printWriter.close();
-            inputStream.close();
-            senderSocket.close();
-            receiverSocket.close();
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("Error when stopping receiver(socket).");
-        }
-    }
-
-    public void receiveFiles() throws IOException {
-        boolean flag = true;
-        int fileSize = 0;
-        BufferedOutputStream bos;
-        OutputStream output;
-        DataOutputStream dos;
-        int len;
-        int smblen;
-        try {
-            while (true) {
-                //while(true && flag==true){
-                while (flag == true) {
-                    //System.out.println("Got a connection!");
-
-                    inputStream = senderSocket.getInputStream();
-                    DataInputStream dataInputStream = new DataInputStream(inputStream);
-
-                    fileSize = dataInputStream.read();
-
-                    // Store list of filename from sender directory.
-                    ArrayList<File> files = new ArrayList<>(fileSize);
-
-                    // Store file size from sender.
-                    ArrayList<Integer> sizes = new ArrayList<>(fileSize);
-
-                    // Start to accept those filename from receiver.
-                    System.out.println("Receiving " + sizes.size() + " files...");
-                    for (int count = 0; count < fileSize; count++) {
-                        files.add(new File(dataInputStream.readUTF()));
-                    }
-
-                    for (int count = 0; count < fileSize; count++) {
-                        sizes.add(dataInputStream.readInt());
-                    }
-
-                    for (int count = 0; count < fileSize; count++) {
-                        if (fileSize - count == 1) {
-                            flag = false;
-                        }
-
-                        len = sizes.get(count);
-
-                        System.out.println("File Size =" + len);
-
-                        output = new FileOutputStream(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\" + files.get(count));
-                        dos = new DataOutputStream(output);
-                        bos = new BufferedOutputStream(output);
-
-                        byte[] buffer = new byte[1024];
-
-                        bos.write(buffer, 0, buffer.length); //This line is important
-
-                        BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-                        while (len > 0 && (smblen = bufferedInputStream.read(buffer)) > 0) {
-                            dos.write(buffer, 0, smblen);
-                            len = len - smblen;
-                            dos.flush();
-                        }
-                        dos.close();  //It should close to avoid continue deploy by resource under view
-                    }
-
-                }
-
-                if (!flag) {
-                    senderSocket = receiverSocket.accept();
-                    flag = true;
-                }
-            }
-
-        // End of while(true)
-        } catch(IllegalArgumentException e){
-            e.printStackTrace();
-            if (fileSize <= 0) {
-                System.out.println("No files were sent");
-            }
-            System.out.println("Error when receiving files.");
-            senderSocket.close();
-        }
-    }
-
-    public static void main(String[] args) {
-        // TODO: Auto-generated method stub. ???
-        System.out.println("Waiting for a connection...");
     }
 
 }

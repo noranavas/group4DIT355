@@ -58,11 +58,12 @@ public class XMLIterator {
             NodeList nodeList = doc.getElementsByTagName("decl_stmt"); // Tag for attributes.
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
+                node = removeTag(node, "annotation");
+                node = removeTag(node,"init");
+                node = removeTag(node, "comment");
                 Node secondParent = node.getParentNode().getParentNode();
                 if (secondParent.getNodeName() == "class" /* && GetClassName(secondParent) == xmlClass.getName()*/ ) {
-                    node = prettyNode(node);
                     String s = node.getTextContent();
-
                     s = prettyString(s);
                     xmlClass.addAttribute(s);
                 }
@@ -105,6 +106,10 @@ public class XMLIterator {
     private Node removeTag(Node node, String tag) {
         NodeList childNodes = node.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
+            Node childNode = childNodes.item(i);
+            if (childNode.hasChildNodes()) {
+                childNode = removeTag(childNode, tag);
+            }
             String childNodeName = childNodes.item(i).getNodeName();
             if (childNodeName.equalsIgnoreCase(tag)) {
                 childNodes.item(i).setTextContent("");
@@ -113,11 +118,6 @@ public class XMLIterator {
         return node;
     }
 
-    private Node prettyNode(Node node) {
-        node = removeTag(node,"init");
-        node = removeTag(node, "comment");
-        return node;
-    }
     private String prettyString(String s) {
         // Remove double spaces, space before comma and semi-column.
         s = s.replaceAll("\\s\\s", " ")

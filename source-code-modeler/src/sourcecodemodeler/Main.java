@@ -11,11 +11,7 @@ public class Main extends Application {
     // Launches the interactive JavaFX window.
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         // Start the receiver(socket) as very first thing.
-        ThreadHandler threadHandler = new ThreadHandler();
-        Thread thread = new Thread(threadHandler.startReceiver);
-        thread.start();
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
         primaryStage.setScene(new Scene(root,500, 225));
