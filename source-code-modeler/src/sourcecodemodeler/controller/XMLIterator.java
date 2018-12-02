@@ -44,7 +44,7 @@ public class XMLIterator {
         );
         setAttributes(name, xmlClass);
         setMethods(name, xmlClass);
-        //setRelationships();
+        setRelationships(name, xmlClass);
         return xmlClass;
     }
 
@@ -140,4 +140,55 @@ public class XMLIterator {
         return s;
     }
 
+    private List<String> getListOfClasses() {
+        File[] files = new File(pathToXMLDirectory).listFiles(); // List of all xml files
+        List<String> classes = new ArrayList<String>();
+
+        // Loop over all files and save their name as a string
+        for (int i = 0; i < files.length; i++) {
+            classes.add(files[i].getName().replace(".java.xml", ""));
+        }
+
+        return classes;
+    }
+
+    private void discoverComposition(XMLClass xmlClass) {
+        List<String> attributes = xmlClass.getAttributes();
+        List<String> classes = getListOfClasses();
+
+        for (String attribute : attributes) {
+            // for each attribute loop over class names and check if attribute contains class name
+            for (String className : classes) {
+                if (attribute.toLowerCase().contains(className.toLowerCase())) {
+                    // attribute contains class name, so make an instance of XMLClass and add it to relationships
+                    xmlClass.addRelationship(new XMLClass(className));
+                }
+            }
+        }
+    }
+
+    private void discoverInheritance(String xmlFileName, XMLClass xmlClass) {
+        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(new File(pathToXMLDirectory + xmlFileName));
+            NodeList nodeList = doc.getElementsByTagName("extends"); // Tag for methods.
+
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                xmlClass.addRelationship(new XMLClass(node.getTextContent()));
+            }
+
+
+        } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
+            e.printStackTrace();
+            System.out.println("Problem parsing XML file: " + xmlFileName);
+        }
+    }
+
+    // Iterates through the XML document to retrieve relationships.
+    private void setRelationships(String xmlFileName, XMLClass xmlClass) {
+        discoverComposition(xmlClass);
+        discoverInheritance(xmlFileName, xmlClass);
+    }
 }

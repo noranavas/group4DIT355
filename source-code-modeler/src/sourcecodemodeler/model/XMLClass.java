@@ -20,6 +20,13 @@ public class XMLClass {
         this.relationships = new ArrayList<>();
     }
 
+    public XMLClass(String name) {
+        this.attributes = new ArrayList<>();
+        this.methods = new ArrayList<>();
+        this.relationships = new ArrayList<>();
+        this.name = name;
+    }
+
     //===== Getters & Setters =====//
     public String getName() {
         return name;
@@ -54,6 +61,11 @@ public class XMLClass {
         }
         for (String method : this.getMethods()) {
             s += "\n" + method;
+        }
+
+        s += "\n\n Relations: ";
+        for (XMLClass relationClass : this.getRelationships()) {
+            s += "\n" + relationClass.getName();
         }
         s += "\n";
         return s;
