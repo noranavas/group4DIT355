@@ -114,22 +114,6 @@ public class Home {
 
     public void visualiseXML(ActionEvent actionEvent) throws IOException {
 
-        /*
-        if (selectedFile.isDirectory()) {
-            System.out.println("Can not visualise a directory yet.");
-        } else {
-            System.out.println("Visualising " + selectedFile.getName());
-
-
-            Visualiser visualiser = new Visualiser();
-
-            // Calling Visualiser's start() method:
-            visualiser.start(Visualiser.classStage);
-
-            ...
-        }
-        */
-
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         String source = "@startuml\n" +
                 "skinparam class {\n" +
@@ -159,8 +143,6 @@ public class Home {
 
         InputStream inputStream = new ByteArrayInputStream(data);
         BufferedImage diagram = ImageIO.read(inputStream);
-
-        //ImageIO.write(diagram, "png", new File("C:\\Users\\melin\\Desktop\\image.png"));
 
         Visualiser visualiser = new Visualiser(diagram);
         visualiser.start(Visualiser.classStage);
