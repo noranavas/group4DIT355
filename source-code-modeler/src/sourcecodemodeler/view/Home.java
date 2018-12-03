@@ -8,23 +8,27 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import sourcecodemodeler.controller.SourceCodeConverter;
 import sourcecodemodeler.controller.XMLIterator;
+import sourcecodemodeler.model.XMLClass;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 /*
     This class handles the communication between JavaFX and the rest of the system.
     For example button events.
  */
 public class Home {
-    private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
-    private XMLIterator xmlIterator = new XMLIterator();
+    private SourceCodeConverter sourceCodeConverter;
+    private XMLIterator xmlIterator;
 
     private File selectedFile;
     private StringProperty fileName;
 
     //===== Constructor(s) =====//
     public Home() {
-        this.fileName = new SimpleStringProperty();
+        fileName = new SimpleStringProperty();
+        xmlIterator = new XMLIterator();
+        sourceCodeConverter = new SourceCodeConverter();
     }
 
     //===== Getters & Setters =====//
@@ -56,7 +60,11 @@ public class Home {
         selectedFile = fileChooser.showOpenDialog(node.getScene().getWindow());
 
         // Update JavaFX to display name of selected file.
-        setFileName(selectedFile.getName());
+        try {
+            setFileName(selectedFile.getName());
+        } catch (NullPointerException e) {
+            System.out.println("No file was selected.");
+        }
     }
 
     // Allows the user to select a directory.
@@ -65,11 +73,20 @@ public class Home {
         directoryChooser.setTitle("Select a directory");
         Node node = (Node)actionEvent.getSource();
         selectedFile = directoryChooser.showDialog(node.getScene().getWindow());
-        setFileName(selectedFile.getName());
+        try {
+            setFileName(selectedFile.getName());
+        } catch (NullPointerException e) {
+            System.out.println("No directory was selected.");
+        }
     }
 
-    // Calls the conversion methods from the SourceCodeConverterClass.
-    public void convertToXML(ActionEvent actionEvent) {
+    /*
+        Converts the code files to XML documents. // CODE CONVERSION.
+        Creates XMLClass instances based on the XML documents. // DATA SELECTION.
+        Uses the XMLClass instances to visualize the data. // VISUALIZATION.
+     */
+    public void visualize(ActionEvent actionEvent) {
+        // Source Code Conversion.
         sourceCodeConverter.clearOutputDirectory();
         try {
             if (selectedFile.isDirectory()) {
@@ -79,19 +96,29 @@ public class Home {
             }
         } catch (NullPointerException e) {
             System.out.println("No file or directory selected.");
+        }
+
+        // Allow XML directory to update before trying to parse the XML documents.
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        // XML Parsing.
+        xmlIterator.createXMLClasses();
+
+        // Call visualizer class and do visualization. Might need its own thread.
+        // Ex: visualizer.visualize(xmlIterator.getXmlClasses());
 
     }
 
     //===== Temporary Test Methods =====//
     // Prints the formatted versions of all the files in the converted_xml folder.
     public void printFormattedXML(ActionEvent actionEvent) {
-        File file = new File(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\");
-        File[] files = file.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            System.out.println(xmlIterator.createXMLClass(files[i].getName())
-                    .toString());
+        xmlIterator.createXMLClasses();
+        for (XMLClass xmlClass : xmlIterator.getXmlClasses()) {
+            System.out.println(xmlClass.toString());
         }
     }
 

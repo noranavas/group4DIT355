@@ -18,7 +18,7 @@
             <Label fx:id="file" text="${controller.fileName}" />
         </HBox>
         <HBox>
-            <Button onAction="#convertToXML" text="Visualize" />
+            <Button onAction="#visualize" text="Visualize" />
             <Button onAction="#printFormattedXML" text="Test Print" />
         </HBox>
     </children>

@@ -9,10 +9,8 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +33,16 @@ public class XMLIterator {
     }
 
     //===== Methods =====//
+    public void createXMLClasses() {
+        File file = new File(pathToXMLDirectory);
+        File[] files = file.listFiles();
+        for (File mFile : files) {
+            xmlClasses.add(createXMLClass(mFile.getName()));
+        }
+    }
+
     // Creates a class (XMLClass) that will hold the data for th visualization.
-    public XMLClass createXMLClass(String name) {
+    private XMLClass createXMLClass(String name) {
         XMLClass xmlClass = new XMLClass();
         xmlClass.setName(name
                 .replace(".xml", "")
@@ -135,6 +141,7 @@ public class XMLIterator {
                 .replace("void", "")
                 .replace("static", "")
                 .replace("final", "")
+                .replace("    ", " ")
                 .replace("   ", " ")
                 .replace("  ", " ");
         return s;
