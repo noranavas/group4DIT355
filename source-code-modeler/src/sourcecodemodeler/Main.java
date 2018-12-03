@@ -58,7 +58,7 @@ public class Main extends Application {
         });
     }
     private Sender createSender() {
-        return new Sender(Globals.PORT, "127.0.0.1", data -> {
+        return new Sender(Globals.PORT, "10.132.178.107", data -> {
             Platform.runLater(() -> {
                 // Send data?
                 System.out.println("Sender: " + data);
@@ -70,21 +70,26 @@ public class Main extends Application {
     // Launches the JavaFX window.
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = null;
+        /*Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        primaryStage.setScene(new Scene(root,500, 225));
+        primaryStage.setScene(new Scene(root,500, 225));*/
 
+        Button selectBTN = new Button("Select Directory");
+        Button visualizeBTN = new Button("Visualize");
+        Label selectedDirectory = new Label();
+        HBox hBox = new HBox(selectBTN, selectedDirectory, visualizeBTN);
+        Scene scene = new Scene(hBox);
+        scene.getStylesheets().add(Main.class.getResource("main.css").toExternalForm());
 
+        primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setTitle("Source Code Modeler");
         primaryStage.show();
     }
-
-
 
     //===== Main =====//
     public static void main(String[] args) {
