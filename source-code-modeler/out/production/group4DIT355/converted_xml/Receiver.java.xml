@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\salva_threads\network\Receiver.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>network</name></name>;</package>
+
+<import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>Globals</name></name>;</import>
+
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>*</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>net</name><operator>.</operator><name>ServerSocket</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>net</name><operator>.</operator><name>Socket</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>ArrayList</name></name>;</import>
+
+<class><specifier>public</specifier> class <name>Receiver</name> <block>{
+    <decl_stmt><decl><type><name>BufferedOutputStream</name></type> <name>bos</name></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>OutputStream</name></type> <name>output</name></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>DataOutputStream</name></type> <name>dos</name></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>int</name></type> <name>len</name></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>int</name></type> <name>smblen</name></decl>, <decl><type ref="prev"/><name>filesize</name></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>InputStream</name></type> <name>in</name></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>boolean</name></type> <name>flag</name><init>=<expr><literal type="boolean">true</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>DataInputStream</name></type> <name>clientData</name></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>BufferedInputStream</name></type> <name>clientBuff</name></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>Socket</name></type> <name>senderSocket</name> <init>= <expr><literal type="null">null</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>ServerSocket</name></type> <name>receiverSocket</name></decl>;</decl_stmt>
+    <decl_stmt><decl><type><name>PrintWriter</name></type> <name>out</name><init>=<expr><literal type="null">null</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name>int</name></type> <name>fileSize</name></decl>;</decl_stmt>
+
+    <constructor><specifier>public</specifier> <name>Receiver</name><parameter_list>()</parameter_list> <throws>throws <argument><expr><name>IOException</name></expr></argument></throws> <block>{}</block></constructor>
+
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>startServer</name><parameter_list>()</parameter_list> <throws>throws <argument><expr><name>IOException</name></expr></argument></throws> <block>{
+        <expr_stmt><expr><name>senderSocket</name> <operator>=</operator> <call><name><name>receiverSocket</name><operator>.</operator><name>accept</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><name>fileSize</name><operator>=</operator><literal type="number">0</literal></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Listening on port "</literal> <operator>+</operator> <name><name>Globals</name><operator>.</operator><name>PORT</name></name> <operator>+</operator> <literal type="string">"..."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <try>try <block>{
+            <expr_stmt><expr><name>receiverSocket</name> <operator>=</operator> <operator>new</operator> <call><name>ServerSocket</name><argument_list>(<argument><expr><name><name>Globals</name><operator>.</operator><name>PORT</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <while>while <condition>(<expr><literal type="boolean">true</literal></expr>)</condition> <block>{
+                <decl_stmt><decl><type><name>Socket</name></type> <name>socket</name> <init>= <expr><call><name><name>receiverSocket</name><operator>.</operator><name>accept</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+                <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Got a connection!"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                <try>try <block>{
+                    <expr_stmt><expr><name>out</name> <operator>=</operator> <operator>new</operator> <call><name>PrintWriter</name><argument_list>(<argument><expr><call><name><name>socket</name><operator>.</operator><name>getOutputStream</name></name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><literal type="boolean">true</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                    <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Hello from the server socket."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>IOException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+                    <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+                }</block></catch></try>
+            }</block></while>
+        }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>IOException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+            <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block></catch></try>
+    }</block></function>
+
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>receiveFiles</name><parameter_list>()</parameter_list> <throws>throws <argument><expr><name>IOException</name></expr></argument></throws> <block>{
+        <try>try<block>{
+            <while>while <condition>(<expr><literal type="boolean">true</literal></expr>)</condition> <block>{
+                <comment type="line">//while(true &amp;&amp; flag==true){</comment>
+                <while>while <condition>(<expr><name>flag</name> <operator>==</operator> <literal type="boolean">true</literal></expr>)</condition> <block>{
+                    <comment type="line">//System.out.println("Got a connection!");</comment>
+
+                    <expr_stmt><expr><name>in</name> <operator>=</operator> <call><name><name>senderSocket</name><operator>.</operator><name>getInputStream</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt> <comment type="line">//used</comment>
+                    <expr_stmt><expr><name>clientData</name> <operator>=</operator> <operator>new</operator> <call><name>DataInputStream</name><argument_list>(<argument><expr><name>in</name></expr></argument>)</argument_list></call></expr>;</expr_stmt> <comment type="line">//use</comment>
+                    <expr_stmt><expr><name>clientBuff</name> <operator>=</operator> <operator>new</operator> <call><name>BufferedInputStream</name><argument_list>(<argument><expr><name>in</name></expr></argument>)</argument_list></call></expr>;</expr_stmt> <comment type="line">//use</comment>
+
+                    <expr_stmt><expr><name>fileSize</name> <operator>=</operator> <call><name><name>clientData</name><operator>.</operator><name>read</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+
+                    <decl_stmt><decl><type><name><name>ArrayList</name><argument_list type="generic">&lt;<argument><name>File</name></argument>&gt;</argument_list></name></type> <name>files</name> <init>= <expr><operator>new</operator> <call><name><name>ArrayList</name><argument_list type="generic">&lt;<argument><name>File</name></argument>&gt;</argument_list></name><argument_list>(<argument><expr><name>fileSize</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt> <comment type="line">//store list of filename from client directory</comment>
+                    <decl_stmt><decl><type><name><name>ArrayList</name><argument_list type="generic">&lt;<argument><name>Integer</name></argument>&gt;</argument_list></name></type> <name>sizes</name> <init>= <expr><operator>new</operator> <call><name><name>ArrayList</name><argument_list type="generic">&lt;<argument><name>Integer</name></argument>&gt;</argument_list></name><argument_list>(<argument><expr><name>fileSize</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt> <comment type="line">//store file size from client</comment>
+                    <comment type="line">//Start to accept those filename from server</comment>
+                    <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Receiving "</literal> <operator>+</operator> <call><name><name>sizes</name><operator>.</operator><name>size</name></name><argument_list>()</argument_list></call> <operator>+</operator> <literal type="string">" files"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                    <for>for <control>(<init><decl><type><name>int</name></type> <name>count</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>count</name> <operator>&lt;</operator> <name>fileSize</name></expr>;</condition> <incr><expr><name>count</name><operator>++</operator></expr></incr>)</control> <block>{
+                        <decl_stmt><decl><type><name>File</name></type> <name>ff</name> <init>= <expr><operator>new</operator> <call><name>File</name><argument_list>(<argument><expr><call><name><name>clientData</name><operator>.</operator><name>readUTF</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+                        <expr_stmt><expr><call><name><name>files</name><operator>.</operator><name>add</name></name><argument_list>(<argument><expr><name>ff</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                    }</block></for>
+
+                    <for>for <control>(<init><decl><type><name>int</name></type> <name>count</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>count</name> <operator>&lt;</operator> <name>fileSize</name></expr>;</condition> <incr><expr><name>count</name><operator>++</operator></expr></incr>)</control> <block>{
+
+                        <expr_stmt><expr><call><name><name>sizes</name><operator>.</operator><name>add</name></name><argument_list>(<argument><expr><call><name><name>clientData</name><operator>.</operator><name>readInt</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                    }</block></for>
+
+                    <for>for <control>(<init><decl><type><name>int</name></type> <name>count</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>count</name> <operator>&lt;</operator> <name>fileSize</name></expr>;</condition> <incr><expr><name>count</name><operator>++</operator></expr></incr>)</control> <block>{
+
+                        <if>if <condition>(<expr><name>fileSize</name> <operator>-</operator> <name>count</name> <operator>==</operator> <literal type="number">1</literal></expr>)</condition><then> <block>{
+                            <expr_stmt><expr><name>flag</name> <operator>=</operator> <literal type="boolean">false</literal></expr>;</expr_stmt>
+                        }</block></then></if>
+
+                        <expr_stmt><expr><name>len</name> <operator>=</operator> <call><name><name>sizes</name><operator>.</operator><name>get</name></name><argument_list>(<argument><expr><name>count</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+                        <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"File Size ="</literal> <operator>+</operator> <name>len</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+                        <expr_stmt><expr><name>output</name> <operator>=</operator> <operator>new</operator> <call><name>FileOutputStream</name><argument_list>(<argument><expr><call><name><name>System</name><operator>.</operator><name>getProperty</name></name><argument_list>(<argument><expr><literal type="string">"user.dir"</literal></expr></argument>)</argument_list></call> <operator>+</operator> <literal type="string">"\\source-code-modeler\\resources\\converted_xml\\"</literal> <operator>+</operator> <call><name><name>files</name><operator>.</operator><name>get</name></name><argument_list>(<argument><expr><name>count</name></expr></argument>)</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                        <expr_stmt><expr><name>dos</name> <operator>=</operator> <operator>new</operator> <call><name>DataOutputStream</name><argument_list>(<argument><expr><name>output</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                        <expr_stmt><expr><name>bos</name> <operator>=</operator> <operator>new</operator> <call><name>BufferedOutputStream</name><argument_list>(<argument><expr><name>output</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+                        <decl_stmt><decl><type><name><name>byte</name><index>[]</index></name></type> <name>buffer</name> <init>= <expr><operator>new</operator> <name><name>byte</name><index>[<expr><literal type="number">1024</literal></expr>]</index></name></expr></init></decl>;</decl_stmt>
+
+                        <expr_stmt><expr><call><name><name>bos</name><operator>.</operator><name>write</name></name><argument_list>(<argument><expr><name>buffer</name></expr></argument>, <argument><expr><literal type="number">0</literal></expr></argument>, <argument><expr><name><name>buffer</name><operator>.</operator><name>length</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt> <comment type="line">//This line is important</comment>
+
+                        <while>while <condition>(<expr><name>len</name> <operator>&gt;</operator> <literal type="number">0</literal> <operator>&amp;&amp;</operator> <operator>(</operator><name>smblen</name> <operator>=</operator> <call><name><name>clientBuff</name><operator>.</operator><name>read</name></name><argument_list>(<argument><expr><name>buffer</name></expr></argument>)</argument_list></call><operator>)</operator> <operator>&gt;</operator> <literal type="number">0</literal></expr>)</condition> <block>{
+                            <expr_stmt><expr><call><name><name>dos</name><operator>.</operator><name>write</name></name><argument_list>(<argument><expr><name>buffer</name></expr></argument>, <argument><expr><literal type="number">0</literal></expr></argument>, <argument><expr><name>smblen</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                            <expr_stmt><expr><name>len</name> <operator>=</operator> <name>len</name> <operator>-</operator> <name>smblen</name></expr>;</expr_stmt>
+                            <expr_stmt><expr><call><name><name>dos</name><operator>.</operator><name>flush</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+                        }</block></while>
+                        <expr_stmt><expr><call><name><name>dos</name><operator>.</operator><name>close</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>  <comment type="line">//It should close to avoid continue deploy by resource under view</comment>
+                    }</block></for>
+
+                }</block></while>
+
+                <if>if <condition>(<expr><name>flag</name> <operator>==</operator> <literal type="boolean">false</literal></expr>)</condition><then> <block>{
+                    <expr_stmt><expr><name>senderSocket</name> <operator>=</operator> <call><name><name>receiverSocket</name><operator>.</operator><name>accept</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+                    <expr_stmt><expr><name>flag</name> <operator>=</operator> <literal type="boolean">true</literal></expr>;</expr_stmt>
+                }</block></then></if>
+            }</block></while>
+
+
+        }</block> <comment type="line">//end of while(true)</comment>
+        <catch>catch<parameter_list>(<parameter><decl><type><name>IllegalArgumentException</name></type> <name>exc1</name></decl></parameter>)</parameter_list><block>{
+            <if>if <condition>(<expr><name>fileSize</name><operator>&lt;=</operator><literal type="number">0</literal></expr>)</condition><then>
+                <block type="pseudo"><expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"No files were sent"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt></block></then></if>
+            <expr_stmt><expr><call><name><name>senderSocket</name><operator>.</operator><name>close</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block></catch></try>
+    }</block></function>
+
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>stopServer</name><parameter_list>()</parameter_list> <block>{
+        <try>try <block>{
+            <expr_stmt><expr><call><name><name>in</name><operator>.</operator><name>close</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>out</name><operator>.</operator><name>close</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>senderSocket</name><operator>.</operator><name>close</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>receiverSocket</name><operator>.</operator><name>close</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>IOException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+            <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Stopped the server."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></catch> <catch>catch <parameter_list>(<parameter><decl><type><name>NullPointerException</name></type> <name>e</name></decl></parameter>)</parameter_list><block>{
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Stopped the server."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></catch></try>
+    }</block></function>
+
+    <function><specifier>public</specifier> <specifier>static</specifier> <type><name>void</name></type> <name>main</name><parameter_list>(<parameter><decl><type><name><name>String</name><index>[]</index></name></type> <name>args</name></decl></parameter>)</parameter_list> <throws>throws <argument><expr><name>IOException</name></expr></argument>,<argument><expr><name>EOFException</name></expr></argument></throws> <block>{
+        <comment type="line">// TODO Auto-generated method stub</comment>
+        <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Starting..."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Waiting for a connection."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+
+        <comment type="line">//System.out.println(System.getProperty("user.dir")+ "\\resources"); DEBUG</comment>
+    }</block></function>
+
+}</block></class></unit>

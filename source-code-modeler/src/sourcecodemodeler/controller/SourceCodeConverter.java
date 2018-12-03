@@ -10,7 +10,7 @@ import java.util.Optional;
     This class uses srcML to convert code files to XML documents.
  */
 public class SourceCodeConverter {
-    private final String pathToSrcML = Globals.PATH_TO_SRCML;
+    public static final String PATH_TO_SRCML = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\srcML-Win\\bin\\srcml.exe";
     private final String outputDirectory = Globals.PATH_TO_XML_FILES;
 
     //===== Constructor(s) =====//
@@ -26,7 +26,7 @@ public class SourceCodeConverter {
         ProcessBuilder pb = new ProcessBuilder(
                 "cmd.exe",
                 "/c",
-                pathToSrcML + " " + filePath + " -o " + outputDirectory + fileName + ".xml"
+                PATH_TO_SRCML + " " + filePath + " -o " + outputDirectory + fileName + ".xml"
         );
         pb.redirectErrorStream(true); // Some kind of error handler for streams.
         try {

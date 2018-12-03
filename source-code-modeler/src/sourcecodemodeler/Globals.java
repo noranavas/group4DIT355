@@ -21,9 +21,6 @@ public class Globals {
             "127.0.0.1"
     };
 
-    // Path to srcML.
-    public static final String PATH_TO_SRCML = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\srcML-Win\\bin\\srcml.exe";
-
     // Path to directory where the converted XML files should be created.
     public static final String PATH_TO_XML_FILES = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\";
 

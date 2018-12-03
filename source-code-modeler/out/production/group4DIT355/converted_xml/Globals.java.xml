@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\salva_threads\Globals.java"><package>package <name>sourcecodemodeler</name>;</package>
+
+<class><specifier>public</specifier> class <name>Globals</name> <block>{
+    <comment type="line">// Port that the nodes(PCs) communicates through.</comment>
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>int</name></type> <name>PORT</name> <init>= <expr><literal type="number">5991</literal></expr></init></decl>;</decl_stmt>
+
+    <comment type="line">// Indexer to keep track of the nodes(PCs).</comment>
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name><name>int</name><index>[]</index></name></type> <name>NODE_NUMBER</name> <init>= <expr><block>{
+            <expr><literal type="number">1</literal></expr>,  <comment type="line">// Main.</comment>
+            <expr><literal type="number">2</literal></expr>,  <comment type="line">// XML Parser.</comment>
+            <expr><literal type="number">3</literal></expr>,  <comment type="line">// XML Formatter.</comment>
+            <expr><literal type="number">4</literal></expr>   <comment type="line">// Visualizer.</comment>
+    }</block></expr></init></decl>;</decl_stmt>
+
+    <comment type="line">// A list of ip addresses belonging to the different nodes(PCs).</comment>
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name><name>String</name><index>[]</index></name></type> <name>IP_ADDRESS</name> <init>= <expr><block>{
+            <expr><literal type="string">"95.80.14.65"</literal></expr>,
+            <expr><literal type="string">"PC2"</literal></expr>,
+            <expr><literal type="string">"PC3"</literal></expr>,
+            <expr><literal type="string">"PC4"</literal></expr>,
+            <expr><literal type="string">"127.0.0.1"</literal></expr>
+    }</block></expr></init></decl>;</decl_stmt>
+
+    <comment type="line">// Path to srcML.</comment>
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>PATH_TO_SRCML</name> <init>= <expr><call><name><name>System</name><operator>.</operator><name>getProperty</name></name><argument_list>(<argument><expr><literal type="string">"user.dir"</literal></expr></argument>)</argument_list></call> <operator>+</operator> <literal type="string">"\\source-code-modeler\\resources\\srcML-Win\\bin\\srcml.exe"</literal></expr></init></decl>;</decl_stmt>
+
+    <comment type="line">// Path to directory where the converted XML files should be created.</comment>
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>PATH_TO_XML_FILES</name> <init>= <expr><call><name><name>System</name><operator>.</operator><name>getProperty</name></name><argument_list>(<argument><expr><literal type="string">"user.dir"</literal></expr></argument>)</argument_list></call> <operator>+</operator> <literal type="string">"\\source-code-modeler\\resources\\converted_xml\\"</literal></expr></init></decl>;</decl_stmt>
+
+}</block></class>
+</unit>
