@@ -4,6 +4,7 @@ import sourcecodemodeler.Globals;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /*
@@ -50,7 +51,16 @@ public class SourceCodeConverter {
                 convertDirectoryToXML(files[i].getPath());
             } else {
                 // Get string value of 'Optional' object.
-                String filter = getFileExtension(files[i].getName()).get();
+                String filter = "";
+
+                // This try-catch is to prevent files without extensions from throwing an exception.
+                try {
+                    filter = getFileExtension(files[i].getName()).get();
+                } catch (NoSuchElementException e) {
+                    System.out.println("Unspecified extension found for file: " + files[i].getName() + " at: ");
+                    System.out.println(files[i].getPath());
+                }
+
                 if (filter.equalsIgnoreCase("java")) {
                     convertToXML(files[i].getName(), files[i].getPath());
                 }

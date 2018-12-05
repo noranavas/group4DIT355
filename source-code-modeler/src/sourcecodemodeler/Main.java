@@ -28,7 +28,7 @@ import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
-    private static final String PATH_TO_CSS = System.getProperty("user.dir") + "/resources/css/";
+    private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
 
     private boolean isReceiver = false; // Switch to true/false depending on node (PC).
     private NetworkConnection connection = isReceiver ? createReceiver() : createSender();
@@ -83,32 +83,35 @@ public class Main extends Application {
         Label title = new Label("Source Code Modeler");
         Button selectBTN = new Button("Select Directory");
         Button visualizeBTN = new Button("Visualize");
-        Label selectedDirectoryName = new Label("PLACEHOLDER");
+        Label selectedDirectoryName = new Label("");
         Button testPrint = new Button("Test Print");
-        
-        HBox hBox = new HBox(selectBTN, visualizeBTN);
-        hBox.setAlignment(Pos.CENTER);
-        HBox hBox2 = new HBox(selectedDirectoryName, testPrint);
 
-        hBox.getStyleClass().add("Hbox");
-        hBox2.getStyleClass().add("Hbox");
-        hBox.setId("Hbox");
+        HBox hBoxButtons = new HBox(selectBTN, visualizeBTN);
+        HBox hBoxSelectedDirectory = new HBox(selectedDirectoryName);
+        HBox hBoxTestPrint = new HBox(testPrint);
+
+        hBoxButtons.getStyleClass().add("Hbox");
+        hBoxSelectedDirectory.getStyleClass().add("Hbox");
+        hBoxTestPrint.getStyleClass().add("Hbox"); // TODO: Remove when done
+
+        hBoxButtons.setId("Hbox");
+        hBoxSelectedDirectory.setId("Hbox");
+        hBoxTestPrint.setId("Hbox"); // TODO: Remove when done
+
         Pane pane = new TilePane();
-        
         pane.getChildren().add(title);
         pane.getStyleClass().add("root");
-        pane.getChildren().addAll(hBox, hBox2);
+        pane.getChildren().addAll(hBoxButtons, hBoxSelectedDirectory, hBoxTestPrint);
+        ((TilePane) pane).setAlignment(Pos.CENTER);
+
         VBox.setVgrow(pane, Priority.ALWAYS);
-        
         VBox vbox = new VBox(pane);
-        
+        vbox.setAlignment(Pos.CENTER);
         
         Scene scene = new Scene(vbox, 400, 255);
-
-        // Apply positioning of components. TODO: Set the positions of the buttons and labels etc.
-        
-        
-        System.out.println(PATH_TO_CSS);
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("Source Code Modeler");
 
         // Apply all css files in the resources/css directory to the JavaFX scene.
         File[] cssFiles = new File(PATH_TO_CSS).listFiles();
@@ -136,7 +139,6 @@ public class Main extends Application {
 
         // Visualize event.
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
-        // THIS IS AWESOMEOEMEOME HYPE
         visualizeBTN.setOnAction(actionEvent -> {
             // Source Code Conversion.
             sourceCodeConverter.clearOutputDirectory();
@@ -161,18 +163,15 @@ public class Main extends Application {
         });
 
         // Test print event. TODO: Remove when done.
-        // TODO: Sometimes all classes are printed twice, might be because the xmlClass list contains duplicates? Need fix.
         testPrint.setOnAction(actionEvent -> {
-            System.out.println("clicked print test btn");
-            xmlIterator.createXMLClasses();
+            if (xmlIterator.getXmlClasses().isEmpty() || xmlIterator.getXmlClasses() == null) {
+                xmlIterator.createXMLClasses();
+            }
             for (XMLClass xmlClass : xmlIterator.getXmlClasses()) {
                 System.out.println(xmlClass.toString());
             }
         });
 
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(true);
-        primaryStage.setTitle("Source Code Modeler");
         primaryStage.show();
     }
 
