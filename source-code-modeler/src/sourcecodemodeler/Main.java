@@ -2,11 +2,18 @@ package sourcecodemodeler;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import sourcecodemodeler.controller.SourceCodeConverter;
@@ -21,7 +28,7 @@ import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
-    private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
+    private static final String PATH_TO_CSS = System.getProperty("user.dir") + "/resources/css/";
 
     private boolean isReceiver = false; // Switch to true/false depending on node (PC).
     private NetworkConnection connection = isReceiver ? createReceiver() : createSender();
@@ -78,11 +85,30 @@ public class Main extends Application {
         Button visualizeBTN = new Button("Visualize");
         Label selectedDirectoryName = new Label("PLACEHOLDER");
         Button testPrint = new Button("Test Print");
-        HBox hBox = new HBox(title, selectBTN, selectedDirectoryName, visualizeBTN, testPrint);
-        Scene scene = new Scene(hBox, 500, 255);
+        
+        HBox hBox = new HBox(selectBTN, visualizeBTN);
+        hBox.setAlignment(Pos.CENTER);
+        HBox hBox2 = new HBox(selectedDirectoryName, testPrint);
+
+        hBox.getStyleClass().add("Hbox");
+        hBox2.getStyleClass().add("Hbox");
+        hBox.setId("Hbox");
+        Pane pane = new TilePane();
+        
+        pane.getChildren().add(title);
+        pane.getStyleClass().add("root");
+        pane.getChildren().addAll(hBox, hBox2);
+        VBox.setVgrow(pane, Priority.ALWAYS);
+        
+        VBox vbox = new VBox(pane);
+        
+        
+        Scene scene = new Scene(vbox, 400, 255);
 
         // Apply positioning of components. TODO: Set the positions of the buttons and labels etc.
-        // WHO WANNA DO DIS?
+        
+        
+        System.out.println(PATH_TO_CSS);
 
         // Apply all css files in the resources/css directory to the JavaFX scene.
         File[] cssFiles = new File(PATH_TO_CSS).listFiles();
