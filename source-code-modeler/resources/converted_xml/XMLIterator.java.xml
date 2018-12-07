@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\meli_visual\controller\XMLIterator.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name></name>;</package>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\salva_threads\controller\XMLIterator.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name></name>;</package>
 
 <import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>model</name><operator>.</operator><name>XMLClass</name></name>;</import>
 <import>import <name><name>org</name><operator>.</operator><name>w3c</name><operator>.</operator><name>dom</name><operator>.</operator><name>Document</name></name>;</import>
@@ -53,8 +53,6 @@
         <decl_stmt><decl><type><name>XMLClass</name></type> <name>xmlClass</name> <init>= <expr><operator>new</operator> <call><name>XMLClass</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
         <expr_stmt><expr><call><name><name>xmlClass</name><operator>.</operator><name>setName</name></name><argument_list>(<argument><expr><call><name><name>name</name>
                 <operator>.</operator><name>replace</name></name><argument_list>(<argument><expr><literal type="string">".xml"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call>
-                <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">".c"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call>
-                <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">".cpp"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call>
                 <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">".java"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call></expr></argument>
         )</argument_list></call></expr>;</expr_stmt>
         <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Class name: "</literal> <operator>+</operator> <call><name><name>xmlClass</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>

@@ -21,8 +21,7 @@ import sourcecodemodeler.network.NetworkConnection;
 import sourcecodemodeler.network.Receiver;
 import sourcecodemodeler.network.Sender;
 
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -67,6 +66,11 @@ public class Main extends Application {
                 System.out.println("Node number: " + nodeNumber);
                 if (nodeNumber == 1) {
                     System.out.println("In node 1!");
+                    File[] files = (File[])data;
+                    xmlIterator.createXMLClasses(files);
+                    for (XMLClass xmlClass : xmlIterator.getXmlClasses()) {
+                        System.out.println(xmlClass.toString());
+                    }
                     nodeNumber++;
                 } else if (nodeNumber == 2) {
                     nodeNumber++;
@@ -165,12 +169,6 @@ public class Main extends Application {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            /*
-            File[] files = new File(Globals.PATH_TO_XML_FILES).listFiles();
-            for (File file : files) {
-                sendData(file);
-            }
-            */
 
             File[] files = new File(Globals.PATH_TO_XML_FILES).listFiles();
             sendData(files);
