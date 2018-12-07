@@ -173,9 +173,7 @@ public class Main extends Application {
             */
 
             File[] files = new File(Globals.PATH_TO_XML_FILES).listFiles();
-            for (File file : files) {
-                sendData(file);
-            }
+            sendData(files);
 
         });
 

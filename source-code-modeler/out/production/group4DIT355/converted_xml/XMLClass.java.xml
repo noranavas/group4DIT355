@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\meli_visual\model\XMLClass.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>model</name></name>;</package>
+
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>ArrayList</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>List</name></name>;</import>
+
+<class><specifier>public</specifier> class <name>XMLClass</name> <block>{
+    <decl_stmt><decl><specifier>private</specifier> <type><name>String</name></type> <name>name</name></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>String</name></argument>&gt;</argument_list></name></type> <name>attributes</name></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>String</name></argument>&gt;</argument_list></name></type> <name>methods</name></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>String</name></argument>&gt;</argument_list></name></type> <name>relationships</name></decl>;</decl_stmt>
+
+    <comment type="line">//===== Constructor(s) =====//</comment>
+    <constructor><specifier>public</specifier> <name>XMLClass</name><parameter_list>()</parameter_list> <block>{
+        <expr_stmt><expr><name><name>this</name><operator>.</operator><name>attributes</name></name> <operator>=</operator> <operator>new</operator> <call><name><name>ArrayList</name><argument_list type="generic">&lt;&gt;</argument_list></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><name><name>this</name><operator>.</operator><name>methods</name></name> <operator>=</operator> <operator>new</operator> <call><name><name>ArrayList</name><argument_list type="generic">&lt;&gt;</argument_list></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><name><name>this</name><operator>.</operator><name>relationships</name></name> <operator>=</operator> <operator>new</operator> <call><name><name>ArrayList</name><argument_list type="generic">&lt;&gt;</argument_list></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+    }</block></constructor>
+
+    <comment type="line">//===== Getters &amp; Setters =====//</comment>
+    <function><specifier>public</specifier> <type><name>String</name></type> <name>getName</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><name>name</name></expr>;</return>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>setName</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>name</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><name><name>this</name><operator>.</operator><name>name</name></name> <operator>=</operator> <name>name</name></expr>;</expr_stmt>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>addAttribute</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>attribute</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><call><name><name>this</name><operator>.</operator><name>attributes</name><operator>.</operator><name>add</name></name><argument_list>(<argument><expr><name>attribute</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>String</name></argument>&gt;</argument_list></name></type> <name>getAttributes</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><name><name>this</name><operator>.</operator><name>attributes</name></name></expr>;</return>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>addMethod</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>method</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><call><name><name>this</name><operator>.</operator><name>methods</name><operator>.</operator><name>add</name></name><argument_list>(<argument><expr><name>method</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>String</name></argument>&gt;</argument_list></name></type> <name>getMethods</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><name><name>this</name><operator>.</operator><name>methods</name></name></expr>;</return>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>addRelationship</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>relationship</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><call><name><name>this</name><operator>.</operator><name>relationships</name><operator>.</operator><name>add</name></name><argument_list>(<argument><expr><name>relationship</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+}</block></class>
+</unit>
