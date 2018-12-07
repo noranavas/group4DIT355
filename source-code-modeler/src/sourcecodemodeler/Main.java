@@ -23,10 +23,12 @@ import sourcecodemodeler.network.Sender;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
+    private static final String[] IP_ADRESS = Globals.IP_ADDRESS;
 
     private boolean isReceiver = false; // Switch to true/false depending on node (PC).
     private NetworkConnection connection = isReceiver ? createReceiver() : createSender();
@@ -35,6 +37,8 @@ public class Main extends Application {
     private XMLIterator xmlIterator = new XMLIterator();
 
     private File selectedDirectory;
+
+    private int nodeNumber = 1;
 
     //===== Network =====//
     @Override
@@ -59,15 +63,24 @@ public class Main extends Application {
         return new Receiver(Globals.PORT, data -> {
             // Give control back to the UI (JavaFX) thread.
             Platform.runLater(() -> {
-                // Do stuff with received data.
-                System.out.println("Receiver: " + data);
+                System.out.println("Receiver: " + data.toString());
+                System.out.println("Node number: " + nodeNumber);
+                if (nodeNumber == 1) {
+                    System.out.println("In node 1!");
+                    nodeNumber++;
+                } else if (nodeNumber == 2) {
+                    nodeNumber++;
+                } else if (nodeNumber == 3) {
+                    nodeNumber++;
+                } else {
+
+                }
             });
         });
     }
     private Sender createSender() {
-        return new Sender(Globals.PORT, "10.132.178.107", data -> {
+        return new Sender(Globals.PORT, IP_ADRESS[nodeNumber], data -> {
             Platform.runLater(() -> {
-                // Send data?
                 System.out.println("Sender: " + data);
             });
         });
@@ -139,25 +152,31 @@ public class Main extends Application {
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
             // Source Code Conversion.
-            sourceCodeConverter.clearOutputDirectory();
+            //sourceCodeConverter.clearOutputDirectory();
             try {
                 sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             } catch (NullPointerException e) {
                 System.out.println("No directory selected.");
             }
 
-            // Allow XML directory to update before trying to parse the XML documents.
+            // Allow output directory to update before doing anything else.
             try {
-                TimeUnit.SECONDS.sleep(2);
+                TimeUnit.SECONDS.sleep(5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            /*
+            File[] files = new File(Globals.PATH_TO_XML_FILES).listFiles();
+            for (File file : files) {
+                sendData(file);
+            }
+            */
 
-            // XML Parsing.
-            xmlIterator.createXMLClasses();
+            File[] files = new File(Globals.PATH_TO_XML_FILES).listFiles();
+            for (File file : files) {
+                sendData(file);
+            }
 
-            // Call visualizer class and do visualization. Might need its own thread.
-            // Ex: visualizer.visualize(xmlIterator.getXmlClasses());
         });
 
         // Test print event. TODO: Remove when done.
