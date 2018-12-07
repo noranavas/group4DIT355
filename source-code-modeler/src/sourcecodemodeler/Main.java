@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
-    private static final String[] IP_ADRESS = Globals.IP_ADDRESS;
+    private static final String[] IP_ADDRESS = Globals.IP_ADDRESS;
 
     private boolean isReceiver = false; // Switch to true/false depending on node (PC).
     private NetworkConnection connection = isReceiver ? createReceiver() : createSender();
@@ -83,7 +83,7 @@ public class Main extends Application {
         });
     }
     private Sender createSender() {
-        return new Sender(Globals.PORT, IP_ADRESS[nodeNumber], data -> {
+        return new Sender(Globals.PORT, IP_ADDRESS[nodeNumber], data -> {
             Platform.runLater(() -> {
                 System.out.println("Sender: " + data);
             });
