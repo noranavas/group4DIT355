@@ -47,6 +47,18 @@ public class XMLClass {
         return this.methods;
     }
     public void addRelationship(XMLClass relationship) {
+
+        // loop over all saved relations
+        for (XMLClass xmlClass : this.relationships) {
+            // checking for duplicates
+            // check whether saved relation name equals the input class name
+            if (xmlClass.getName().equals(relationship.getName())) {
+                // this is a duplicate, do nothing and go out immediately
+                return;
+            }
+        }
+
+        // if we reach this point, then this is not duplicate, so add it to list
         this.relationships.add(relationship);
     }
     public List<XMLClass> getRelationships() {

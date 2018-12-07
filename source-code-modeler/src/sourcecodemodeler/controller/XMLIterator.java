@@ -83,16 +83,21 @@ public class XMLIterator {
             NodeList nodeList = doc.getElementsByTagName("function"); // Tag for methods.
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
-                node = removeTag(node, "annotation");
-                node = removeTag(node, "throws");
+
                 // Skip nodes that are children of expression nodes - overridden methods will be excluded.
                 if (node.getParentNode().getParentNode().getParentNode().getNodeName() != "expr") {
+                    node = removeTag(node, "annotation");
+                    node = removeTag(node, "throws");
+                    node = removeTag(node, "parameter_list");
+                    node = removeTag(node, "specifier");
+                    node = removeTag(node, "type");
+
                     String s = node.getTextContent();
                     String body = s.substring(s.indexOf('{'), s.length());
                     if (!body.isEmpty()) {
                         s = s.replace(body, "");
                     }
-                    s = prettyString(s);
+                    s = prettyString(s) + "()";
                     xmlClass.addMethod(s);
                 }
             }
@@ -176,7 +181,16 @@ public class XMLIterator {
 
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
-                xmlClass.addRelationship(new XMLClass(node.getTextContent()));
+
+                // node "extends" contains node "name", so take all children and find child node "name"
+                NodeList childNodes = node.getChildNodes();
+                for (int j = 0; j < childNodes.getLength(); j++) {
+                    Node child = childNodes.item(j);
+                    if (child.getNodeName() == "name"){
+                        xmlClass.addRelationship(new XMLClass(child.getTextContent()));
+                        break;
+                    }
+                }
             }
 
 
