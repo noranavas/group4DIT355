@@ -152,7 +152,7 @@ public class Main extends Application {
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
             // Source Code Conversion.
-            //sourceCodeConverter.clearOutputDirectory();
+            sourceCodeConverter.clearOutputDirectory();
             try {
                 sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             } catch (NullPointerException e) {
