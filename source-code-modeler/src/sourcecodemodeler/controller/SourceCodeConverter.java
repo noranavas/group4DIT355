@@ -12,7 +12,7 @@ import java.util.Optional;
  */
 public class SourceCodeConverter {
     public static final String PATH_TO_SRCML = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\srcML-Win\\bin\\srcml.exe";
-    private final String outputDirectory = Globals.PATH_TO_XML_FILES;
+    private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
 
     //===== Constructor(s) =====//
     public SourceCodeConverter() {}
@@ -27,7 +27,7 @@ public class SourceCodeConverter {
         ProcessBuilder pb = new ProcessBuilder(
                 "cmd.exe",
                 "/c",
-                PATH_TO_SRCML + " " + filePath + " -o " + outputDirectory + fileName + ".xml"
+                PATH_TO_SRCML + " " + filePath + " -o " + PATH_TO_XML_DIRECTORY + fileName + ".xml"
         );
         pb.redirectErrorStream(true); // Some kind of error handler for streams.
         try {
@@ -57,8 +57,7 @@ public class SourceCodeConverter {
                 try {
                     filter = getFileExtension(files[i].getName()).get();
                 } catch (NoSuchElementException e) {
-                    System.out.println("Unspecified extension found for file: " + files[i].getName() + " at: ");
-                    System.out.println(files[i].getPath());
+                    System.out.println("Unspecified extension found for file: " + files[i].getName() + " at: " + files[i].getPath());
                 }
 
                 if (filter.equalsIgnoreCase("java")) {
@@ -78,7 +77,7 @@ public class SourceCodeConverter {
 
     // Clears the output directory to prevent files from previous conversions to be included in the current process.
     public void clearOutputDirectory() {
-        File[] files = new File(outputDirectory).listFiles();
+        File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
         for (int i = 0; i < files.length; i++) {
             files[i].delete();
         }

@@ -3,24 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="cddf23ba-2667-4c3f-8adf-9b9191d3549d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/converted_xml/AppConfig.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/converted_xml/Category.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/converted_xml/CategoryController.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/converted_xml/CategoryRepository.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/converted_xml/Gif.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/converted_xml/GifController.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/converted_xml/GifRepository.java.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/Globals.class" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/Globals.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Globals.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Home.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Main.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Receiver.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Sender.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Server.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/SourceCodeConverter.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/XMLClass.java.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/resources/converted_xml/XMLIterator.java.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/controller/SourceCodeConverter.class" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/controller/SourceCodeConverter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/controller/XMLIterator.class" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/controller/XMLIterator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Globals.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Globals.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,8 +24,8 @@
       <file leaf-file-name="Globals.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Globals.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+            <state relative-caret-position="240">
+              <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -43,44 +33,17 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="31" column="38" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
+            <state relative-caret-position="340">
+              <caret line="41" column="31" lean-forward="true" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
               <folding>
-                <element signature="e#4528#5158#0" />
-                <element signature="e#6230#6553#0" />
+                <element signature="method#init#0;class#Main#0" />
+                <element signature="method#stop#0;class#Main#0" />
+                <element signature="method#sendData#0;class#Main#0" />
+                <element signature="method#createSender#0;class#Main#0" />
+                <element signature="e#5292#5922#0" />
+                <element signature="e#6860#7183#0" />
                 <element signature="method#main#0;class#Main#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XMLIterator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="93" column="50" lean-forward="true" selection-start-line="93" selection-start-column="50" selection-end-line="93" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XMLClass.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/XMLClass.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="500">
-              <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
-              <folding>
-                <element signature="e#761#762#0" expanded="true" />
-                <element signature="e#793#794#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SourceCodeConverter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="80" column="61" lean-forward="true" selection-start-line="80" selection-start-column="61" selection-end-line="80" selection-end-column="61" />
             </state>
           </provider>
         </entry>
@@ -124,12 +87,12 @@
         <option value="$PROJECT_DIR$/source-code-modeler/tests/SenderTest.java" />
         <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/XMLDocument.java" />
         <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/Sender.java" />
-        <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/Receiver.java" />
         <option value="$PROJECT_DIR$/source-code-modeler/resources/css/main.css" />
-        <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java" />
-        <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Globals.java" />
+        <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/Receiver.java" />
         <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java" />
+        <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Globals.java" />
         <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java" />
+        <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java" />
         <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java" />
       </list>
     </option>
@@ -151,6 +114,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -168,6 +132,13 @@
               <item name="group4DIT355" type="462c0819:PsiDirectoryNode" />
               <item name="source-code-modeler" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="group4DIT355" type="b2602c69:ProjectViewProjectNode" />
+              <item name="group4DIT355" type="462c0819:PsiDirectoryNode" />
+              <item name="source-code-modeler" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="converted_xml" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="group4DIT355" type="b2602c69:ProjectViewProjectNode" />
@@ -228,9 +199,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -424,6 +394,7 @@
       <workItem from="1544047817276" duration="212000" />
       <workItem from="1544192555003" duration="244000" />
       <workItem from="1544193830876" duration="12260000" />
+      <workItem from="1544292220979" duration="11553000" />
     </task>
     <servers />
   </component>
@@ -451,7 +422,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131750000" />
+    <option name="totallyTimeSpent" value="144445000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
@@ -467,61 +438,38 @@
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.3286517" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3511236" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info id="Capture Tool" order="6" />
-      <window_info id="Designer" order="3" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2147651" />
-      <window_info anchor="right" id="Database" order="6" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3286517" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info id="Designer" order="3" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.3286517" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3511236" />
-      <window_info id="Image Layers" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Capture Tool" order="6" />
-      <window_info id="UI Designer" order="4" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3286517" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info id="Designer" order="3" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21744967" />
       <window_info anchor="right" id="Database" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="8" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3286517" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.3286517" />
-      <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2147651" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.3286517" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3511236" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1932886" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" order="6" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -531,13 +479,13 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.3286517" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Capture Tool" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.3286517" />
       <window_info anchor="right" id="Maven Projects" order="7" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1932886" />
+      <window_info id="Favorites" order="5" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -552,14 +500,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="22" column="21" lean-forward="true" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/Client.java" />
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/view/Home.java" />
     <entry file="file://$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Main.java.xml" />
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java">
@@ -635,8 +575,6 @@
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/ThreadEx.java" />
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/TaskHandler.java" />
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/ThreadHandler.java" />
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/resources/converted_xml/CategoryController.java.xml" />
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Category.java.xml" />
     <entry file="file://$USER_HOME$/Desktop/code_samples/subdirectory_test/Category.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-180">
@@ -661,27 +599,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="80" column="61" lean-forward="true" selection-start-line="80" selection-start-column="61" selection-end-line="80" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Globals.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/Receiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/Sender.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -689,38 +606,114 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java">
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/XMLClass.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="7" column="35" lean-forward="true" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="35" />
+        <state relative-caret-position="380">
+          <caret line="29" column="5" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+          <folding>
+            <element signature="method#XMLClass#0;class#XMLClass#0" />
+            <element signature="method#toString#0;class#XMLClass#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/XMLClass.java">
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/resources/converted_xml/CategoryController.java.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/resources/converted_xml/AppConfig.java.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="500">
-          <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
+        <state>
+          <caret column="54" lean-forward="true" selection-start-column="54" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/Receiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="11" column="5" lean-forward="true" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
           <folding>
-            <element signature="e#761#762#0" expanded="true" />
-            <element signature="e#793#794#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#Receiver#0;class#Receiver#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="43" column="50" selection-start-line="43" selection-start-column="50" selection-end-line="43" selection-end-column="50" />
+          <folding>
+            <element signature="method#NetworkConnection#0;class#NetworkConnection#0" />
+            <element signature="method#startConnection#0;class#NetworkConnection#0" />
+            <element signature="method#send#0;class#NetworkConnection#0" />
+            <element signature="method#closeConnection#0;class#NetworkConnection#0" />
+            <element signature="class#ConnectionThread#0;class#NetworkConnection#0" />
+            <element signature="method#run#0;class#ConnectionThread#0;class#NetworkConnection#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/resources/converted_xml/Category.java.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="3" column="47" selection-start-line="3" selection-start-column="47" selection-end-line="3" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Globals.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="12" column="38" lean-forward="true" selection-start-line="12" selection-start-column="38" selection-end-line="12" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="93" column="50" lean-forward="true" selection-start-line="93" selection-start-column="50" selection-end-line="93" selection-end-column="50" />
+        <state relative-caret-position="159">
+          <caret line="20" column="26" lean-forward="true" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+          <folding>
+            <element signature="method#createXMLClasses#0;class#XMLIterator#0" />
+            <element signature="method#createXMLClass#0;class#XMLIterator#0" />
+            <element signature="method#setClassName#0;class#XMLIterator#0" />
+            <element signature="method#setAttributes#0;class#XMLIterator#0" />
+            <element signature="method#setMethods#0;class#XMLIterator#0" />
+            <element signature="method#removeTag#0;class#XMLIterator#0" />
+            <element signature="method#prettyString#0;class#XMLIterator#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="78" column="39" selection-start-line="78" selection-start-column="39" selection-end-line="78" selection-end-column="39" />
+          <folding>
+            <element signature="method#convertToXML#0;class#SourceCodeConverter#0" />
+            <element signature="method#convertDirectoryToXML#0;class#SourceCodeConverter#0" />
+            <element signature="method#getFileExtension#0;class#SourceCodeConverter#0" />
+            <element signature="method#clearOutputDirectory#0;class#SourceCodeConverter#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/resources/converted_xml/0">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="11" column="36" lean-forward="true" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="31" column="38" selection-start-line="31" selection-start-column="38" selection-end-line="31" selection-end-column="38" />
+        <state relative-caret-position="340">
+          <caret line="41" column="31" lean-forward="true" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
           <folding>
-            <element signature="e#4528#5158#0" />
-            <element signature="e#6230#6553#0" />
+            <element signature="method#init#0;class#Main#0" />
+            <element signature="method#stop#0;class#Main#0" />
+            <element signature="method#sendData#0;class#Main#0" />
+            <element signature="method#createSender#0;class#Main#0" />
+            <element signature="e#5292#5922#0" />
+            <element signature="e#6860#7183#0" />
             <element signature="method#main#0;class#Main#0" />
           </folding>
         </state>

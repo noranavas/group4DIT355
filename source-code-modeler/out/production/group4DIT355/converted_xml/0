@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\giflib-master\src\main\java\com\teamtreehouse\giflib\AppConfig.java"><package>package <name><name>com</name><operator>.</operator><name>teamtreehouse</name><operator>.</operator><name>giflib</name></name>;</package>
+
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>beans</name><operator>.</operator><name>factory</name><operator>.</operator><name>annotation</name><operator>.</operator><name>Autowired</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>boot</name><operator>.</operator><name>CommandLineRunner</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>boot</name><operator>.</operator><name>SpringApplication</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>boot</name><operator>.</operator><name>autoconfigure</name><operator>.</operator><name>EnableAutoConfiguration</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>context</name><operator>.</operator><name>annotation</name><operator>.</operator><name>ComponentScan</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>thymeleaf</name><operator>.</operator><name>extras</name><operator>.</operator><name>java8time</name><operator>.</operator><name>dialect</name><operator>.</operator><name>Java8TimeDialect</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>thymeleaf</name><operator>.</operator><name>spring4</name><operator>.</operator><name>SpringTemplateEngine</name></name>;</import>
+
+<class><annotation>@<name>EnableAutoConfiguration</name></annotation>
+<annotation>@<name>ComponentScan</name></annotation>
+<specifier>public</specifier> class <name>AppConfig</name> <super><implements>implements <name>CommandLineRunner</name></implements></super> <block>{
+    <decl_stmt><decl><annotation>@<name>Autowired</name></annotation>
+    <specifier>private</specifier> <type><name>SpringTemplateEngine</name></type> <name>templateEngine</name></decl>;</decl_stmt>
+
+    <function><specifier>public</specifier> <specifier>static</specifier> <type><name>void</name></type> <name>main</name><parameter_list>(<parameter><decl><type><name><name>String</name><index>[]</index></name></type> <name>args</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><call><name><name>SpringApplication</name><operator>.</operator><name>run</name></name><argument_list>(<argument><expr><name><name>AppConfig</name><operator>.</operator><name>class</name></name></expr></argument>, <argument><expr><name>args</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+
+    <function><annotation>@<name>Override</name></annotation>
+    <specifier>public</specifier> <type><name>void</name></type> <name>run</name><parameter_list>(<parameter><decl><type><name>String</name><modifier>...</modifier></type> <name>args</name></decl></parameter>)</parameter_list> <throws>throws <argument><expr><name>Exception</name></expr></argument></throws> <block>{
+        <expr_stmt><expr><call><name><name>templateEngine</name><operator>.</operator><name>addDialect</name></name><argument_list>(<argument><expr><operator>new</operator> <call><name>Java8TimeDialect</name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+}</block></class></unit>

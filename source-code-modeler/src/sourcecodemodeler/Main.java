@@ -22,11 +22,14 @@ import sourcecodemodeler.network.Receiver;
 import sourcecodemodeler.network.Sender;
 
 import java.io.*;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
+    public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
+    private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static final String[] IP_ADDRESS = Globals.IP_ADDRESS;
 
     private boolean isReceiver = false; // Switch to true/false depending on node (PC).
@@ -36,7 +39,6 @@ public class Main extends Application {
     private XMLIterator xmlIterator = new XMLIterator();
 
     private File selectedDirectory;
-
     private int nodeNumber = 1;
 
     //===== Network =====//
@@ -53,41 +55,62 @@ public class Main extends Application {
             connection.send(data);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error when sending data.");
+            System.out.println("Error when sending data: " + data.toString());
         }
     }
 
     // Create receiver and sender whenever we want to send/receive data between the nodes.
     private Receiver createReceiver() {
-        return new Receiver(Globals.PORT, data -> {
+        return new Receiver(PORT, data -> {
             // Give control back to the UI (JavaFX) thread.
             Platform.runLater(() -> {
-                System.out.println("Receiver: " + data.toString());
-                System.out.println("Node number: " + nodeNumber);
+
                 if (nodeNumber == 1) {
-                    System.out.println("In node 1!");
-                    File[] files = (File[])data;
-                    xmlIterator.createXMLClasses(files);
-                    for (XMLClass xmlClass : xmlIterator.getXmlClasses()) {
-                        System.out.println(xmlClass.toString());
-                    }
+                    System.out.println("In node: " + nodeNumber);
+                    parseXML(data);
                     nodeNumber++;
                 } else if (nodeNumber == 2) {
+                    System.out.println("In node: " + nodeNumber);
+                    // TODO: Do visualization?
                     nodeNumber++;
                 } else if (nodeNumber == 3) {
+                    System.out.println("In node: " + nodeNumber);
+                    // TODO: Send visualization to all nodes?
                     nodeNumber++;
                 } else {
-
+                    System.out.println("In node: " + nodeNumber);
+                    // TODO: ???
                 }
+
             });
         });
     }
     private Sender createSender() {
-        return new Sender(Globals.PORT, IP_ADDRESS[nodeNumber], data -> {
+        return new Sender(PORT, IP_ADDRESS[nodeNumber], data -> {
             Platform.runLater(() -> {
                 System.out.println("Sender: " + data);
             });
         });
+    }
+
+    //===== Node Tasks =====//
+    // Node 1
+    private void parseXML(Serializable data) {
+        sourceCodeConverter.clearOutputDirectory();
+        byte[][] encoded = (byte[][])data;
+        for (int i = 0; i < encoded.length; i++) {
+            try {
+                Files.write(new File(PATH_TO_XML_DIRECTORY + i).toPath(), encoded[i]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
+        xmlIterator.createXMLClasses(files);
+        for (XMLClass xmlClass : xmlIterator.getXmlClasses()) {
+            System.out.println(xmlClass.toString());
+        }
+
     }
 
     //===== JavaFX =====//
@@ -160,25 +183,35 @@ public class Main extends Application {
             try {
                 sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             } catch (NullPointerException e) {
-                System.out.println("No directory selected.");
+                System.out.println("No directory selected or selected directory invalid.");
             }
 
             // Allow output directory to update before doing anything else.
             try {
-                TimeUnit.SECONDS.sleep(5);
+                TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            File[] files = new File(Globals.PATH_TO_XML_FILES).listFiles();
-            sendData(files);
+            File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
+            byte[][] encoded = new byte[files.length][];
+            for (int i = 0; i < encoded.length; i++) {
+                try {
+                    encoded[i] = Files.readAllBytes(Paths.get(files[i].getPath()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            sourceCodeConverter.clearOutputDirectory();
+            sendData(encoded);
 
         });
 
         // Test print event. TODO: Remove when done.
         testPrint.setOnAction(actionEvent -> {
             if (xmlIterator.getXmlClasses().isEmpty() || xmlIterator.getXmlClasses() == null) {
-                xmlIterator.createXMLClasses();
+                xmlIterator.testCreateXMLClasses();
             }
             for (XMLClass xmlClass : xmlIterator.getXmlClasses()) {
                 System.out.println(xmlClass.toString());

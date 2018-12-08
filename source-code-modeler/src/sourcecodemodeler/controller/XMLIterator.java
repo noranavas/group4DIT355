@@ -19,7 +19,6 @@ import java.util.List;
     The data is then used to create classes that can later be displayed in the produced class diagram.
  */
 public class XMLIterator {
-    private final String pathToXMLDirectory = Globals.PATH_TO_XML_FILES;
     private List<XMLClass> xmlClasses;
 
     //===== Constructor(s) =====//
@@ -33,15 +32,13 @@ public class XMLIterator {
     }
 
     //===== Methods =====//
-    public void createXMLClasses() {
-        File file = new File(pathToXMLDirectory);
-        File[] files = file.listFiles();
-        for (File mFile : files) {
-            xmlClasses.add(createXMLClass(mFile));
+    public void createXMLClasses(File[] files) {
+        for (File file : files) {
+            xmlClasses.add(createXMLClass(file));
         }
     }
-
-    public void createXMLClasses(File[] files) {
+    public void testCreateXMLClasses() {
+        File[] files = new File(Globals.PATH_TO_XML_DIRECTORY).listFiles();
         for (File file : files) {
             xmlClasses.add(createXMLClass(file));
         }
@@ -50,14 +47,36 @@ public class XMLIterator {
     // Creates a class (XMLClass) that will hold the data for th visualization.
     private XMLClass createXMLClass(File file) {
         XMLClass xmlClass = new XMLClass();
-        xmlClass.setName(file.getName()
-                .replace(".xml", "")
-                .replace(".java", "")
-        );
+        setClassName(file, xmlClass);
         setAttributes(file, xmlClass);
         setMethods(file, xmlClass);
-        //setRelationships();
+        //setRelationships(file, xmlClass);
         return xmlClass;
+    }
+
+    // Iterates through the XML document to retrieve the class name.
+    private void setClassName(File file, XMLClass xmlClass) {
+        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(file);
+
+            NodeList nodeList = doc.getElementsByTagName("name");
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                Node parent = node.getParentNode();
+                if (parent.getNodeName().equalsIgnoreCase("class")) {
+                    node = removeTag(node, "annotation");
+                    node = removeTag(node, "comment");
+                    String s = node.getTextContent();
+                    s = prettyString(s);
+                    xmlClass.setName(s);
+                }
+            }
+        } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
+            e.printStackTrace();
+            System.out.println("Problem parsing XML file: " + file.getName());
+        }
     }
 
     // Iterates through the XML document to retrieve attributes.
