@@ -11,6 +11,7 @@ public class Main extends Application {
     // Launches/opens the interactive JavaFX window.
     @Override
     public void start(Stage primaryStage) throws Exception {
+
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/home.fxml"));
         primaryStage.setScene(new Scene(root,900, 600));
         primaryStage.setResizable(false);

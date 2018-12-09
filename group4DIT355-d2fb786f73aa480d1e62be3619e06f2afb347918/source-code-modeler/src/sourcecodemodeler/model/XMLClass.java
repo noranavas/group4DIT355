@@ -11,6 +11,7 @@ public class XMLClass {
 
     //===== Constructor(s) =====//
     public XMLClass() {
+        this.name = new String();
         this.attributes = new ArrayList<>();
         this.methods = new ArrayList<>();
         this.relationships = new ArrayList<>();
@@ -37,5 +38,24 @@ public class XMLClass {
     }
     public void addRelationship(String relationship) {
         this.relationships.add(relationship);
+    }
+
+    //for the visualisation
+    @Override
+    public String toString(){
+
+        String xmlClass = "class " + getName() + " {\n";
+
+        for (String attr: attributes) {
+            xmlClass += attr + "\n";
+        }
+
+        for (String method: methods){
+            xmlClass += method + "\n";
+        }
+
+        xmlClass += "}\n";
+
+        return xmlClass;
     }
 }

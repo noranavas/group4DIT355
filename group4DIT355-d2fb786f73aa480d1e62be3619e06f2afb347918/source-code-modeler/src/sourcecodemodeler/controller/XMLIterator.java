@@ -1,9 +1,9 @@
 package sourcecodemodeler.controller;
 
-import sourcecodemodeler.model.XMLClass;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import sourcecodemodeler.model.XMLClass;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -12,6 +12,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
     This class iterates over the tags of XML documents to retrieve data (data selection).
@@ -19,9 +21,59 @@ import java.io.InputStreamReader;
  */
 public class XMLIterator {
     private final String pathToXMLDirectory = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\";
+    private static List<XMLClass> xmlClasses;
 
     //===== Constructor(s) =====//
-    public XMLIterator() {}
+    public XMLIterator() {
+        this.xmlClasses = new ArrayList<>();
+    }
+
+    //===== Getters & Setters =====//
+    public List<XMLClass> getXmlClasses() {
+        return xmlClasses;
+    }
+
+    public static String getStringifiedXmlClasses() {
+
+        //manually creating a list of XML class instances to test visualisation
+        //had to make it static to be able to reference it from Home's visualiseXML method
+
+        xmlClasses = new ArrayList<>();
+
+        XMLClass class1 = new XMLClass();
+        class1.setName("User");
+        class1.addAttribute("String name");
+        class1.addAttribute("int age");
+        class1.addMethod("String getName()");
+
+        XMLClass class2 = new XMLClass();
+        class2.setName("Balance");
+        class2.addAttribute("int money");
+        class2.addMethod("int returnMoney()");
+
+        XMLClass class3 = new XMLClass();
+        class3.setName("Users");
+        class3.addAttribute("List<String> users");
+        class3.addMethod("String getUser()");
+        class3.addMethod("void setUser(String user)");
+
+        xmlClasses.add(class1);
+        xmlClasses.add(class2);
+        xmlClasses.add(class3);
+
+
+        //now handling the getting part
+
+        String classes = "";
+
+        for (XMLClass cl: xmlClasses){
+            classes += cl.toString();
+        }
+
+        return classes;
+    }
+
+
 
     //===== Methods =====//
     // This method prints the raw content of the latest converted file.

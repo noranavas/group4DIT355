@@ -114,7 +114,28 @@ public class Home {
 
     public void visualiseXML(ActionEvent actionEvent) throws IOException {
 
+        System.out.print(XMLIterator.getStringifiedXmlClasses());
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+
+
+
+
+
+        String source = "@startuml\n" +
+                "skinparam class {\n" +
+                "BorderColor black\n" +
+                "ArrowColor black\n" +
+                "BackgroundColor LightSkyBlue\n" +
+                "}\n";
+
+        source += XMLIterator.getStringifiedXmlClasses() +
+                "@enduml\n";
+
+
+
+/*
         String source = "@startuml\n" +
                 "skinparam class {\n" +
                 "BorderColor black\n" +
@@ -135,6 +156,7 @@ public class Home {
                 "}\n" +
                 "Person -- ShoppingList\n" +
                 "@enduml\n";
+*/
 
         SourceStringReader reader = new SourceStringReader(source);
 
