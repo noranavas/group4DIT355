@@ -30,6 +30,13 @@ public class XMLIterator {
     public List<XMLClass> getXmlClasses() {
         return xmlClasses;
     }
+    public XMLClass[] getXMLClasses() {
+        XMLClass[] xmlClassArray = new XMLClass[getXmlClasses().size()];
+        for (int i = 0; i < xmlClasses.size(); i++) {
+            xmlClassArray[i] = xmlClasses.get(i);
+        }
+        return xmlClassArray;
+    }
 
     //===== Methods =====//
     public void createXMLClasses(File[] files) {

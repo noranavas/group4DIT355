@@ -14,7 +14,6 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import net.sourceforge.plantuml.nwdiag.Network;
 import sourcecodemodeler.controller.SourceCodeConverter;
 import sourcecodemodeler.controller.XMLIterator;
 import sourcecodemodeler.model.XMLClass;
@@ -35,7 +34,7 @@ public class Main extends Application {
 
     private boolean isReceiver = true; // Switch to true/false depending on node (PC).
     private NetworkConnection connection = isReceiver ? createReceiver() : createSender();
-    private NetworkConnection sender= new NetworkConnection() {
+    private NetworkConnection sender = new NetworkConnection() {
         @Override
         protected boolean isReceiver() {
             return false;
@@ -86,10 +85,14 @@ public class Main extends Application {
                 if (nodeNumber == 1) {
                     System.out.println("In node: " + nodeNumber);
                     parseXML(data);
-                  /*  parseXML(data);
                     nodeNumber++;
+                    //===== NEW STUFF
+                    File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
+                    xmlIterator.createXMLClasses(files);
+                    XMLClass[] xmlClassArray = xmlIterator.getXMLClasses();
                     createSender();
-                    sendData(data);*/
+                    sendData(xmlClassArray);
+                    //=====
                 } else if (nodeNumber == 2) {
                     System.out.println("In node: " + nodeNumber);
                     // TODO: Do visualization?
