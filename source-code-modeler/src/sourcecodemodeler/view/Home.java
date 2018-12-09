@@ -8,6 +8,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import sourcecodemodeler.controller.SourceCodeConverter;
 import sourcecodemodeler.controller.XMLIterator;
+import sourcecodemodeler.model.XMLClass;
 
 import java.io.File;
 
@@ -89,9 +90,10 @@ public class Home {
     public void printFormattedXML(ActionEvent actionEvent) {
         File file = new File(System.getProperty("user.dir") + "\\source-code-modeler\\resources\\converted_xml\\");
         File[] files = file.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            System.out.println(xmlIterator.createXMLClass(files[i].getName())
-                    .toString());
+        xmlIterator.createXMLClasses(files);
+
+        for (XMLClass xmlClass : xmlIterator.getXmlClasses()) {
+            System.out.println(xmlClass.toString());
         }
     }
 
