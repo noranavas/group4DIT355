@@ -1,6 +1,5 @@
 package sourcecodemodeler.controller;
 
-import sourcecodemodeler.Globals;
 import sourcecodemodeler.model.XMLClass;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -11,43 +10,30 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /*
     This class iterates over the tags of XML documents to retrieve data (data selection).
     The data is then used to create classes that can later be displayed in the produced class diagram.
  */
 public class XMLIterator {
-    private List<XMLClass> xmlClasses;
+    private XMLClass[] xmlClasses;
 
     //===== Constructor(s) =====//
-    public XMLIterator() {
-        this.xmlClasses = new ArrayList<>();
-    }
+    public XMLIterator() {}
 
     //===== Getters & Setters =====//
-    public List<XMLClass> getXmlClasses() {
-        return xmlClasses;
-    }
     public XMLClass[] getXMLClasses() {
-        XMLClass[] xmlClassArray = new XMLClass[getXmlClasses().size()];
-        for (int i = 0; i < xmlClasses.size(); i++) {
-            xmlClassArray[i] = xmlClasses.get(i);
-        }
-        return xmlClassArray;
+        return xmlClasses;
     }
 
     //===== Methods =====//
     public void createXMLClasses(File[] files) {
-        for (File file : files) {
-            xmlClasses.add(createXMLClass(file));
+        xmlClasses = new XMLClass[files.length];
+        for (int i = 0; i < xmlClasses.length; i++) {
+            xmlClasses[i] = createXMLClass(files[i]);
         }
-    }
-    public void testCreateXMLClasses() {
-        File[] files = new File(Globals.PATH_TO_XML_DIRECTORY).listFiles();
-        for (File file : files) {
-            xmlClasses.add(createXMLClass(file));
+        for (int i = 0; i < xmlClasses.length; i++) {
+            //setRelationships(xmlClasses[i]);
         }
     }
 
@@ -57,7 +43,6 @@ public class XMLIterator {
         setClassName(file, xmlClass);
         setAttributes(file, xmlClass);
         setMethods(file, xmlClass);
-        //setRelationships(file, xmlClass);
         return xmlClass;
     }
 

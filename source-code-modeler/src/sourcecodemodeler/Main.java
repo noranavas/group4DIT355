@@ -32,24 +32,8 @@ public class Main extends Application {
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static final String[] IP_ADDRESS = Globals.IP_ADDRESS;
 
-    private boolean isReceiver = true; // Switch to true/false depending on node (PC).
-    private NetworkConnection connection = isReceiver ? createReceiver() : createSender();
-    private NetworkConnection sender = new NetworkConnection() {
-        @Override
-        protected boolean isReceiver() {
-            return false;
-        }
-
-        @Override
-        protected String getIP() {
-            return "192.168.1.110"; //TODO: put the IP address you send to
-        }
-
-        @Override
-        protected int getPort() {
-            return PORT;
-        }
-    };
+    private NetworkConnection receiver = createReceiver();
+    private NetworkConnection sender = createSender();
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -60,12 +44,13 @@ public class Main extends Application {
     //===== Network =====//
     @Override
     public void init() throws Exception {
-        connection.startConnection();
+        receiver.startConnection();
         sender.startConnection();
     }
     @Override
     public void stop() throws Exception {
-        connection.closeConnection();
+        receiver.closeConnection();
+        sender.closeConnection();
     }
     public void sendData(Serializable data) {
         try {
@@ -131,8 +116,11 @@ public class Main extends Application {
         }
         File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
         xmlIterator.createXMLClasses(files);
-        for (XMLClass xmlClass : xmlIterator.getXmlClasses()) {
-            System.out.println(xmlClass.toString());
+
+        // Test Print
+        XMLClass[] xmlClasses = xmlIterator.getXMLClasses();
+        for (int i = 0; i < xmlIterator.getXMLClasses().length; i++) {
+            System.out.println(xmlClasses[i].toString());
         }
 
     }
@@ -236,11 +224,13 @@ public class Main extends Application {
 
         // Test print event. TODO: Remove when done.
         testPrint.setOnAction(actionEvent -> {
-            if (xmlIterator.getXmlClasses().isEmpty() || xmlIterator.getXmlClasses() == null) {
-                xmlIterator.testCreateXMLClasses();
+            File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
+            if (xmlIterator.getXMLClasses() == null || xmlIterator.getXMLClasses().length == 0) {
+                xmlIterator.createXMLClasses(files);
             }
-            for (XMLClass xmlClass : xmlIterator.getXmlClasses()) {
-                System.out.println(xmlClass.toString());
+            XMLClass[] xmlClasses = xmlIterator.getXMLClasses();
+            for (int i = 0; i < xmlIterator.getXMLClasses().length; i++) {
+                System.out.println(xmlClasses[i].toString());
             }
         });
 
