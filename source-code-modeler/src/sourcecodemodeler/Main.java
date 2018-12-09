@@ -42,12 +42,12 @@ public class Main extends Application {
 
         @Override
         protected String getIP() {
-            return ""; //TODO: put the IP address you send to
+            return "192.168.1.110"; //TODO: put the IP address you send to
         }
 
         @Override
         protected int getPort() {
-            return 5991;
+            return PORT;
         }
     };
 
@@ -230,6 +230,7 @@ public class Main extends Application {
 
             sourceCodeConverter.clearOutputDirectory();
             sendData(encoded);
+            nodeNumber++;
 
         });
 

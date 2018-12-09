@@ -67,7 +67,9 @@ public abstract class NetworkConnection {
                     //if(socket.isConnected()) System.out.println("Socket connected");
                 }
             } catch (Exception e) {
-                onReceiveCallback.accept("Connection closed.");
+               // onReceiveCallback.accept("Connection closed.");
+                System.out.println("no receivers found in 10s, retrying..");
+                run();
             }
         }
     }
