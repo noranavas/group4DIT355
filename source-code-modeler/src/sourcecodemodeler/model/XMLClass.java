@@ -1,5 +1,6 @@
 package sourcecodemodeler.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
     This class is an information holder that stores parsed XML data.
     The instances of these classes are temporary.
  */
-public class XMLClass {
+public class XMLClass implements Serializable {
     private String name;
     private List<String> attributes;
     private List<String> methods;

@@ -4,14 +4,15 @@ import sourcecodemodeler.Globals;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /*
     This class uses srcML to convert code files to XML documents.
  */
 public class SourceCodeConverter {
-    private final String pathToSrcML = Globals.PATH_TO_SRCML;
-    private final String outputDirectory = Globals.PATH_TO_XML_FILES;
+    public static final String PATH_TO_SRCML = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\srcML-Win\\bin\\srcml.exe";
+    private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
 
     //===== Constructor(s) =====//
     public SourceCodeConverter() {}
@@ -26,7 +27,7 @@ public class SourceCodeConverter {
         ProcessBuilder pb = new ProcessBuilder(
                 "cmd.exe",
                 "/c",
-                pathToSrcML + " " + filePath + " -o " + outputDirectory + fileName + ".xml"
+                PATH_TO_SRCML + " " + filePath + " -o " + PATH_TO_XML_DIRECTORY + fileName + ".xml"
         );
         pb.redirectErrorStream(true); // Some kind of error handler for streams.
         try {
@@ -50,7 +51,15 @@ public class SourceCodeConverter {
                 convertDirectoryToXML(files[i].getPath());
             } else {
                 // Get string value of 'Optional' object.
-                String filter = getFileExtension(files[i].getName()).get();
+                String filter = "";
+
+                // This try-catch is to prevent files without extensions from throwing an exception.
+                try {
+                    filter = getFileExtension(files[i].getName()).get();
+                } catch (NoSuchElementException e) {
+                    System.out.println("Unspecified extension found for file: " + files[i].getName() + " at: " + files[i].getPath());
+                }
+
                 if (filter.equalsIgnoreCase("java")) {
                     convertToXML(files[i].getName(), files[i].getPath());
                 }
@@ -68,7 +77,7 @@ public class SourceCodeConverter {
 
     // Clears the output directory to prevent files from previous conversions to be included in the current process.
     public void clearOutputDirectory() {
-        File[] files = new File(outputDirectory).listFiles();
+        File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
         for (int i = 0; i < files.length; i++) {
             files[i].delete();
         }

@@ -9,10 +9,8 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,6 @@ import java.util.List;
     The data is then used to create classes that can later be displayed in the produced class diagram.
  */
 public class XMLIterator {
-    private final String pathToXMLDirectory = Globals.PATH_TO_XML_FILES;
     private List<XMLClass> xmlClasses;
 
     //===== Constructor(s) =====//
@@ -35,25 +32,59 @@ public class XMLIterator {
     }
 
     //===== Methods =====//
+    public void createXMLClasses(File[] files) {
+        for (File file : files) {
+            xmlClasses.add(createXMLClass(file));
+        }
+    }
+    public void testCreateXMLClasses() {
+        File[] files = new File(Globals.PATH_TO_XML_DIRECTORY).listFiles();
+        for (File file : files) {
+            xmlClasses.add(createXMLClass(file));
+        }
+    }
+
     // Creates a class (XMLClass) that will hold the data for th visualization.
-    public XMLClass createXMLClass(String name) {
+    private XMLClass createXMLClass(File file) {
         XMLClass xmlClass = new XMLClass();
-        xmlClass.setName(name
-                .replace(".xml", "")
-                .replace(".java", "")
-        );
-        setAttributes(name, xmlClass);
-        setMethods(name, xmlClass);
-        //setRelationships();
+        setClassName(file, xmlClass);
+        setAttributes(file, xmlClass);
+        setMethods(file, xmlClass);
+        //setRelationships(file, xmlClass);
         return xmlClass;
     }
 
-    // Iterates through the XML document to retrieve attributes.
-    private void setAttributes(String xmlFileName, XMLClass xmlClass) {
+    // Iterates through the XML document to retrieve the class name.
+    private void setClassName(File file, XMLClass xmlClass) {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse(new File(pathToXMLDirectory + xmlFileName));
+            Document doc = docBuilder.parse(file);
+
+            NodeList nodeList = doc.getElementsByTagName("name");
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                Node parent = node.getParentNode();
+                if (parent.getNodeName().equalsIgnoreCase("class")) {
+                    node = removeTag(node, "annotation");
+                    node = removeTag(node, "comment");
+                    String s = node.getTextContent();
+                    s = prettyString(s).replace("+", "").replace(" ", "");
+                    xmlClass.setName(s);
+                }
+            }
+        } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
+            e.printStackTrace();
+            System.out.println("Problem parsing XML file: " + file.getName());
+        }
+    }
+
+    // Iterates through the XML document to retrieve attributes.
+    private void setAttributes(File file, XMLClass xmlClass) {
+        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse(file);
 
             NodeList nodeList = doc.getElementsByTagName("decl_stmt"); // Tag for attributes.
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -70,16 +101,16 @@ public class XMLIterator {
             }
         } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
             e.printStackTrace();
-            System.out.println("Problem parsing XML file: " + xmlFileName);
+            System.out.println("Problem parsing XML file: " + file.getName());
         }
     }
 
     // Iterates through a XML document to retrieve methods.
-    private void setMethods(String xmlFileName, XMLClass xmlClass) {
+    private void setMethods(File file, XMLClass xmlClass) {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse(new File(pathToXMLDirectory + xmlFileName));
+            Document doc = docBuilder.parse(file);
             NodeList nodeList = doc.getElementsByTagName("function"); // Tag for methods.
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
@@ -98,7 +129,7 @@ public class XMLIterator {
             }
         } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
             e.printStackTrace();
-            System.out.println("Problem parsing XML file: " + xmlFileName);
+            System.out.println("Problem parsing XML file: " + file.getName());
         }
     }
 
@@ -135,6 +166,7 @@ public class XMLIterator {
                 .replace("void", "")
                 .replace("static", "")
                 .replace("final", "")
+                .replace("    ", " ")
                 .replace("   ", " ")
                 .replace("  ", " ");
         return s;
