@@ -22,6 +22,8 @@ import sourcecodemodeler.network.Receiver;
 import sourcecodemodeler.network.Sender;
 
 import java.io.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
@@ -30,27 +32,30 @@ public class Main extends Application {
     public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
-    private static final String[] IP_ADDRESS = Globals.IP_ADDRESS;
-
-    private NetworkConnection receiver = createReceiver();
-    private NetworkConnection sender = createSender();
+    private static final String IP_ADDRESS_MIDDLEWARE_NODE = "95.80.14.65";
+    private static final String IP_ADDRESS_XML_PARSER_NODE = "95.80.14.65";
+    private static final String IP_ADDRESS_VISUALIZER_NODE = "95.80.14.65";
+    private static String IP_ADDRESS_LOCAL;
+    private static String IP_ADDRESS_NEXT_NODE;
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
 
+    private NetworkConnection receiver = createReceiver();
+    private NetworkConnection sender;
+
     private File selectedDirectory;
-    private int nodeNumber = 1;
 
     //===== Network =====//
     @Override
     public void init() throws Exception {
         receiver.startConnection();
-        sender.startConnection();
+        if (sender != null) sender.startConnection();
     }
     @Override
     public void stop() throws Exception {
         receiver.closeConnection();
-        sender.closeConnection();
+        if (sender != null) sender.closeConnection();
     }
     public void sendData(Serializable data) {
         try {
@@ -61,55 +66,58 @@ public class Main extends Application {
         }
     }
 
-    // Create receiver and sender whenever we want to send/receive data between the nodes.
     private Receiver createReceiver() {
         return new Receiver(PORT, data -> {
             // Give control back to the UI (JavaFX) thread.
             Platform.runLater(() -> {
-
-                if (nodeNumber == 1) {
-                    System.out.println("In node: " + nodeNumber);
-                    parseXML(data);
-                    nodeNumber++;
-                    //===== NEW STUFF
-                    File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
-                    xmlIterator.createXMLClasses(files);
-                    XMLClass[] xmlClassArray = xmlIterator.getXMLClasses();
-                    createSender();
-                    sendData(xmlClassArray);
-                    //=====
-                } else if (nodeNumber == 2) {
-                    System.out.println("In node: " + nodeNumber);
-                    // TODO: Do visualization?
-                    nodeNumber++;
-                } else if (nodeNumber == 3) {
-                    System.out.println("In node: " + nodeNumber);
-                    // TODO: Send visualization to all nodes?
-                    nodeNumber++;
-                } else {
-                    System.out.println("In node: " + nodeNumber);
-                    // TODO: ???
-                }
-
+                handleData(data);
             });
         });
     }
     private Sender createSender() {
-        return new Sender(PORT, "192.168.1.110", data -> {
+        return new Sender(PORT, IP_ADDRESS_LOCAL, data -> {
             Platform.runLater(() -> {
                 System.out.println("Sender: " + data);
             });
         });
     }
 
-    //===== Node Tasks =====//
-    // Node 1
+    public void handleData(Serializable data) {
+        Object object = data;
+
+        // If data is String, it is a ip address.
+        if (object instanceof String) {
+            IP_ADDRESS_NEXT_NODE = (String)data;
+
+        // If data is byte[][], it is the xml files. Do XML parsing.
+        } else if (object instanceof byte[][]) {
+            System.out.println("In XML Parser node...");
+            parseXML(data);
+            if (sender == null) sender = createSender();
+            try {
+                sender.startConnection();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // TODO: Request ip address of next node from middleware?
+            //sendData(IP_ADDRESS_NEXT_NODE);
+            //sendData(xmlIterator.getXMLClasses());
+
+        // If data is XMLClass[], it is the parsed xml. Do visualization.
+        } else if (object instanceof XMLClass[]) {
+            System.out.println("In Visualizer node...");
+            // TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.
+        } else {
+            System.out.println("Unable to recognize data: " + data.toString());
+        }
+    }
+
     private void parseXML(Serializable data) {
         sourceCodeConverter.clearOutputDirectory();
         byte[][] encoded = (byte[][])data;
         for (int i = 0; i < encoded.length; i++) {
             try {
-                Files.write(new File(PATH_TO_XML_DIRECTORY + i).toPath(), encoded[i]);
+                Files.write(new File(PATH_TO_XML_DIRECTORY + "XMLFile" + i).toPath(), encoded[i]);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -117,12 +125,11 @@ public class Main extends Application {
         File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
         xmlIterator.createXMLClasses(files);
 
-        // Test Print
-        XMLClass[] xmlClasses = xmlIterator.getXMLClasses();
-        for (int i = 0; i < xmlIterator.getXMLClasses().length; i++) {
-            System.out.println(xmlClasses[i].toString());
+        // Test print
+        XMLClass[] xmlClass = xmlIterator.getXMLClasses();
+        for (int i = 0; i < xmlClass.length; i++) {
+            System.out.println(xmlClass[i].toString());
         }
-
     }
 
     //===== JavaFX =====//
@@ -191,7 +198,12 @@ public class Main extends Application {
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
             // Source Code Conversion.
-            createSender();
+            sender = createSender();
+            try {
+                sender.startConnection();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             sourceCodeConverter.clearOutputDirectory();
             try {
                 sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
@@ -215,14 +227,12 @@ public class Main extends Application {
                     e.printStackTrace();
                 }
             }
-
             sourceCodeConverter.clearOutputDirectory();
+            sendData(IP_ADDRESS_LOCAL);
             sendData(encoded);
-            nodeNumber++;
-
         });
 
-        // Test print event. TODO: Remove when done.
+        // Test print the parsed XML. TODO: Remove when done.
         testPrint.setOnAction(actionEvent -> {
             File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
             if (xmlIterator.getXMLClasses() == null || xmlIterator.getXMLClasses().length == 0) {
@@ -237,10 +247,14 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
     //===== Main =====//
     public static void main(String[] args) {
         // Runs the start() function.
+        try {
+            IP_ADDRESS_LOCAL = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         launch(args);
     }
 

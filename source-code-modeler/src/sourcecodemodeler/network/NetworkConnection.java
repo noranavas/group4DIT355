@@ -16,10 +16,6 @@ public abstract class NetworkConnection {
         connectionThread.setDaemon(true); // Prevents blocking exiting from JBM. (?)
     }
 
-    public NetworkConnection() {
-
-    }
-
     public void startConnection() throws Exception {
         String s = isReceiver() ? "Receiver" : "Sender";
         System.out.println(s + " started.");
@@ -67,9 +63,7 @@ public abstract class NetworkConnection {
                     //if(socket.isConnected()) System.out.println("Socket connected");
                 }
             } catch (Exception e) {
-               // onReceiveCallback.accept("Connection closed.");
-                System.out.println("no receivers found in 10s, retrying..");
-                run();
+                onReceiveCallback.accept("Connection closed.");
             }
         }
     }
