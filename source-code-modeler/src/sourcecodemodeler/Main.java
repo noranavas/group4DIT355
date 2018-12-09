@@ -3,10 +3,12 @@ package sourcecodemodeler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -28,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
     public static final int PORT = 5991;
-    private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
+    private static final String PATH_TO_CSS = System.getProperty("user.dir") + "/resources/css/";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static final String[] IP_ADDRESS = Globals.IP_ADDRESS;
 
@@ -121,7 +123,7 @@ public class Main extends Application {
         Label title = new Label("Source Code Modeler");
         Button selectBTN = new Button("Select Directory");
         Button visualizeBTN = new Button("Visualize");
-        Label selectedDirectoryName = new Label("");
+        Label selectedDirectoryName = new Label("PLACEHOLDER");
         Button testPrint = new Button("Test Print");
 
         HBox hBoxButtons = new HBox(selectBTN, visualizeBTN);
@@ -145,6 +147,8 @@ public class Main extends Application {
         VBox.setVgrow(pane, Priority.ALWAYS);
         VBox vbox = new VBox(pane);
         vbox.setAlignment(Pos.CENTER);
+        
+        System.out.println(PATH_TO_CSS);
         
         Scene scene = new Scene(vbox, 400, 255);
         primaryStage.setScene(scene);
