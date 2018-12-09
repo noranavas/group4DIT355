@@ -16,6 +16,10 @@ public abstract class NetworkConnection {
         connectionThread.setDaemon(true); // Prevents blocking exiting from JBM. (?)
     }
 
+    public NetworkConnection() {
+
+    }
+
     public void startConnection() throws Exception {
         String s = isReceiver() ? "Receiver" : "Sender";
         System.out.println(s + " started.");
@@ -45,6 +49,7 @@ public abstract class NetworkConnection {
         private Socket socket;
         private ObjectOutputStream out;
 
+
         @Override
         public void run() {
             try (ServerSocket serverSocket = isReceiver() ? new ServerSocket(getPort()) : null;
@@ -59,9 +64,12 @@ public abstract class NetworkConnection {
                 while (true) {
                     Serializable data = (Serializable) in.readObject();
                     onReceiveCallback.accept(data);
+                    //if(socket.isConnected()) System.out.println("Socket connected");
                 }
             } catch (Exception e) {
-                onReceiveCallback.accept("Connection closed.");
+               // onReceiveCallback.accept("Connection closed.");
+                System.out.println("no receivers found in 10s, retrying..");
+                run();
             }
         }
     }
