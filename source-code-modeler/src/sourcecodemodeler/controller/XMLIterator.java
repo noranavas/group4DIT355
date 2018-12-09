@@ -69,7 +69,7 @@ public class XMLIterator {
                     node = removeTag(node, "annotation");
                     node = removeTag(node, "comment");
                     String s = node.getTextContent();
-                    s = prettyString(s).replace("+", "").replace(" ", "");
+                    s = prettyString(s);
                     xmlClass.setName(s);
                 }
             }

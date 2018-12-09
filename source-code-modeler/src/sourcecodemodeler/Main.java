@@ -14,6 +14,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import net.sourceforge.plantuml.nwdiag.Network;
 import sourcecodemodeler.controller.SourceCodeConverter;
 import sourcecodemodeler.controller.XMLIterator;
 import sourcecodemodeler.model.XMLClass;
@@ -32,8 +33,24 @@ public class Main extends Application {
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static final String[] IP_ADDRESS = Globals.IP_ADDRESS;
 
-    private boolean isReceiver = false; // Switch to true/false depending on node (PC).
+    private boolean isReceiver = true; // Switch to true/false depending on node (PC).
     private NetworkConnection connection = isReceiver ? createReceiver() : createSender();
+    private NetworkConnection sender= new NetworkConnection() {
+        @Override
+        protected boolean isReceiver() {
+            return false;
+        }
+
+        @Override
+        protected String getIP() {
+            return ""; //TODO: put the IP address you send to
+        }
+
+        @Override
+        protected int getPort() {
+            return 5991;
+        }
+    };
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -45,6 +62,7 @@ public class Main extends Application {
     @Override
     public void init() throws Exception {
         connection.startConnection();
+        sender.startConnection();
     }
     @Override
     public void stop() throws Exception {
@@ -52,7 +70,7 @@ public class Main extends Application {
     }
     public void sendData(Serializable data) {
         try {
-            connection.send(data);
+            sender.send(data);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error when sending data: " + data.toString());
@@ -68,7 +86,10 @@ public class Main extends Application {
                 if (nodeNumber == 1) {
                     System.out.println("In node: " + nodeNumber);
                     parseXML(data);
+                  /*  parseXML(data);
                     nodeNumber++;
+                    createSender();
+                    sendData(data);*/
                 } else if (nodeNumber == 2) {
                     System.out.println("In node: " + nodeNumber);
                     // TODO: Do visualization?
@@ -86,7 +107,7 @@ public class Main extends Application {
         });
     }
     private Sender createSender() {
-        return new Sender(PORT, IP_ADDRESS[nodeNumber], data -> {
+        return new Sender(PORT, "192.168.1.110", data -> {
             Platform.runLater(() -> {
                 System.out.println("Sender: " + data);
             });
@@ -179,6 +200,7 @@ public class Main extends Application {
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
             // Source Code Conversion.
+            createSender();
             sourceCodeConverter.clearOutputDirectory();
             try {
                 sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
