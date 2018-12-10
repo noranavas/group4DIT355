@@ -36,7 +36,7 @@ public class Main extends Application {
     private static final String IP_ADDRESS_VISUALIZER_NODE = "";
 
     private final String IP_ADDRESS_LOCAL=InetAddress.getLocalHost().getHostAddress();
-    private static String IP_ADDRESS_NEXT_NODE = "";
+    private static String IP_ADDRESS_NEXT_NODE = "192.168.1.178";
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -96,21 +96,24 @@ public class Main extends Application {
 
             //TODO Change this according to what a node does
         // If data is byte[][], it is the xml files. Do XML parsing.
-        }/* else if (object instanceof byte[][]) {
+        } else if (object instanceof byte[][]) {
 
             System.out.println("In XML Parser node...");
             parseXML(data);
 
             // TODO: Request ip address of next node from middleware?
+            try {TimeUnit.SECONDS.sleep(2);}
+            catch (InterruptedException e) {e.printStackTrace();}
+
             System.out.println("SENDING " + IP_ADDRESS_LOCAL);
-            sendData(IP_ADDRESS_LOCAL);
+            sendData(IP_ADDRESS_LOCAL);/*
 
             System.out.println("SENDING XML CLASSES");
             sendData(xmlIterator.getXMLClasses());
 
 
         // If data is XMLClass[], it is the parsed xml. Do visualization.
-        }*/ else if (object instanceof XMLClass[]) {
+        */ } else if (object instanceof XMLClass[]) {
             System.out.println("In Visualizer node...");
             // TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.
         } else {
