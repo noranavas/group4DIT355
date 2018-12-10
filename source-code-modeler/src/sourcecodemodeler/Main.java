@@ -32,12 +32,11 @@ public class Main extends Application {
     public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
-    private static final String IP_ADDRESS_MIDDLEWARE_NODE = "95.80.14.65";
-    private static final String IP_ADDRESS_XML_PARSER_NODE = "95.80.14.65";
-    private static final String IP_ADDRESS_VISUALIZER_NODE = "95.80.14.65";
+    private static final String IP_ADDRESS_MIDDLEWARE_NODE = "";
+    private static final String IP_ADDRESS_XML_PARSER_NODE = "";
+    private static final String IP_ADDRESS_VISUALIZER_NODE = "";
     private static String IP_ADDRESS_LOCAL;
-    private static String IP_ADDRESS_NEXT_NODE;
-    private String tempIP = "192.168.43.37"; //"10.0.223.123";
+    private static String IP_ADDRESS_NEXT_NODE = "192.168.137.169";
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -76,7 +75,7 @@ public class Main extends Application {
         });
     }
     private Sender createSender() {
-        return new Sender(PORT, tempIP, data -> {
+        return new Sender(PORT, IP_ADDRESS_NEXT_NODE, data -> {
             Platform.runLater(() -> {
                 System.out.println("Sender: " + data);
             });
@@ -101,8 +100,8 @@ public class Main extends Application {
                 e.printStackTrace();
             }
             // TODO: Request ip address of next node from middleware?
-            //sendData(IP_ADDRESS_NEXT_NODE);
-            //sendData(xmlIterator.getXMLClasses());
+            sendData(IP_ADDRESS_NEXT_NODE);
+            sendData(xmlIterator.getXMLClasses());
 
         // If data is XMLClass[], it is the parsed xml. Do visualization.
         } else if (object instanceof XMLClass[]) {
@@ -199,11 +198,6 @@ public class Main extends Application {
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
             // Source Code Conversion.
-            try {
-                sender.startConnection();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             sourceCodeConverter.clearOutputDirectory();
             try {
                 sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
@@ -228,7 +222,7 @@ public class Main extends Application {
                 }
             }
             sourceCodeConverter.clearOutputDirectory();
-            sendData(IP_ADDRESS_LOCAL);
+            sendData(IP_ADDRESS_VISUALIZER_NODE);
             sendData(encoded);
         });
 

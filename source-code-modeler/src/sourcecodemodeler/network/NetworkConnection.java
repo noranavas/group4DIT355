@@ -22,16 +22,16 @@ public abstract class NetworkConnection {
         try {
             connectionThread.start();
         } catch (IllegalThreadStateException e) {
-            System.out.println("IllegalThreadStateException");
+            System.out.println("Problem starting " + s);
         }
     }
 
     public void send(Serializable data) throws Exception {
         System.out.println("Sending data...");
-        if (connectionThread.getOut() != null) {
+        if (connectionThread.out != null) {
             connectionThread.out.writeObject(data);
         } else {
-            System.out.println("Obj output stream is null");
+            System.out.println("ObjectOutputStream is null.");
         }
 
     }
@@ -42,7 +42,7 @@ public abstract class NetworkConnection {
             connectionThread.socket.close();
             System.out.println(s + " closed.");
         } catch (Exception e) {
-            System.out.println("Exception when closing " + s);
+            System.out.println("Problem when closing " + s);
         }
     }
 
@@ -54,46 +54,25 @@ public abstract class NetworkConnection {
         private Socket socket;
         private ObjectOutputStream out;
 
-        public ObjectOutputStream getOut() {
-            return out;
-        }
-        public void setOut(ObjectOutputStream out) {
-            this.out = out;
-        }
-
         @Override
         public void run() {
-            try
+            try (ServerSocket serverSocket = isReceiver() ? new ServerSocket(getPort()) : null;
+                 Socket socket = isReceiver() ? serverSocket.accept() : new Socket(getIP(), getPort());
+                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream()))
             {
-                System.out.println("run() is blblb");
-                ServerSocket serverSocket = isReceiver() ? new ServerSocket(getPort()) : null;
-
-                Socket socket;
-                if (isReceiver()) {
-                    System.out.println("A1");
-                    socket = serverSocket.accept();
-                    System.out.println("A2");
-                } else {
-                    System.out.println("B1");
-                    System.out.println(getIP() + " " + getPort());
-                    socket = new Socket(getIP(), getPort());
-                    System.out.println("B2");
-                }
-                System.out.println("C");
-                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
                 this.socket = socket;
                 this.out = out;
                 socket.setTcpNoDelay(true); // Allows faster sending of messages.
-
                 while (true) {
-                    Serializable data = (Serializable) in.readObject();
+                    Serializable data = (Serializable)in.readObject();
                     onReceiveCallback.accept(data);
                     if(socket.isConnected()) System.out.println("Socket connected.");
                 }
             } catch (Exception e) {
-                onReceiveCallback.accept("Connection closed.");
-                e.printStackTrace();
+                onReceiveCallback.accept("Connection closed. Retrying in a few seconds...");
+                //e.printStackTrace();
+                run();
             }
         }
     }
