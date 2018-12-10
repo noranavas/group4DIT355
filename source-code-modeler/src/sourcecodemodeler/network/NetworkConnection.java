@@ -16,10 +16,16 @@ public abstract class NetworkConnection {
         connectionThread.setDaemon(true); // Prevents blocking exiting from JBM. (?)
     }
 
+    public NetworkConnection() {}
+
     public void startConnection() throws Exception {
         String s = isReceiver() ? "Receiver" : "Sender";
         System.out.println(s + " started.");
-        connectionThread.start();
+        try {
+            connectionThread.start();
+        } catch (IllegalThreadStateException e) {
+            System.out.println("IllegalThreadStateException");
+        }
     }
 
     public void send(Serializable data) throws Exception {
@@ -63,7 +69,9 @@ public abstract class NetworkConnection {
                     //if(socket.isConnected()) System.out.println("Socket connected");
                 }
             } catch (Exception e) {
-                onReceiveCallback.accept("Connection closed.");
+                //onReceiveCallback.accept("Connection closed.");
+                System.out.println("no receiver found retrying in 10s");
+                //run();
             }
         }
     }

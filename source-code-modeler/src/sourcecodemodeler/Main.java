@@ -42,7 +42,23 @@ public class Main extends Application {
     private XMLIterator xmlIterator = new XMLIterator();
 
     private NetworkConnection receiver = createReceiver();
-    private NetworkConnection sender;
+    private NetworkConnection sender = createSender();
+    /*new NetworkConnection() {
+        @Override
+        protected boolean isReceiver() {
+            return false;
+        }
+
+        @Override
+        protected String getIP() {
+            return "10.132.178.107"; //TODO: put the IP address you send to
+        }
+
+        @Override
+        protected int getPort() {
+            return PORT;
+        }
+    };*/
 
     private File selectedDirectory;
 
@@ -50,12 +66,11 @@ public class Main extends Application {
     @Override
     public void init() throws Exception {
         receiver.startConnection();
-        if (sender != null) sender.startConnection();
+        sender.startConnection();
     }
     @Override
     public void stop() throws Exception {
         receiver.closeConnection();
-        if (sender != null) sender.closeConnection();
     }
     public void sendData(Serializable data) {
         try {
@@ -75,7 +90,7 @@ public class Main extends Application {
         });
     }
     private Sender createSender() {
-        return new Sender(PORT, IP_ADDRESS_LOCAL, data -> {
+        return new Sender(PORT, "10.132.178.107", data -> {
             Platform.runLater(() -> {
                 System.out.println("Sender: " + data);
             });
@@ -198,7 +213,7 @@ public class Main extends Application {
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
             // Source Code Conversion.
-            sender = createSender();
+            createSender();
             try {
                 sender.startConnection();
             } catch (Exception e) {
