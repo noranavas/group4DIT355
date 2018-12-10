@@ -37,39 +37,26 @@ public class Main extends Application {
     private static final String IP_ADDRESS_VISUALIZER_NODE = "95.80.14.65";
     private static String IP_ADDRESS_LOCAL;
     private static String IP_ADDRESS_NEXT_NODE;
+    private String tempIP = "192.168.43.37"; //"10.0.223.123";
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
 
     private NetworkConnection receiver = createReceiver();
-    private NetworkConnection sender = new NetworkConnection() {
-        @Override
-        protected boolean isReceiver() {
-            return false;
-        }
-
-        @Override
-        protected String getIP() {
-            return "10.132.178.107"; //TODO: put the IP address you send to
-        }
-
-        @Override
-        protected int getPort() {
-            return PORT;
-        }
-    };
+    private NetworkConnection sender  = createSender();
 
     private File selectedDirectory;
 
     //===== Network =====//
     @Override
     public void init() throws Exception {
-        receiver.startConnection();
-        sender.startConnection();
+        if (receiver != null) receiver.startConnection();
+        if (sender != null) sender.startConnection();
     }
     @Override
     public void stop() throws Exception {
-        receiver.closeConnection();
+        if (receiver != null) receiver.closeConnection();
+        if (sender != null) sender.closeConnection();
     }
     public void sendData(Serializable data) {
         try {
@@ -89,7 +76,7 @@ public class Main extends Application {
         });
     }
     private Sender createSender() {
-        return new Sender(PORT, "10.0.109.129", data -> {
+        return new Sender(PORT, tempIP, data -> {
             Platform.runLater(() -> {
                 System.out.println("Sender: " + data);
             });
@@ -212,7 +199,6 @@ public class Main extends Application {
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
             // Source Code Conversion.
-            createSender();
             try {
                 sender.startConnection();
             } catch (Exception e) {
@@ -263,12 +249,12 @@ public class Main extends Application {
 
     //===== Main =====//
     public static void main(String[] args) {
-        // Runs the start() function.
         try {
             IP_ADDRESS_LOCAL = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
+        // Runs the start() function.
         launch(args);
     }
 
