@@ -69,7 +69,7 @@ public abstract class NetworkConnection {
                     Serializable data = (Serializable)in.readObject();
                     Sound.play(System.getProperty("user.dir")+"\\source-code-modeler\\resources\\sound.wav");
                     onReceiveCallback.accept(data);
-                   // if(socket.isConnected()) System.out.println("Socket connected.");
+
                 }
             } catch (Exception e) {
                 onReceiveCallback.accept("Connection closed. Retrying in a few seconds...");
