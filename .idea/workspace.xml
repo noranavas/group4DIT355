@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cddf23ba-2667-4c3f-8adf-9b9191d3549d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/Main$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/network/NetworkConnection$ConnectionThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/network/NetworkConnection$ConnectionThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/network/NetworkConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/sourcecodemodeler/network/NetworkConnection.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java" afterDir="false" />
     </list>
@@ -45,9 +41,15 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="60" column="8" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="8" />
+            <state relative-caret-position="374">
+              <caret line="59" column="6" selection-start-line="59" selection-start-column="6" selection-end-line="59" selection-end-column="6" />
               <folding>
+                <element signature="e#1888#1889#0" expanded="true" />
+                <element signature="e#1924#1925#0" expanded="true" />
+                <element signature="e#1978#1979#0" expanded="true" />
+                <element signature="e#2064#2065#0" expanded="true" />
+                <element signature="e#2117#2118#0" expanded="true" />
+                <element signature="e#2152#2153#0" expanded="true" />
                 <element signature="method#parseXML#0;class#Main#0" />
                 <element signature="e#6826#7456#0" />
                 <element signature="method#main#0;class#Main#0" />
@@ -60,7 +62,7 @@
         <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="174">
-              <caret line="73" column="18" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
+              <caret line="73" column="16" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="16" />
               <folding>
                 <element signature="method#NetworkConnection#0;class#NetworkConnection#0" />
               </folding>
@@ -421,7 +423,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="161017000" />
+    <option name="totallyTimeSpent" value="161323000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
@@ -526,6 +528,12 @@
         <state relative-caret-position="643">
           <caret line="70" column="33" lean-forward="true" selection-start-line="70" selection-start-column="33" selection-end-line="70" selection-end-column="33" />
           <folding>
+            <element signature="e#1888#1889#0" expanded="true" />
+            <element signature="e#1924#1925#0" expanded="true" />
+            <element signature="e#1978#1979#0" expanded="true" />
+            <element signature="e#2064#2065#0" expanded="true" />
+            <element signature="e#2117#2118#0" expanded="true" />
+            <element signature="e#2152#2153#0" expanded="true" />
             <element signature="method#parseXML#0;class#Main#0" />
             <element signature="e#6826#7456#0" />
             <element signature="method#main#0;class#Main#0" />
@@ -692,9 +700,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="60" column="8" selection-start-line="60" selection-start-column="8" selection-end-line="60" selection-end-column="8" />
+        <state relative-caret-position="374">
+          <caret line="59" column="6" selection-start-line="59" selection-start-column="6" selection-end-line="59" selection-end-column="6" />
           <folding>
+            <element signature="e#1888#1889#0" expanded="true" />
+            <element signature="e#1924#1925#0" expanded="true" />
+            <element signature="e#1978#1979#0" expanded="true" />
+            <element signature="e#2064#2065#0" expanded="true" />
+            <element signature="e#2117#2118#0" expanded="true" />
+            <element signature="e#2152#2153#0" expanded="true" />
             <element signature="method#parseXML#0;class#Main#0" />
             <element signature="e#6826#7456#0" />
             <element signature="method#main#0;class#Main#0" />
@@ -705,7 +719,7 @@
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="174">
-          <caret line="73" column="18" selection-start-line="73" selection-start-column="18" selection-end-line="73" selection-end-column="18" />
+          <caret line="73" column="16" selection-start-line="73" selection-start-column="16" selection-end-line="73" selection-end-column="16" />
           <folding>
             <element signature="method#NetworkConnection#0;class#NetworkConnection#0" />
           </folding>

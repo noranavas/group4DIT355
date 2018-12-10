@@ -42,8 +42,7 @@ public class Main extends Application {
     private XMLIterator xmlIterator = new XMLIterator();
 
     private NetworkConnection receiver = createReceiver();
-    private NetworkConnection sender = createSender();
-    /*new NetworkConnection() {
+    private NetworkConnection sender = new NetworkConnection() {
         @Override
         protected boolean isReceiver() {
             return false;
@@ -58,7 +57,7 @@ public class Main extends Application {
         protected int getPort() {
             return PORT;
         }
-    };*/
+    };
 
     private File selectedDirectory;
 
@@ -90,7 +89,7 @@ public class Main extends Application {
         });
     }
     private Sender createSender() {
-        return new Sender(PORT, "10.132.178.107", data -> {
+        return new Sender(PORT, "10.0.109.129", data -> {
             Platform.runLater(() -> {
                 System.out.println("Sender: " + data);
             });

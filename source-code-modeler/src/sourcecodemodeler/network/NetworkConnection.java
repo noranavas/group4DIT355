@@ -71,7 +71,7 @@ public abstract class NetworkConnection {
             } catch (Exception e) {
                 //onReceiveCallback.accept("Connection closed.");
                 System.out.println("no receiver found retrying in 10s");
-                //run();
+                run();
             }
         }
     }
