@@ -35,8 +35,8 @@ public class Main extends Application {
     private static final String IP_ADDRESS_MIDDLEWARE_NODE = "";
     private static final String IP_ADDRESS_XML_PARSER_NODE = "";
     private static final String IP_ADDRESS_VISUALIZER_NODE = "";
-    private static String IP_ADDRESS_LOCAL;
-    private static String IP_ADDRESS_NEXT_NODE = "192.168.137.169";
+    private final String IP_ADDRESS_LOCAL=InetAddress.getLocalHost().getHostAddress();
+    private static String IP_ADDRESS_NEXT_NODE = "192.168.1.110";
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -46,16 +46,19 @@ public class Main extends Application {
 
     private File selectedDirectory;
 
+    public Main() throws UnknownHostException {
+    }
+
     //===== Network =====//
     @Override
     public void init() throws Exception {
-        if (receiver != null) receiver.startConnection();
-        if (sender != null) sender.startConnection();
+        receiver.startConnection();
+        sender.startConnection();
     }
     @Override
     public void stop() throws Exception {
-        if (receiver != null) receiver.closeConnection();
-        if (sender != null) sender.closeConnection();
+        receiver.closeConnection();
+        sender.closeConnection();
     }
     public void sendData(Serializable data) {
         try {
@@ -77,7 +80,8 @@ public class Main extends Application {
     private Sender createSender() {
         return new Sender(PORT, IP_ADDRESS_NEXT_NODE, data -> {
             Platform.runLater(() -> {
-                System.out.println("Sender: " + data);
+                //System.out.println("Sender: " + data);
+                System.out.println("Sender created");
             });
         });
     }
@@ -87,10 +91,12 @@ public class Main extends Application {
 
         // If data is String, it is a ip address.
         if (object instanceof String) {
-            IP_ADDRESS_NEXT_NODE = (String)data;
+            //IP_ADDRESS_NEXT_NODE = (String)data;
+            System.out.println("Received " + (String)data);
 
+            //TODO Change this according to what a node does
         // If data is byte[][], it is the xml files. Do XML parsing.
-        } else if (object instanceof byte[][]) {
+        }/* else if (object instanceof byte[][]) {
             System.out.println("In XML Parser node...");
             parseXML(data);
             if (sender == null) sender = createSender();
@@ -104,7 +110,7 @@ public class Main extends Application {
             sendData(xmlIterator.getXMLClasses());
 
         // If data is XMLClass[], it is the parsed xml. Do visualization.
-        } else if (object instanceof XMLClass[]) {
+        }*/ else if (object instanceof XMLClass[]) {
             System.out.println("In Visualizer node...");
             // TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.
         } else {
@@ -197,8 +203,10 @@ public class Main extends Application {
         // Visualize event.
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
-            // Source Code Conversion.
             sourceCodeConverter.clearOutputDirectory();
+            createSender();
+
+            // Source Code Conversion.
             try {
                 sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             } catch (NullPointerException e) {
@@ -222,8 +230,12 @@ public class Main extends Application {
                 }
             }
             sourceCodeConverter.clearOutputDirectory();
-            sendData(IP_ADDRESS_VISUALIZER_NODE);
+            sendData(IP_ADDRESS_LOCAL);
+            System.out.println(System.lineSeparator() + "sending 'LOCAL IP: "+IP_ADDRESS_LOCAL + "' to " +IP_ADDRESS_NEXT_NODE);
             sendData(encoded);
+            System.out.println("sending 'encoded' to "+IP_ADDRESS_NEXT_NODE + System.lineSeparator());
+
+
         });
 
         // Test print the parsed XML. TODO: Remove when done.
@@ -243,11 +255,7 @@ public class Main extends Application {
 
     //===== Main =====//
     public static void main(String[] args) {
-        try {
-            IP_ADDRESS_LOCAL = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+
         // Runs the start() function.
         launch(args);
     }

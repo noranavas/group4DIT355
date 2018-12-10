@@ -1,5 +1,6 @@
 package sourcecodemodeler.network;
 
+import sourcecodemodeler.model.Sound;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -27,7 +28,7 @@ public abstract class NetworkConnection {
     }
 
     public void send(Serializable data) throws Exception {
-        System.out.println("Sending data...");
+        //System.out.println("Sending data...");
         if (connectionThread.out != null) {
             connectionThread.out.writeObject(data);
         } else {
@@ -66,8 +67,9 @@ public abstract class NetworkConnection {
                 socket.setTcpNoDelay(true); // Allows faster sending of messages.
                 while (true) {
                     Serializable data = (Serializable)in.readObject();
+                    Sound.play(System.getProperty("user.dir")+"\\source-code-modeler\\resources\\sound.wav");
                     onReceiveCallback.accept(data);
-                    if(socket.isConnected()) System.out.println("Socket connected.");
+                   // if(socket.isConnected()) System.out.println("Socket connected.");
                 }
             } catch (Exception e) {
                 onReceiveCallback.accept("Connection closed. Retrying in a few seconds...");
