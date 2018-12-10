@@ -67,7 +67,7 @@ public abstract class NetworkConnection {
                 while (true) {
                     Serializable data = (Serializable)in.readObject();
                     onReceiveCallback.accept(data);
-                    if(socket.isConnected()) System.out.println("Socket connected.");
+                    //if(socket.isConnected()) System.out.println("Socket connected.");
                 }
             } catch (Exception e) {
                 onReceiveCallback.accept("Connection closed. Retrying in a few seconds...");
