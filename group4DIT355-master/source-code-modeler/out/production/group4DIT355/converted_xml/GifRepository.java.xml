@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\giflib-master\src\main\java\com\teamtreehouse\giflib\data\GifRepository.java"><package>package <name><name>com</name><operator>.</operator><name>teamtreehouse</name><operator>.</operator><name>giflib</name><operator>.</operator><name>data</name></name>;</package>
+
+<import>import <name><name>com</name><operator>.</operator><name>teamtreehouse</name><operator>.</operator><name>giflib</name><operator>.</operator><name>model</name><operator>.</operator><name>Gif</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>stereotype</name><operator>.</operator><name>Component</name></name>;</import>
+
+<import>import <name><name>java</name><operator>.</operator><name>time</name><operator>.</operator><name>LocalDate</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>ArrayList</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>Arrays</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>List</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>stream</name><operator>.</operator><name>Collectors</name></name>;</import>
+
+<class><annotation>@<name>Component</name></annotation>
+<specifier>public</specifier> class <name>GifRepository</name> <block>{
+    <decl_stmt><decl><specifier>private</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name><name>List</name><argument_list type="generic">&lt;<argument><name>Gif</name></argument>&gt;</argument_list></name></type> <name>ALL_GIFS</name> <init>= <expr><call><name><name>Arrays</name><operator>.</operator><name>asList</name></name><argument_list>(
+        <argument><expr><operator>new</operator> <call><name>Gif</name><argument_list>(<argument><expr><literal type="string">"android-explosion"</literal></expr></argument>, <argument><expr><literal type="number">3</literal></expr></argument>, <argument><expr><call><name><name>LocalDate</name><operator>.</operator><name>of</name></name><argument_list>(<argument><expr><literal type="number">2015</literal></expr></argument>,<argument><expr><literal type="number">2</literal></expr></argument>,<argument><expr><literal type="number">13</literal></expr></argument>)</argument_list></call></expr></argument>, <argument><expr><literal type="string">"Chris Ramacciotti"</literal></expr></argument>, <argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr></argument>,
+        <argument><expr><operator>new</operator> <call><name>Gif</name><argument_list>(<argument><expr><literal type="string">"ben-and-mike"</literal></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>, <argument><expr><call><name><name>LocalDate</name><operator>.</operator><name>of</name></name><argument_list>(<argument><expr><literal type="number">2015</literal></expr></argument>,<argument><expr><literal type="number">10</literal></expr></argument>,<argument><expr><literal type="number">30</literal></expr></argument>)</argument_list></call></expr></argument>, <argument><expr><literal type="string">"Ben Jakuben"</literal></expr></argument>, <argument><expr><literal type="boolean">true</literal></expr></argument>)</argument_list></call></expr></argument>,
+        <argument><expr><operator>new</operator> <call><name>Gif</name><argument_list>(<argument><expr><literal type="string">"book-dominos"</literal></expr></argument>, <argument><expr><literal type="number">3</literal></expr></argument>, <argument><expr><call><name><name>LocalDate</name><operator>.</operator><name>of</name></name><argument_list>(<argument><expr><literal type="number">2015</literal></expr></argument>,<argument><expr><literal type="number">9</literal></expr></argument>,<argument><expr><literal type="number">15</literal></expr></argument>)</argument_list></call></expr></argument>, <argument><expr><literal type="string">"Craig Dennis"</literal></expr></argument>, <argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr></argument>,
+        <argument><expr><operator>new</operator> <call><name>Gif</name><argument_list>(<argument><expr><literal type="string">"compiler-bot"</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>, <argument><expr><call><name><name>LocalDate</name><operator>.</operator><name>of</name></name><argument_list>(<argument><expr><literal type="number">2015</literal></expr></argument>,<argument><expr><literal type="number">2</literal></expr></argument>,<argument><expr><literal type="number">13</literal></expr></argument>)</argument_list></call></expr></argument>, <argument><expr><literal type="string">"Ada Lovelace"</literal></expr></argument>, <argument><expr><literal type="boolean">true</literal></expr></argument>)</argument_list></call></expr></argument>,
+        <argument><expr><operator>new</operator> <call><name>Gif</name><argument_list>(<argument><expr><literal type="string">"cowboy-coder"</literal></expr></argument>, <argument><expr><literal type="number">1</literal></expr></argument>, <argument><expr><call><name><name>LocalDate</name><operator>.</operator><name>of</name></name><argument_list>(<argument><expr><literal type="number">2015</literal></expr></argument>,<argument><expr><literal type="number">2</literal></expr></argument>,<argument><expr><literal type="number">13</literal></expr></argument>)</argument_list></call></expr></argument>, <argument><expr><literal type="string">"Grace Hopper"</literal></expr></argument>, <argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr></argument>,
+        <argument><expr><operator>new</operator> <call><name>Gif</name><argument_list>(<argument><expr><literal type="string">"infinite-andrew"</literal></expr></argument>, <argument><expr><literal type="number">2</literal></expr></argument>, <argument><expr><call><name><name>LocalDate</name><operator>.</operator><name>of</name></name><argument_list>(<argument><expr><literal type="number">2015</literal></expr></argument>,<argument><expr><literal type="number">8</literal></expr></argument>,<argument><expr><literal type="number">23</literal></expr></argument>)</argument_list></call></expr></argument>, <argument><expr><literal type="string">"Marissa Mayer"</literal></expr></argument>, <argument><expr><literal type="boolean">true</literal></expr></argument>)</argument_list></call></expr></argument>
+    )</argument_list></call></expr></init></decl>;</decl_stmt>
+
+    <function><specifier>public</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>Gif</name></argument>&gt;</argument_list></name></type> <name>getAllGifs</name><parameter_list>()</parameter_list><block>{
+        <return>return <expr><name>ALL_GIFS</name></expr>;</return>
+    }</block></function>
+
+    <function><specifier>public</specifier> <type><name>Gif</name></type> <name>findByName</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>name</name></decl></parameter>)</parameter_list> <block>{
+        <for>for<control>(<init><decl><type><name>Gif</name></type> <name>gif</name> <range>: <expr><name>ALL_GIFS</name></expr></range></decl></init>)</control> <block>{
+            <if>if<condition>(<expr><call><name><name>gif</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>equals</name><argument_list>(<argument><expr><name>name</name></expr></argument>)</argument_list></call></expr>)</condition><then> <block>{
+                <return>return <expr><name>gif</name></expr>;</return>
+            }</block></then></if>
+        }</block></for>
+        <return>return <expr><literal type="null">null</literal></expr>;</return>
+        <comment type="line">// OR return ALL_GIFS.stream().filter(gif -&gt; gif.getName().equals(name)).findFirst().get();</comment>
+    }</block></function>
+
+    <function><specifier>public</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>Gif</name></argument>&gt;</argument_list></name></type> <name>getFavorites</name><parameter_list>()</parameter_list> <block>{
+        <decl_stmt><decl><type><name><name>List</name><argument_list type="generic">&lt;<argument><name>Gif</name></argument>&gt;</argument_list></name></type> <name>faves</name> <init>= <expr><operator>new</operator> <call><name><name>ArrayList</name><argument_list type="generic">&lt;<argument><name>Gif</name></argument>&gt;</argument_list></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <for>for<control>(<init><decl><type><name>Gif</name></type> <name>gif</name> <range>: <expr><name>ALL_GIFS</name></expr></range></decl></init>)</control> <block>{
+            <if>if<condition>(<expr><call><name><name>gif</name><operator>.</operator><name>isFavorite</name></name><argument_list>()</argument_list></call></expr>)</condition><then> <block>{
+                <expr_stmt><expr><call><name><name>faves</name><operator>.</operator><name>add</name></name><argument_list>(<argument><expr><name>gif</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></then></if>
+        }</block></for>
+        <return>return <expr><name>faves</name></expr>;</return>
+        <comment type="line">// OR return ALL_GIFS.stream().filter(Gif::isFavorite).collect(Collectors.toList());</comment>
+    }</block></function>
+
+    <function><specifier>public</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>Gif</name></argument>&gt;</argument_list></name></type> <name>findByCategoryId</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>id</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name><name>List</name><argument_list type="generic">&lt;<argument><name>Gif</name></argument>&gt;</argument_list></name></type> <name>gifs</name> <init>= <expr><operator>new</operator> <call><name><name>ArrayList</name><argument_list type="generic">&lt;<argument><name>Gif</name></argument>&gt;</argument_list></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <for>for<control>(<init><decl><type><name>Gif</name></type> <name>gif</name> <range>: <expr><name>ALL_GIFS</name></expr></range></decl></init>)</control> <block>{
+            <if>if<condition>(<expr><call><name><name>gif</name><operator>.</operator><name>getCategoryId</name></name><argument_list>()</argument_list></call> <operator>==</operator> <name>id</name></expr>)</condition><then> <block>{
+                <expr_stmt><expr><call><name><name>gifs</name><operator>.</operator><name>add</name></name><argument_list>(<argument><expr><name>gif</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></then></if>
+        }</block></for>
+        <return>return <expr><name>gifs</name></expr>;</return>
+        <comment type="line">// OR return ALL_GIFS.stream().filter(gif -&gt; gif.getCategoryId() == id).collect(Collectors.toList());</comment>
+    }</block></function>
+}</block></class>
+</unit>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\x220\Desktop\newbranch\group4DIT355\source-code-modeler\src\sourcecodemodeler\Main.java"><package>package <name>sourcecodemodeler</name>;</package>
+
+<import>import <name><name>javafx</name><operator>.</operator><name>application</name><operator>.</operator><name>Application</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>application</name><operator>.</operator><name>Platform</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>geometry</name><operator>.</operator><name>Pos</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>scene</name><operator>.</operator><name>Node</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>scene</name><operator>.</operator><name>Scene</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>scene</name><operator>.</operator><name>control</name><operator>.</operator><name>Button</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>scene</name><operator>.</operator><name>control</name><operator>.</operator><name>Label</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>scene</name><operator>.</operator><name>layout</name><operator>.</operator><name>HBox</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>scene</name><operator>.</operator><name>layout</name><operator>.</operator><name>Pane</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>scene</name><operator>.</operator><name>layout</name><operator>.</operator><name>Priority</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>scene</name><operator>.</operator><name>layout</name><operator>.</operator><name>TilePane</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>scene</name><operator>.</operator><name>layout</name><operator>.</operator><name>VBox</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>stage</name><operator>.</operator><name>DirectoryChooser</name></name>;</import>
+<import>import <name><name>javafx</name><operator>.</operator><name>stage</name><operator>.</operator><name>Stage</name></name>;</import>
+<import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name><operator>.</operator><name>SourceCodeConverter</name></name>;</import>
+<import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name><operator>.</operator><name>XMLIterator</name></name>;</import>
+<import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>model</name><operator>.</operator><name>XMLClass</name></name>;</import>
+<import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>network</name><operator>.</operator><name>NetworkConnection</name></name>;</import>
+<import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>network</name><operator>.</operator><name>Receiver</name></name>;</import>
+<import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>network</name><operator>.</operator><name>Sender</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>*</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>net</name><operator>.</operator><name>InetAddress</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>net</name><operator>.</operator><name>UnknownHostException</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>nio</name><operator>.</operator><name>file</name><operator>.</operator><name>Files</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>nio</name><operator>.</operator><name>file</name><operator>.</operator><name>Paths</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>concurrent</name><operator>.</operator><name>TimeUnit</name></name>;</import>
+
+<class><specifier>public</specifier> class <name>Main</name> <super><extends>extends <name>Application</name></extends></super> <block>{
+    <decl_stmt><decl><specifier>public</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>int</name></type> <name>PORT</name> <init>= <expr><literal type="number">5991</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>PATH_TO_CSS</name> <init>= <expr><call><name><name>System</name><operator>.</operator><name>getProperty</name></name><argument_list>(<argument><expr><literal type="string">"user.dir"</literal></expr></argument>)</argument_list></call> <operator>+</operator> <literal type="string">"\\source-code-modeler\\resources\\css\\"</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>PATH_TO_XML_DIRECTORY</name> <init>= <expr><name><name>Globals</name><operator>.</operator><name>PATH_TO_XML_DIRECTORY</name></name></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>IP_ADDRESS_MIDDLEWARE_NODE</name> <init>= <expr><literal type="string">""</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>IP_ADDRESS_XML_PARSER_NODE</name> <init>= <expr><literal type="string">""</literal></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <specifier>static</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>IP_ADDRESS_VISUALIZER_NODE</name> <init>= <expr><literal type="string">""</literal></expr></init></decl>;</decl_stmt>
+
+    <decl_stmt><decl><specifier>private</specifier> <type><specifier>final</specifier> <name>String</name></type> <name>IP_ADDRESS_LOCAL</name><init>=<expr><call><name><name>InetAddress</name><operator>.</operator><name>getLocalHost</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>getHostAddress</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <specifier>static</specifier> <type><name>String</name></type> <name>IP_ADDRESS_NEXT_NODE</name> <init>= <expr><literal type="string">"192.168.1.110"</literal></expr></init></decl>;</decl_stmt>
+
+    <decl_stmt><decl><specifier>private</specifier> <type><name>SourceCodeConverter</name></type> <name>sourceCodeConverter</name> <init>= <expr><operator>new</operator> <call><name>SourceCodeConverter</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name>XMLIterator</name></type> <name>xmlIterator</name> <init>= <expr><operator>new</operator> <call><name>XMLIterator</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+
+    <decl_stmt><decl><specifier>private</specifier> <type><name>NetworkConnection</name></type> <name>receiver</name> <init>= <expr><call><name>createReceiver</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name>NetworkConnection</name></type> <name>sender</name>  <init>= <expr><call><name>createSender</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+
+    <decl_stmt><decl><specifier>private</specifier> <type><name>File</name></type> <name>selectedDirectory</name></decl>;</decl_stmt>
+
+    <constructor><specifier>public</specifier> <name>Main</name><parameter_list>()</parameter_list> <throws>throws <argument><expr><name>UnknownHostException</name></expr></argument></throws> <block>{
+    }</block></constructor>
+
+    <comment type="line">//===== Network =====//</comment>
+    <function><annotation>@<name>Override</name></annotation>
+    <specifier>public</specifier> <type><name>void</name></type> <name>init</name><parameter_list>()</parameter_list> <throws>throws <argument><expr><name>Exception</name></expr></argument></throws> <block>{
+        <expr_stmt><expr><call><name><name>receiver</name><operator>.</operator><name>startConnection</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>sender</name><operator>.</operator><name>startConnection</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+    <function><annotation>@<name>Override</name></annotation>
+    <specifier>public</specifier> <type><name>void</name></type> <name>stop</name><parameter_list>()</parameter_list> <throws>throws <argument><expr><name>Exception</name></expr></argument></throws> <block>{
+        <expr_stmt><expr><call><name><name>receiver</name><operator>.</operator><name>closeConnection</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>sender</name><operator>.</operator><name>closeConnection</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>sendData</name><parameter_list>(<parameter><decl><type><name>Serializable</name></type> <name>data</name></decl></parameter>)</parameter_list> <block>{
+        <try>try <block>{
+            <expr_stmt><expr><call><name><name>sender</name><operator>.</operator><name>send</name></name><argument_list>(<argument><expr><name>data</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>Exception</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+            <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Error when sending data: "</literal> <operator>+</operator> <call><name><name>data</name><operator>.</operator><name>toString</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></catch></try>
+    }</block></function>
+    <function><specifier>private</specifier> <type><name>Receiver</name></type> <name>createReceiver</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><operator>new</operator> <call><name>Receiver</name><argument_list>(<argument><expr><name>PORT</name></expr></argument>, <argument><expr><lambda><parameter_list type="pseudo"><parameter><decl><name>data</name></decl></parameter></parameter_list> -&gt; <block>{
+            <comment type="line">// Give control back to the UI (JavaFX) thread.</comment>
+            <expr_stmt><expr><call><name><name>Platform</name><operator>.</operator><name>runLater</name></name><argument_list>(<argument><expr><lambda><parameter_list>()</parameter_list> -&gt; <block>{
+                <expr_stmt><expr><call><name>handleData</name><argument_list>(<argument><expr><name>data</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></lambda></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></lambda></expr></argument>)</argument_list></call></expr>;</return>
+    }</block></function>
+    <function><specifier>private</specifier> <type><name>Sender</name></type> <name>createSender</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><operator>new</operator> <call><name>Sender</name><argument_list>(<argument><expr><name>PORT</name></expr></argument>, <argument><expr><name>IP_ADDRESS_NEXT_NODE</name></expr></argument>, <argument><expr><lambda><parameter_list type="pseudo"><parameter><decl><name>data</name></decl></parameter></parameter_list> -&gt; <block>{
+            <expr_stmt><expr><call><name><name>Platform</name><operator>.</operator><name>runLater</name></name><argument_list>(<argument><expr><lambda><parameter_list>()</parameter_list> -&gt; <block>{
+                <comment type="line">//System.out.println("Sender: " + data);</comment>
+                <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Sender created"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></lambda></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></lambda></expr></argument>)</argument_list></call></expr>;</return>
+    }</block></function>
+
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>handleData</name><parameter_list>(<parameter><decl><type><name>Serializable</name></type> <name>data</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name>Object</name></type> <name>object</name> <init>= <expr><name>data</name></expr></init></decl>;</decl_stmt>
+
+        <comment type="line">// If data is String, it is a ip address.</comment>
+        <if>if <condition>(<expr><name>object</name> <operator>instanceof</operator> <name>String</name></expr>)</condition><then> <block>{
+            <comment type="line">//IP_ADDRESS_NEXT_NODE = (String)data;</comment>
+
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Received "</literal> <operator>+</operator> <operator>(</operator><name>String</name><operator>)</operator><name>data</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+            <comment type="line">//TODO Change this according to what a node does</comment>
+        <comment type="line">// If data is byte[][], it is the xml files. Do XML parsing.</comment>
+        }</block></then><comment type="block">/* else if (object instanceof byte[][]) {
+
+            System.out.println("In XML Parser node...");
+            parseXML(data);
+
+            // TODO: Request ip address of next node from middleware?
+            System.out.println("SENDING " + IP_ADDRESS_LOCAL);
+            sendData(IP_ADDRESS_LOCAL);
+
+            System.out.println("SENDING XML CLASSES");
+            sendData(xmlIterator.getXMLClasses());
+
+
+        // If data is XMLClass[], it is the parsed xml. Do visualization.
+        }*/</comment> <elseif>else <if>if <condition>(<expr><name>object</name> <operator>instanceof</operator> <name><name>XMLClass</name><index>[]</index></name></expr>)</condition><then> <block>{
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"In Visualizer node..."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <comment type="line">// TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.</comment>
+        }</block></then></if></elseif> <else>else <block>{
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Unable to recognize data: "</literal> <operator>+</operator> <call><name><name>data</name><operator>.</operator><name>toString</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <comment type="line">//*/</comment>
+        }</block></else></if>
+    }</block></function>
+
+    <function><specifier>private</specifier> <type><name>void</name></type> <name>parseXML</name><parameter_list>(<parameter><decl><type><name>Serializable</name></type> <name>data</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><call><name><name>sourceCodeConverter</name><operator>.</operator><name>clearOutputDirectory</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        <decl_stmt><decl><type><name><name>byte</name><index>[]</index><index>[]</index></name></type> <name>encoded</name> <init>= <expr><operator>(</operator><name><name>byte</name><index>[]</index><index>[]</index></name><operator>)</operator><name>data</name></expr></init></decl>;</decl_stmt>
+        <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name><name>encoded</name><operator>.</operator><name>length</name></name></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+            <try>try <block>{
+                <expr_stmt><expr><call><name><name>Files</name><operator>.</operator><name>write</name></name><argument_list>(<argument><expr><operator>new</operator> <call><name>File</name><argument_list>(<argument><expr><name>PATH_TO_XML_DIRECTORY</name> <operator>+</operator> <literal type="string">"XMLFile"</literal> <operator>+</operator> <name>i</name></expr></argument>)</argument_list></call><operator>.</operator><call><name>toPath</name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><name><name>encoded</name><index>[<expr><name>i</name></expr>]</index></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>IOException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+                <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            }</block></catch></try>
+        }</block></for>
+        <decl_stmt><decl><type><name><name>File</name><index>[]</index></name></type> <name>files</name> <init>= <expr><operator>new</operator> <call><name>File</name><argument_list>(<argument><expr><name>PATH_TO_XML_DIRECTORY</name></expr></argument>)</argument_list></call><operator>.</operator><call><name>listFiles</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>xmlIterator</name><operator>.</operator><name>createXMLClasses</name></name><argument_list>(<argument><expr><name>files</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+        <comment type="line">// Test print</comment>
+        <decl_stmt><decl><type><name><name>XMLClass</name><index>[]</index></name></type> <name>xmlClass</name> <init>= <expr><call><name><name>xmlIterator</name><operator>.</operator><name>getXMLClasses</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name><name>xmlClass</name><operator>.</operator><name>length</name></name></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><name><name>xmlClass</name><index>[<expr><name>i</name></expr>]</index></name><operator>.</operator><call><name>toString</name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></for>
+    }</block></function>
+
+    <comment type="line">//===== JavaFX =====//</comment>
+    <comment type="line">// Launches the JavaFX window.</comment>
+    <function><annotation>@<name>Override</name></annotation>
+    <specifier>public</specifier> <type><name>void</name></type> <name>start</name><parameter_list>(<parameter><decl><type><name>Stage</name></type> <name>primaryStage</name></decl></parameter>)</parameter_list> <throws>throws <argument><expr><name>Exception</name></expr></argument></throws> <block>{
+        <comment type="line">// Set JavaFX content.</comment>
+        <decl_stmt><decl><type><name>Label</name></type> <name>title</name> <init>= <expr><operator>new</operator> <call><name>Label</name><argument_list>(<argument><expr><literal type="string">"Source Code Modeler"</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>Button</name></type> <name>selectBTN</name> <init>= <expr><operator>new</operator> <call><name>Button</name><argument_list>(<argument><expr><literal type="string">"Select Directory"</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>Button</name></type> <name>visualizeBTN</name> <init>= <expr><operator>new</operator> <call><name>Button</name><argument_list>(<argument><expr><literal type="string">"Visualize"</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>Label</name></type> <name>selectedDirectoryName</name> <init>= <expr><operator>new</operator> <call><name>Label</name><argument_list>(<argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>Button</name></type> <name>testPrint</name> <init>= <expr><operator>new</operator> <call><name>Button</name><argument_list>(<argument><expr><literal type="string">"Test Print"</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+
+        <decl_stmt><decl><type><name>HBox</name></type> <name>hBoxButtons</name> <init>= <expr><operator>new</operator> <call><name>HBox</name><argument_list>(<argument><expr><name>selectBTN</name></expr></argument>, <argument><expr><name>visualizeBTN</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>HBox</name></type> <name>hBoxSelectedDirectory</name> <init>= <expr><operator>new</operator> <call><name>HBox</name><argument_list>(<argument><expr><name>selectedDirectoryName</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name>HBox</name></type> <name>hBoxTestPrint</name> <init>= <expr><operator>new</operator> <call><name>HBox</name><argument_list>(<argument><expr><name>testPrint</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+
+        <expr_stmt><expr><call><name><name>hBoxButtons</name><operator>.</operator><name>getStyleClass</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>add</name><argument_list>(<argument><expr><literal type="string">"Hbox"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>hBoxSelectedDirectory</name><operator>.</operator><name>getStyleClass</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>add</name><argument_list>(<argument><expr><literal type="string">"Hbox"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>hBoxTestPrint</name><operator>.</operator><name>getStyleClass</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>add</name><argument_list>(<argument><expr><literal type="string">"Hbox"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt> <comment type="line">// TODO: Remove when done</comment>
+
+        <expr_stmt><expr><call><name><name>hBoxButtons</name><operator>.</operator><name>setId</name></name><argument_list>(<argument><expr><literal type="string">"Hbox"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>hBoxSelectedDirectory</name><operator>.</operator><name>setId</name></name><argument_list>(<argument><expr><literal type="string">"Hbox"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>hBoxTestPrint</name><operator>.</operator><name>setId</name></name><argument_list>(<argument><expr><literal type="string">"Hbox"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt> <comment type="line">// TODO: Remove when done</comment>
+
+        <decl_stmt><decl><type><name>Pane</name></type> <name>pane</name> <init>= <expr><operator>new</operator> <call><name>TilePane</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>pane</name><operator>.</operator><name>getChildren</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>add</name><argument_list>(<argument><expr><name>title</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>pane</name><operator>.</operator><name>getStyleClass</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>add</name><argument_list>(<argument><expr><literal type="string">"root"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>pane</name><operator>.</operator><name>getChildren</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>addAll</name><argument_list>(<argument><expr><name>hBoxButtons</name></expr></argument>, <argument><expr><name>hBoxSelectedDirectory</name></expr></argument>, <argument><expr><name>hBoxTestPrint</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><operator>(</operator><operator>(</operator><name>TilePane</name><operator>)</operator> <name>pane</name><operator>)</operator><operator>.</operator><call><name>setAlignment</name><argument_list>(<argument><expr><name><name>Pos</name><operator>.</operator><name>CENTER</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+        <expr_stmt><expr><call><name><name>VBox</name><operator>.</operator><name>setVgrow</name></name><argument_list>(<argument><expr><name>pane</name></expr></argument>, <argument><expr><name><name>Priority</name><operator>.</operator><name>ALWAYS</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <decl_stmt><decl><type><name>VBox</name></type> <name>vbox</name> <init>= <expr><operator>new</operator> <call><name>VBox</name><argument_list>(<argument><expr><name>pane</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>vbox</name><operator>.</operator><name>setAlignment</name></name><argument_list>(<argument><expr><name><name>Pos</name><operator>.</operator><name>CENTER</name></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        
+        <decl_stmt><decl><type><name>Scene</name></type> <name>scene</name> <init>= <expr><operator>new</operator> <call><name>Scene</name><argument_list>(<argument><expr><name>vbox</name></expr></argument>, <argument><expr><literal type="number">400</literal></expr></argument>, <argument><expr><literal type="number">255</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>primaryStage</name><operator>.</operator><name>setScene</name></name><argument_list>(<argument><expr><name>scene</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>primaryStage</name><operator>.</operator><name>setResizable</name></name><argument_list>(<argument><expr><literal type="boolean">false</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>primaryStage</name><operator>.</operator><name>setTitle</name></name><argument_list>(<argument><expr><literal type="string">"Source Code Modeler"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+        <comment type="line">// Apply all css files in the resources/css directory to the JavaFX scene.</comment>
+        <decl_stmt><decl><type><name><name>File</name><index>[]</index></name></type> <name>cssFiles</name> <init>= <expr><operator>new</operator> <call><name>File</name><argument_list>(<argument><expr><name>PATH_TO_CSS</name></expr></argument>)</argument_list></call><operator>.</operator><call><name>listFiles</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <for>for <control>(<init><decl><type><name>File</name></type> <name>cssFile</name> <range>: <expr><name>cssFiles</name></expr></range></decl></init>)</control> <block>{
+            <expr_stmt><expr><call><name><name>scene</name><operator>.</operator><name>getStylesheets</name></name><argument_list>()</argument_list></call>
+                    <operator>.</operator><call><name>add</name>
+                    <argument_list>(
+                            <argument><expr><operator>new</operator> <call><name>File</name><argument_list>(<argument><expr><name>PATH_TO_CSS</name> <operator>+</operator> <call><name><name>cssFile</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call><operator>.</operator><call><name>toURI</name><argument_list>()</argument_list></call><operator>.</operator><call><name>toURL</name><argument_list>()</argument_list></call><operator>.</operator><call><name>toExternalForm</name><argument_list>()</argument_list></call></expr></argument>
+                    )</argument_list></call></expr>;</expr_stmt>
+        }</block></for>
+
+        <comment type="line">// Select directory event.</comment>
+        <expr_stmt><expr><call><name><name>selectBTN</name><operator>.</operator><name>setOnAction</name></name><argument_list>(<argument><expr><lambda><parameter_list type="pseudo"><parameter><decl><name>actionEvent</name></decl></parameter></parameter_list> -&gt; <block>{
+            <decl_stmt><decl><type><name>DirectoryChooser</name></type> <name>directoryChooser</name> <init>= <expr><operator>new</operator> <call><name>DirectoryChooser</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <expr_stmt><expr><call><name><name>directoryChooser</name><operator>.</operator><name>setTitle</name></name><argument_list>(<argument><expr><literal type="string">"Select a directory"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <decl_stmt><decl><type><name>Node</name></type> <name>node</name> <init>= <expr><operator>(</operator><name>Node</name><operator>)</operator> <call><name><name>actionEvent</name><operator>.</operator><name>getSource</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <comment type="line">//final File selectedDirectory1 = directoryChooser.showDialog(node.getScene().getWindow());</comment>
+            <expr_stmt><expr><name>selectedDirectory</name> <operator>=</operator> <call><name><name>directoryChooser</name><operator>.</operator><name>showDialog</name></name><argument_list>(<argument><expr><call><name><name>node</name><operator>.</operator><name>getScene</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>getWindow</name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <try>try <block>{
+                <expr_stmt><expr><call><name><name>selectedDirectoryName</name><operator>.</operator><name>setText</name></name><argument_list>(<argument><expr><call><name><name>selectedDirectory</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>NullPointerException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+                <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"No directory was selected."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></catch></try>
+        }</block></lambda></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+        <comment type="line">// Visualize event.</comment>
+        <comment type="line">// TODO: Separate the tasks, and execute them separately based on current node (PC).</comment>
+        <expr_stmt><expr><call><name><name>visualizeBTN</name><operator>.</operator><name>setOnAction</name></name><argument_list>(<argument><expr><lambda><parameter_list type="pseudo"><parameter><decl><name>actionEvent</name></decl></parameter></parameter_list> -&gt; <block>{
+            <expr_stmt><expr><call><name><name>sourceCodeConverter</name><operator>.</operator><name>clearOutputDirectory</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name>createSender</name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+
+            <comment type="line">// Source Code Conversion.</comment>
+
+            <try>try <block>{
+                <expr_stmt><expr><call><name><name>sourceCodeConverter</name><operator>.</operator><name>convertDirectoryToXML</name></name><argument_list>(<argument><expr><call><name><name>selectedDirectory</name><operator>.</operator><name>getPath</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>NullPointerException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+                <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"No directory selected or selected directory invalid."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></catch></try>
+
+            <comment type="line">// Allow output directory to update before doing anything else.</comment>
+            <try>try <block>{
+                <expr_stmt><expr><call><name><name>TimeUnit</name><operator>.</operator><name>SECONDS</name><operator>.</operator><name>sleep</name></name><argument_list>(<argument><expr><literal type="number">3</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>InterruptedException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+                <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            }</block></catch></try>
+
+            <decl_stmt><decl><type><name><name>File</name><index>[]</index></name></type> <name>files</name> <init>= <expr><operator>new</operator> <call><name>File</name><argument_list>(<argument><expr><name>PATH_TO_XML_DIRECTORY</name></expr></argument>)</argument_list></call><operator>.</operator><call><name>listFiles</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <decl_stmt><decl><type><name><name>byte</name><index>[]</index><index>[]</index></name></type> <name>encoded</name> <init>= <expr><operator>new</operator> <name><name>byte</name><index>[<expr><name><name>files</name><operator>.</operator><name>length</name></name></expr>]</index><index>[]</index></name></expr></init></decl>;</decl_stmt>
+            <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name><name>encoded</name><operator>.</operator><name>length</name></name></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+                <try>try <block>{
+                    <expr_stmt><expr><name><name>encoded</name><index>[<expr><name>i</name></expr>]</index></name> <operator>=</operator> <call><name><name>Files</name><operator>.</operator><name>readAllBytes</name></name><argument_list>(<argument><expr><call><name><name>Paths</name><operator>.</operator><name>get</name></name><argument_list>(<argument><expr><name><name>files</name><index>[<expr><name>i</name></expr>]</index></name><operator>.</operator><call><name>getPath</name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>IOException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+                    <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+                }</block></catch></try>
+            }</block></for>
+            <expr_stmt><expr><call><name><name>sourceCodeConverter</name><operator>.</operator><name>clearOutputDirectory</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name>sendData</name><argument_list>(<argument><expr><name>IP_ADDRESS_LOCAL</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><call><name><name>System</name><operator>.</operator><name>lineSeparator</name></name><argument_list>()</argument_list></call> <operator>+</operator> <literal type="string">"sending 'LOCAL IP: "</literal><operator>+</operator><name>IP_ADDRESS_LOCAL</name> <operator>+</operator> <literal type="string">"' to "</literal> <operator>+</operator><name>IP_ADDRESS_NEXT_NODE</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name>sendData</name><argument_list>(<argument><expr><name>encoded</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"sending 'encoded' to "</literal><operator>+</operator><name>IP_ADDRESS_NEXT_NODE</name> <operator>+</operator> <call><name><name>System</name><operator>.</operator><name>lineSeparator</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+        }</block></lambda></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+        <comment type="line">// Test print the parsed XML. TODO: Remove when done.</comment>
+        <expr_stmt><expr><call><name><name>testPrint</name><operator>.</operator><name>setOnAction</name></name><argument_list>(<argument><expr><lambda><parameter_list type="pseudo"><parameter><decl><name>actionEvent</name></decl></parameter></parameter_list> -&gt; <block>{
+            <decl_stmt><decl><type><name><name>File</name><index>[]</index></name></type> <name>files</name> <init>= <expr><operator>new</operator> <call><name>File</name><argument_list>(<argument><expr><name>PATH_TO_XML_DIRECTORY</name></expr></argument>)</argument_list></call><operator>.</operator><call><name>listFiles</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <if>if <condition>(<expr><call><name><name>xmlIterator</name><operator>.</operator><name>getXMLClasses</name></name><argument_list>()</argument_list></call> <operator>==</operator> <literal type="null">null</literal> <operator>||</operator> <call><name><name>xmlIterator</name><operator>.</operator><name>getXMLClasses</name></name><argument_list>()</argument_list></call><operator>.</operator><name>length</name> <operator>==</operator> <literal type="number">0</literal></expr>)</condition><then> <block>{
+                <expr_stmt><expr><call><name><name>xmlIterator</name><operator>.</operator><name>createXMLClasses</name></name><argument_list>(<argument><expr><name>files</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></then></if>
+            <decl_stmt><decl><type><name><name>XMLClass</name><index>[]</index></name></type> <name>xmlClasses</name> <init>= <expr><call><name><name>xmlIterator</name><operator>.</operator><name>getXMLClasses</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <call><name><name>xmlIterator</name><operator>.</operator><name>getXMLClasses</name></name><argument_list>()</argument_list></call><operator>.</operator><name>length</name></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+                <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><name><name>xmlClasses</name><index>[<expr><name>i</name></expr>]</index></name><operator>.</operator><call><name>toString</name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></for>
+        }</block></lambda></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+        <expr_stmt><expr><call><name><name>primaryStage</name><operator>.</operator><name>show</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+
+    <comment type="line">//===== Main =====//</comment>
+    <function><specifier>public</specifier> <specifier>static</specifier> <type><name>void</name></type> <name>main</name><parameter_list>(<parameter><decl><type><name><name>String</name><index>[]</index></name></type> <name>args</name></decl></parameter>)</parameter_list> <block>{
+
+        <comment type="line">// Runs the start() function.</comment>
+        <expr_stmt><expr><call><name>launch</name><argument_list>(<argument><expr><name>args</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+
+}</block></class>
+</unit>

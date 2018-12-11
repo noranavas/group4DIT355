@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="plantuml1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/source-code-modeler/out/production/group4DIT355/jars/plantuml.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

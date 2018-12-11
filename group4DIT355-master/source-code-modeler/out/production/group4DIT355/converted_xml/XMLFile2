@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\x220\Desktop\newbranch\group4DIT355\source-code-modeler\src\sourcecodemodeler\network\NetworkConnection.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>network</name></name>;</package>
+
+<import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>model</name><operator>.</operator><name>Sound</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>ObjectInputStream</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>ObjectOutputStream</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>Serializable</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>net</name><operator>.</operator><name>ServerSocket</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>net</name><operator>.</operator><name>Socket</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>function</name><operator>.</operator><name>Consumer</name></name>;</import>
+
+<class><specifier>public</specifier> <specifier>abstract</specifier> class <name>NetworkConnection</name> <block>{
+    <decl_stmt><decl><specifier>private</specifier> <type><name>ConnectionThread</name></type> <name>connectionThread</name> <init>= <expr><operator>new</operator> <call><name>ConnectionThread</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name><name>Consumer</name><argument_list type="generic">&lt;<argument><name>Serializable</name></argument>&gt;</argument_list></name></type> <name>onReceiveCallback</name></decl>;</decl_stmt>
+
+    <constructor><specifier>public</specifier> <name>NetworkConnection</name><parameter_list>(<parameter><decl><type><name><name>Consumer</name><argument_list type="generic">&lt;<argument><name>Serializable</name></argument>&gt;</argument_list></name></type> <name>onReceiveCallback</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><name><name>this</name><operator>.</operator><name>onReceiveCallback</name></name> <operator>=</operator> <name>onReceiveCallback</name></expr>;</expr_stmt>
+        <expr_stmt><expr><call><name><name>connectionThread</name><operator>.</operator><name>setDaemon</name></name><argument_list>(<argument><expr><literal type="boolean">true</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt> <comment type="line">// Prevents blocking exiting from JBM. (?)</comment>
+    }</block></constructor>
+
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>startConnection</name><parameter_list>()</parameter_list> <throws>throws <argument><expr><name>Exception</name></expr></argument></throws> <block>{
+        <decl_stmt><decl><type><name>String</name></type> <name>s</name> <init>= <expr><ternary><condition><expr><call><name>isReceiver</name><argument_list>()</argument_list></call></expr> ?</condition><then> <expr><literal type="string">"Receiver"</literal></expr> </then><else>: <expr><literal type="string">"Sender"</literal></expr></else></ternary></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><name>s</name> <operator>+</operator> <literal type="string">" started."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <try>try <block>{
+            <expr_stmt><expr><call><name><name>connectionThread</name><operator>.</operator><name>start</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>IllegalThreadStateException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Problem starting "</literal> <operator>+</operator> <name>s</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></catch></try>
+    }</block></function>
+
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>send</name><parameter_list>(<parameter><decl><type><name>Serializable</name></type> <name>data</name></decl></parameter>)</parameter_list> <throws>throws <argument><expr><name>Exception</name></expr></argument></throws> <block>{
+        <comment type="line">//System.out.println("Sending data...");</comment>
+        <if>if <condition>(<expr><name><name>connectionThread</name><operator>.</operator><name>out</name></name> <operator>!=</operator> <literal type="null">null</literal></expr>)</condition><then> <block>{
+            <expr_stmt><expr><call><name><name>connectionThread</name><operator>.</operator><name>out</name><operator>.</operator><name>writeObject</name></name><argument_list>(<argument><expr><name>data</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></then> <else>else <block>{
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"ObjectOutputStream is null."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></else></if>
+
+    }</block></function>
+
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>closeConnection</name><parameter_list>()</parameter_list> <throws>throws <argument><expr><name>Exception</name></expr></argument></throws> <block>{
+        <decl_stmt><decl><type><name>String</name></type> <name>s</name> <init>= <expr><ternary><condition><expr><call><name>isReceiver</name><argument_list>()</argument_list></call></expr> ?</condition><then> <expr><literal type="string">"Receiver"</literal></expr> </then><else>: <expr><literal type="string">"Sender"</literal></expr></else></ternary></expr></init></decl>;</decl_stmt>
+        <try>try <block>{
+            <expr_stmt><expr><call><name><name>connectionThread</name><operator>.</operator><name>socket</name><operator>.</operator><name>close</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><name>s</name> <operator>+</operator> <literal type="string">" closed."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>Exception</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Problem when closing "</literal> <operator>+</operator> <name>s</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></catch></try>
+    }</block></function>
+
+    <function_decl><specifier>protected</specifier> <specifier>abstract</specifier> <type><name>boolean</name></type> <name>isReceiver</name><parameter_list>()</parameter_list>;</function_decl>
+    <function_decl><specifier>protected</specifier> <specifier>abstract</specifier> <type><name>String</name></type> <name>getIP</name><parameter_list>()</parameter_list>;</function_decl>
+    <function_decl><specifier>protected</specifier> <specifier>abstract</specifier> <type><name>int</name></type> <name>getPort</name><parameter_list>()</parameter_list>;</function_decl>
+
+    <class><specifier>private</specifier> class <name>ConnectionThread</name> <super><extends>extends <name>Thread</name></extends></super> <block>{
+        <decl_stmt><decl><specifier>private</specifier> <type><name>Socket</name></type> <name>socket</name></decl>;</decl_stmt>
+        <decl_stmt><decl><specifier>private</specifier> <type><name>ObjectOutputStream</name></type> <name>out</name></decl>;</decl_stmt>
+
+        <function><annotation>@<name>Override</name></annotation>
+        <specifier>public</specifier> <type><name>void</name></type> <name>run</name><parameter_list>()</parameter_list> <block>{
+            <try>try <init>(<decl><type><name>ServerSocket</name></type> <name>serverSocket</name> <init>= <expr><ternary><condition><expr><call><name>isReceiver</name><argument_list>()</argument_list></call></expr> ?</condition><then> <expr><operator>new</operator> <call><name>ServerSocket</name><argument_list>(<argument><expr><call><name>getPort</name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr> </then><else>: <expr><literal type="null">null</literal></expr></else></ternary></expr></init></decl>;
+                 <expr><name>Socket</name> <name>socket</name> <operator>=</operator> <ternary><condition><expr><call><name>isReceiver</name><argument_list>()</argument_list></call></expr> ?</condition><then> <expr><call><name><name>serverSocket</name><operator>.</operator><name>accept</name></name><argument_list>()</argument_list></call></expr> </then><else>: <expr><operator>new</operator> <call><name>Socket</name><argument_list>(<argument><expr><call><name>getIP</name><argument_list>()</argument_list></call></expr></argument>, <argument><expr><call><name>getPort</name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr></else></ternary></expr>;
+                 <expr><name>ObjectOutputStream</name> <name>out</name> <operator>=</operator> <operator>new</operator> <call><name>ObjectOutputStream</name><argument_list>(<argument><expr><call><name><name>socket</name><operator>.</operator><name>getOutputStream</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;
+                 <expr><name>ObjectInputStream</name> <name>in</name> <operator>=</operator> <operator>new</operator> <call><name>ObjectInputStream</name><argument_list>(<argument><expr><call><name><name>socket</name><operator>.</operator><name>getInputStream</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>)</init>
+            <block>{
+                <expr_stmt><expr><name><name>this</name><operator>.</operator><name>socket</name></name> <operator>=</operator> <name>socket</name></expr>;</expr_stmt>
+                <expr_stmt><expr><name><name>this</name><operator>.</operator><name>out</name></name> <operator>=</operator> <name>out</name></expr>;</expr_stmt>
+                <expr_stmt><expr><call><name><name>socket</name><operator>.</operator><name>setTcpNoDelay</name></name><argument_list>(<argument><expr><literal type="boolean">true</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt> <comment type="line">// Allows faster sending of messages.</comment>
+                <while>while <condition>(<expr><literal type="boolean">true</literal></expr>)</condition> <block>{
+                    <decl_stmt><decl><type><name>Serializable</name></type> <name>data</name> <init>= <expr><operator>(</operator><name>Serializable</name><operator>)</operator><call><name><name>in</name><operator>.</operator><name>readObject</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+                    <expr_stmt><expr><call><name><name>Sound</name><operator>.</operator><name>play</name></name><argument_list>(<argument><expr><call><name><name>System</name><operator>.</operator><name>getProperty</name></name><argument_list>(<argument><expr><literal type="string">"user.dir"</literal></expr></argument>)</argument_list></call><operator>+</operator><literal type="string">"\\source-code-modeler\\resources\\sound.wav"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                    <expr_stmt><expr><call><name><name>onReceiveCallback</name><operator>.</operator><name>accept</name></name><argument_list>(<argument><expr><name>data</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+                }</block></while>
+            }</block></try> <catch>catch <parameter_list>(<parameter><decl><type><name>Exception</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+                <expr_stmt><expr><call><name><name>onReceiveCallback</name><operator>.</operator><name>accept</name></name><argument_list>(<argument><expr><literal type="string">"Connection closed. Retrying in a few seconds..."</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                <comment type="line">//e.printStackTrace();</comment>
+                <expr_stmt><expr><call><name>run</name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            }</block></catch>
+        }</block></function>
+    }</block></class>
+
+}</block></class>
+</unit>
