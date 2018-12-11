@@ -16,7 +16,7 @@ public class Sound {
                 clip.open(inputStream);
                 clip.start();
             } catch (Exception e) {
-                System.out.println("play sound error: " + e.getMessage() + " for " + fileName);
+                System.out.println("Play sound error: " + e.getMessage() + " for " + fileName);
             }
         }).start();
     }

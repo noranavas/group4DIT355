@@ -56,6 +56,16 @@ public class XMLClass implements Serializable {
         for (String method : this.getMethods()) {
             s += "\n" + method;
         }
+        if (!this.getRelationships().isEmpty()) {
+            List<XMLClass> xmlClasses = getRelationships();
+            s += "\nRelationships:";
+            for (int i = 0; i < xmlClasses.size(); i++) {
+                s += " " + xmlClasses.get(i).getName();
+                if (i < xmlClasses.size() - 1) {
+                    s += ",";
+                }
+            }
+        }
         s += "\n";
         return s;
     }

@@ -1,6 +1,7 @@
 package sourcecodemodeler.network;
 
 import sourcecodemodeler.model.Sound;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -28,13 +29,11 @@ public abstract class NetworkConnection {
     }
 
     public void send(Serializable data) throws Exception {
-        //System.out.println("Sending data...");
         if (connectionThread.out != null) {
             connectionThread.out.writeObject(data);
         } else {
-            System.out.println("ObjectOutputStream is null.");
+            System.out.println("Error: ObjectOutputStream is null.");
         }
-
     }
 
     public void closeConnection() throws Exception {
@@ -69,12 +68,11 @@ public abstract class NetworkConnection {
                     Serializable data = (Serializable)in.readObject();
                     Sound.play(System.getProperty("user.dir")+"\\source-code-modeler\\resources\\sound.wav");
                     onReceiveCallback.accept(data);
-
                 }
             } catch (Exception e) {
                 onReceiveCallback.accept("Connection closed. Retrying in a few seconds...");
                 //e.printStackTrace();
-                run();
+                run(); // No longer needed.
             }
         }
     }

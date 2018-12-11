@@ -57,7 +57,7 @@ public class SourceCodeConverter {
                 try {
                     filter = getFileExtension(files[i].getName()).get();
                 } catch (NoSuchElementException e) {
-                    System.out.println("Unspecified extension found for file: " + files[i].getName() + " at: " + files[i].getPath());
+                    //System.out.println("Unspecified extension found for file: " + files[i].getName() + " at: " + files[i].getPath());
                 }
 
                 if (filter.equalsIgnoreCase("java")) {
