@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cddf23ba-2667-4c3f-8adf-9b9191d3549d" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/Visualizer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/Sound.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/Sound.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/XMLClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/XMLClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java" afterDir="false" />
-    </list>
+    <list default="true" id="cddf23ba-2667-4c3f-8adf-9b9191d3549d" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,11 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="298" lean-forward="true" selection-start-line="298" selection-end-line="298" />
+            <state relative-caret-position="-50">
+              <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
               <folding>
                 <element signature="method#init#0;class#Main#0" />
                 <element signature="method#stop#0;class#Main#0" />
@@ -66,26 +57,9 @@
                 <element signature="method#visualize#0;class#Main#0" />
                 <element signature="e#7110#7740#0" />
                 <element signature="e#7898#9311#0" />
+                <element signature="e#10830#11447#0" />
+                <element signature="e#11587#12881#0" />
                 <element signature="method#main#0;class#Main#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="XMLIterator.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="699">
-              <caret line="107" column="58" selection-start-line="107" selection-start-column="58" selection-end-line="107" selection-end-column="58" />
-              <folding>
-                <element signature="method#createXMLClasses#0;class#XMLIterator#0" />
-                <element signature="method#createXMLClass#0;class#XMLIterator#0" />
-                <element signature="method#setClassName#0;class#XMLIterator#0" />
-                <element signature="method#setAttributes#0;class#XMLIterator#0" />
-                <element signature="method#setMethods#0;class#XMLIterator#0" />
-                <element signature="method#setRelationships#0;class#XMLIterator#0" />
-                <element signature="method#removeTag#0;class#XMLIterator#0" />
-                <element signature="method#prettyString#0;class#XMLIterator#0" />
               </folding>
             </state>
           </provider>
@@ -139,8 +113,8 @@
         <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java" />
         <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/XMLClass.java" />
         <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/SourceCodeConverter.java" />
-        <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java" />
         <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java" />
+        <option value="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java" />
       </list>
     </option>
   </component>
@@ -442,10 +416,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="179153000" />
+    <option name="totallyTimeSpent" value="179463000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="848" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -721,10 +695,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="760">
+          <caret line="107" column="58" selection-start-line="107" selection-start-column="58" selection-end-line="107" selection-end-column="58" />
+          <folding>
+            <element signature="method#createXMLClasses#0;class#XMLIterator#0" />
+            <element signature="method#createXMLClass#0;class#XMLIterator#0" />
+            <element signature="method#setClassName#0;class#XMLIterator#0" />
+            <element signature="method#setAttributes#0;class#XMLIterator#0" />
+            <element signature="method#setMethods#0;class#XMLIterator#0" />
+            <element signature="method#setRelationships#0;class#XMLIterator#0" />
+            <element signature="method#removeTag#0;class#XMLIterator#0" />
+            <element signature="method#prettyString#0;class#XMLIterator#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="298" lean-forward="true" selection-start-line="298" selection-end-line="298" />
+        <state relative-caret-position="-50">
+          <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
           <folding>
             <element signature="method#init#0;class#Main#0" />
             <element signature="method#stop#0;class#Main#0" />
@@ -736,24 +727,9 @@
             <element signature="method#visualize#0;class#Main#0" />
             <element signature="e#7110#7740#0" />
             <element signature="e#7898#9311#0" />
+            <element signature="e#10830#11447#0" />
+            <element signature="e#11587#12881#0" />
             <element signature="method#main#0;class#Main#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="699">
-          <caret line="107" column="58" selection-start-line="107" selection-start-column="58" selection-end-line="107" selection-end-column="58" />
-          <folding>
-            <element signature="method#createXMLClasses#0;class#XMLIterator#0" />
-            <element signature="method#createXMLClass#0;class#XMLIterator#0" />
-            <element signature="method#setClassName#0;class#XMLIterator#0" />
-            <element signature="method#setAttributes#0;class#XMLIterator#0" />
-            <element signature="method#setMethods#0;class#XMLIterator#0" />
-            <element signature="method#setRelationships#0;class#XMLIterator#0" />
-            <element signature="method#removeTag#0;class#XMLIterator#0" />
-            <element signature="method#prettyString#0;class#XMLIterator#0" />
           </folding>
         </state>
       </provider>
