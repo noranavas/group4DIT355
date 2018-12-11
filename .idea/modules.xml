@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/group4DIT355.iml" filepath="$PROJECT_DIR$/.idea/group4DIT355.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/source-code-modeler.iml" filepath="$PROJECT_DIR$/.idea/modules/source-code-modeler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/source-code-modeler_main.iml" filepath="$PROJECT_DIR$/.idea/modules/source-code-modeler_main.iml" group="source-code-modeler" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/source-code-modeler_test.iml" filepath="$PROJECT_DIR$/.idea/modules/source-code-modeler_test.iml" group="source-code-modeler" />
     </modules>
   </component>
 </project>

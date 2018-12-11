@@ -72,7 +72,6 @@ public abstract class NetworkConnection {
             } catch (Exception e) {
                 onReceiveCallback.accept("Connection closed. Retrying in a few seconds...");
                 //e.printStackTrace();
-                run();
             }
         }
     }

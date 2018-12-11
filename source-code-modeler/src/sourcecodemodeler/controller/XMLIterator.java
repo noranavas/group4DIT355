@@ -26,6 +26,15 @@ public class XMLIterator {
         return xmlClasses;
     }
 
+    public String getStringifiedXMLClasses() {
+        String classes = "";
+        XMLClass[] xmlClasses = getXMLClasses();
+        for (int i = 0; i < xmlClasses.length; i++) {
+            classes += xmlClasses[i].toString();
+        }
+        return classes;
+    }
+
     //===== Methods =====//
     public void createXMLClasses(File[] files) {
         xmlClasses = new XMLClass[files.length];

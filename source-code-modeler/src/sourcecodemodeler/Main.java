@@ -15,27 +15,27 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import sourcecodemodeler.controller.SourceCodeConverter;
+import sourcecodemodeler.controller.Visualizer;
 import sourcecodemodeler.controller.XMLIterator;
 import sourcecodemodeler.model.XMLClass;
 import sourcecodemodeler.network.NetworkConnection;
 import sourcecodemodeler.network.Receiver;
 import sourcecodemodeler.network.Sender;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
     public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
-    private static final String IP_ADDRESS_MIDDLEWARE_NODE = "";
-    private static final String IP_ADDRESS_XML_PARSER_NODE = "";
-    private static final String IP_ADDRESS_VISUALIZER_NODE = "";
-    private String IP_ADDRESS_LOCAL=InetAddress.getLocalHost().getHostAddress();;
-    private static String IP_ADDRESS_NEXT_NODE = "192.168.1.178";
+    private static String IP_ADDRESS_LOCAL;
+    private static String IP_ADDRESS_NEXT_NODE = "95.80.14.65";
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -45,8 +45,7 @@ public class Main extends Application {
 
     private File selectedDirectory;
 
-    public Main() throws UnknownHostException {
-    }
+    public Main() throws UnknownHostException {}
 
     //===== Network =====//
     @Override
@@ -202,9 +201,8 @@ public class Main extends Application {
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
             // Source Code Conversion.
-
-            sourceCodeConverter.clearOutputDirectory();
-            createSender();
+            //sourceCodeConverter.clearOutputDirectory();
+            //createSender();
             try {
                 sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             } catch (NullPointerException e) {
@@ -219,6 +217,45 @@ public class Main extends Application {
             }
 
             File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
+            xmlIterator.createXMLClasses(files);
+
+            // Test print
+            XMLClass[] xmlClass = xmlIterator.getXMLClasses();
+            for (int i = 0; i < xmlClass.length; i++) {
+                System.out.println(xmlClass[i].toString());
+            }
+
+            //==================================================
+            // VISUALIZATION TEST
+            //==================================================
+            System.out.print(XMLIterator.getStringifiedXMLClasses());
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            String source = "@startuml\n" +
+                    "skinparam class {\n" +
+                    "BorderColor black\n" +
+                    "ArrowColor black\n" +
+                    "BackgroundColor LightSkyBlue\n" +
+                    "}\n";
+
+            source += XMLIterator.getStringifiedXmlClasses() +
+                    "@enduml\n";
+
+            SourceStringReader reader = new SourceStringReader(source);
+
+            String desc = reader.generateImage(outputStream);
+            byte[] data = outputStream.toByteArray();
+
+            InputStream inputStream = new ByteArrayInputStream(data);
+            BufferedImage diagram = ImageIO.read(inputStream);
+
+            Visualizer visualiser = new Visualizer(diagram);
+            visualiser.start(Visualizer.classStage);
+            //==================================================
+            // VISUALIZATION TEST END
+            //==================================================
+
+            /*
             byte[][] encoded = new byte[files.length][];
             for (int i = 0; i < encoded.length; i++) {
                 try {
@@ -227,9 +264,10 @@ public class Main extends Application {
                     e.printStackTrace();
                 }
             }
+
             sourceCodeConverter.clearOutputDirectory();
-            sendData(IP_ADDRESS_LOCAL);
-            System.out.println(System.lineSeparator() + "sending 'LOCAL IP: " +IP_ADDRESS_LOCAL+ "' to "+IP_ADDRESS_NEXT_NODE);
+            sendData(IP_ADDRESS_NEXT_NODE);
+            System.out.println(System.lineSeparator() + "sending 'LOCAL IP: " +IP_ADDRESS_NEXT_NODE+ "' to "+IP_ADDRESS_NEXT_NODE);
             sendData(encoded);
             System.out.println("sending 'encoded' to + "+IP_ADDRESS_NEXT_NODE+ System.lineSeparator());
             try {
@@ -237,6 +275,7 @@ public class Main extends Application {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            */
         });
 
         // Test print the parsed XML. TODO: Remove when done.
@@ -256,7 +295,11 @@ public class Main extends Application {
 
     //===== Main =====//
     public static void main(String[] args) {
-
+        try {
+            IP_ADDRESS_LOCAL = InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         // Runs the start() function.
         launch(args);
     }
