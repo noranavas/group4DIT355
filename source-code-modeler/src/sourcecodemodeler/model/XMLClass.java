@@ -49,13 +49,15 @@ public class XMLClass implements Serializable {
 
     @Override
     public String toString() {
-        String s = this.getName();
+        String s = "class " + this.getName() + " {\n";
         for (String attribute: this.getAttributes()) {
-            s += "\n" + attribute;
+            s += attribute + "\n";
         }
         for (String method : this.getMethods()) {
-            s += "\n" + method;
+            s += method + "\n";
         }
+
+        /*
         if (!this.getRelationships().isEmpty()) {
             List<XMLClass> xmlClasses = getRelationships();
             s += "\nRelationships:";
@@ -66,7 +68,9 @@ public class XMLClass implements Serializable {
                 }
             }
         }
-        s += "\n";
+        */
+
+        s += "}\n";
         return s;
     }
 
