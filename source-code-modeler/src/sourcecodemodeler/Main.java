@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
     public static final int PORT = 5991;
-    private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
+    private static final String PATH_TO_CSS = System.getProperty("user.dir") + "/resources/css/";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static String IP_ADDRESS_LOCAL;
     private static String IP_ADDRESS_NEXT_NODE = "192.168.1.178";
