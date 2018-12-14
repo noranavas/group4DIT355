@@ -141,9 +141,11 @@ public class XMLIterator {
         // For each attribute, loop over class names and check if attribute matches class name.
         for (String attribute : attributes) {
             for (int i = 0; i < xmlClasses.length; i++) {
-                if (attribute.toLowerCase().contains(xmlClasses[i].getName().toLowerCase())) {
-                    // If attribute contains class name, add that class to relationships.
-                    xmlClass.addRelationship(xmlClasses[i]);
+                if (attribute != null && xmlClasses[i].getName() != null) {
+                    if (attribute.toLowerCase().contains(xmlClasses[i].getName().toLowerCase())) {
+                        // If attribute contains class name, add that class to relationships.
+                        xmlClass.addRelationship(xmlClasses[i]);
+                    }
                 }
             }
         }
