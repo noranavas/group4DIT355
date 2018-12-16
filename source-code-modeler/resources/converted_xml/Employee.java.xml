@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Elsada\Downloads\Assignment3_Elsada_7Oct_1500\Employee.java"><package>package <name>assignment3</name>;</package>
+
+<class><specifier>public</specifier> <specifier>abstract</specifier> class <name>Employee</name> <block>{
+	
+	
+	
+	<decl_stmt><decl><specifier>private</specifier> <type><name>String</name></type> <name>id</name></decl>;</decl_stmt>
+	<decl_stmt><decl><specifier>private</specifier> <type><name>String</name></type> <name>name</name></decl>;</decl_stmt>
+	<decl_stmt><decl><specifier>private</specifier> <type><name>double</name></type> <name>grossSalary</name></decl>;</decl_stmt>
+	
+
+	
+	<constructor><specifier>public</specifier> <name>Employee</name> <parameter_list>(<parameter><decl><type><name>String</name></type> <name>id</name></decl></parameter> ,<parameter><decl><type><name>String</name></type> <name>name</name></decl></parameter>, <parameter><decl><type><name>double</name></type> <name>grossSalary</name></decl></parameter>)</parameter_list> <block>{
+		
+		<expr_stmt><expr><name><name>this</name><operator>.</operator><name>id</name></name> <operator>=</operator> <name>id</name></expr>;</expr_stmt>
+		<expr_stmt><expr><name><name>this</name><operator>.</operator><name>name</name></name> <operator>=</operator> <name>name</name></expr>;</expr_stmt>
+		<expr_stmt><expr><name><name>this</name><operator>.</operator><name>grossSalary</name></name> <operator>=</operator> <name>grossSalary</name></expr>;</expr_stmt>
+	}</block></constructor>
+	
+	<function><annotation>@<name>Override</name></annotation>
+	<specifier>public</specifier> <type><name>String</name></type> <name>toString</name><parameter_list>()</parameter_list> <block>{
+		<return>return <expr><name>name</name> <operator>+</operator> <literal type="string">"'s gross salary is of "</literal> <operator>+</operator> <name>grossSalary</name> <operator>+</operator> <literal type="string">" SEK per month."</literal></expr>;</return> 
+	}</block></function>
+
+	<function><annotation>@<name>Override</name></annotation>
+	<specifier>public</specifier> <type><name>boolean</name></type> <name>equals</name><parameter_list>(<parameter><decl><type><name>Object</name></type> <name>o</name></decl></parameter>)</parameter_list> <block>{ <comment type="line">// </comment>
+		<if>if <condition>(<expr><operator>!</operator><operator>(</operator><name>o</name> <operator>instanceof</operator> <name>Employee</name><operator>)</operator></expr>)</condition><then> <block>{
+			<return>return <expr><literal type="boolean">false</literal></expr>;</return>
+		}</block></then></if>
+		<decl_stmt><decl><type><name>Employee</name></type> <name>e</name> <init>= <expr><operator>(</operator><name>Employee</name><operator>)</operator><name>o</name></expr></init></decl>;</decl_stmt> 
+		<if>if <condition>(<expr><call><name><name>this</name><operator>.</operator><name>getId</name></name><argument_list>()</argument_list></call> <operator>==</operator> <name><name>e</name><operator>.</operator><name>id</name></name></expr>)</condition><then> <block>{
+			<return>return <expr><literal type="boolean">true</literal></expr>;</return>
+		}</block></then> <else>else <block type="pseudo"><return>return <expr><literal type="boolean">false</literal></expr>;</return></block></else></if>
+	
+		}</block></function>
+
+
+
+	<function><specifier>public</specifier> <type><name>String</name></type> <name>getName</name><parameter_list>()</parameter_list> <block>{
+		<return>return <expr><name>name</name></expr>;</return>
+	}</block></function>
+	<function><specifier>public</specifier> <type><name>void</name></type> <name>setName</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>name</name></decl></parameter>)</parameter_list> <block>{
+		<expr_stmt><expr><name><name>this</name><operator>.</operator><name>name</name></name> <operator>=</operator> <name>name</name></expr>;</expr_stmt>
+	}</block></function>
+	
+	<function><specifier>public</specifier> <type><name>double</name></type> <name>getGrossSalary</name><parameter_list>()</parameter_list> <block>{
+		<return>return <expr><name>grossSalary</name></expr>;</return>
+	}</block></function>
+
+	<function><specifier>public</specifier> <type><name>void</name></type> <name>setGrossSalary</name><parameter_list>(<parameter><decl><type><name>double</name></type> <name>grossSalary</name></decl></parameter>)</parameter_list> <block>{
+		<expr_stmt><expr><name><name>this</name><operator>.</operator><name>grossSalary</name></name> <operator>=</operator> <name>grossSalary</name></expr>;</expr_stmt>
+	}</block></function>
+	
+	<function><specifier>public</specifier> <type><name>String</name></type> <name>getId</name><parameter_list>()</parameter_list> <block>{
+		<return>return <expr><name>id</name></expr>;</return>
+	}</block></function>
+	
+	<function_decl><specifier>public</specifier> <specifier>abstract</specifier> <type><name>double</name></type> <name>getNetSalary</name><parameter_list>()</parameter_list>;</function_decl>
+}</block></class>
+</unit>

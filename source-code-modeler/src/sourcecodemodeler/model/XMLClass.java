@@ -21,6 +21,13 @@ public class XMLClass implements Serializable {
         this.relationships = new ArrayList<>();
     }
 
+    public XMLClass(String name) {
+        this.name = name;
+        this.attributes = new ArrayList<>();
+        this.methods = new ArrayList<>();
+        this.relationships = new ArrayList<>();
+    }
+
     //===== Getters & Setters =====//
     public String getName() {
         return name;
@@ -41,6 +48,16 @@ public class XMLClass implements Serializable {
         return this.methods;
     }
     public void addRelationship(XMLClass relationship) {
+        // loop over all saved relations
+        for (XMLClass xmlClass : this.relationships) {
+            // checking for duplicates
+            // check whether saved relation name equals the input class name
+            if (xmlClass.getName().equals(relationship.getName())) {
+                // this is a duplicate, do nothing and go out immediately
+                return;
+            }
+        }
+        // if we reach this point, then this is not duplicate, so add it to list
         this.relationships.add(relationship);
     }
     public List<XMLClass> getRelationships() {
@@ -57,20 +74,17 @@ public class XMLClass implements Serializable {
             s += method + "\n";
         }
 
-        /*
-        if (!this.getRelationships().isEmpty()) {
-            List<XMLClass> xmlClasses = getRelationships();
+        if (!this.relationships.isEmpty()) {
             s += "\nRelationships:";
-            for (int i = 0; i < xmlClasses.size(); i++) {
-                s += " " + xmlClasses.get(i).getName();
-                if (i < xmlClasses.size() - 1) {
+            for (int i = 0; i < relationships.size(); i++) {
+                s += " " + relationships.get(i).getName();
+                if (i < relationships.size() - 1) {
                     s += ",";
                 }
             }
         }
-        */
 
-        s += "}\n";
+        s += "\n}\n";
         return s;
     }
 
