@@ -99,8 +99,12 @@
 
         <comment type="line">// If data is String, it is a ip address.</comment>
         <if>if <condition>(<expr><name>object</name> <operator>instanceof</operator> <name>String</name></expr>)</condition><then> <block>{
+
+            <if>if<condition>(<expr><call><name><name>data</name><operator>.</operator><name>equals</name></name><argument_list>(<argument><expr><literal type="string">"next?"</literal></expr></argument>)</argument_list></call></expr>)</condition><then><block>{
+
+            }</block></then></if>
             <comment type="line">//IP_ADDRESS_NEXT_NODE = (String)data;</comment>
-            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Received "</literal> <operator>+</operator> <operator>(</operator><name>String</name><operator>)</operator><name>data</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Received "</literal> <operator>+</operator><literal type="char">'"'</literal> <operator>+</operator><operator>(</operator><operator>(</operator><name>String</name><operator>)</operator><name>data</name><operator>)</operator> <operator>+</operator> <literal type="char">'"'</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 
             <comment type="line">//TODO Change this according to what a node does</comment>
         <comment type="line">// If data is byte[][], it is the xml files. Do XML parsing.</comment>
@@ -243,7 +247,7 @@
                 }</block></catch></try>
             }</block></for>
             <expr_stmt><expr><call><name><name>sourceCodeConverter</name><operator>.</operator><name>clearOutputDirectory</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
-            <expr_stmt><expr><call><name>sendData</name><argument_list>(<argument><expr><literal type="string">"next?"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name>sendData</name><argument_list>(<argument><expr><name>IP_ADDRESS_LOCAL</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
 
             <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><call><name><name>System</name><operator>.</operator><name>lineSeparator</name></name><argument_list>()</argument_list></call> <operator>+</operator> <literal type="string">"sending 'LOCAL IP: "</literal><operator>+</operator><name>IP_ADDRESS_LOCAL</name> <operator>+</operator> <literal type="string">"' to "</literal> <operator>+</operator><name>IP_ADDRESS_NEXT_NODE</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
             <expr_stmt><expr><call><name>sendData</name><argument_list>(<argument><expr><name>encoded</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\x220\Desktop\newbranch\group4DIT355\source-code-modeler\src\sourcecodemodeler\model\XMLClass.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>model</name></name>;</package>
+
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>Serializable</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>ArrayList</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>List</name></name>;</import>
+
+<comment type="block">/*
+    This class is an information holder that stores parsed XML data.
+    The instances of these classes are temporary.
+ */</comment>
+<class><specifier>public</specifier> class <name>XMLClass</name> <super><implements>implements <name>Serializable</name></implements></super> <block>{
+    <decl_stmt><decl><specifier>private</specifier> <type><name>String</name></type> <name>name</name></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>String</name></argument>&gt;</argument_list></name></type> <name>attributes</name></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>String</name></argument>&gt;</argument_list></name></type> <name>methods</name></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>private</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>XMLClass</name></argument>&gt;</argument_list></name></type> <name>relationships</name></decl>;</decl_stmt>
+
+    <comment type="line">//===== Constructor(s) =====//</comment>
+    <constructor><specifier>public</specifier> <name>XMLClass</name><parameter_list>()</parameter_list> <block>{
+        <expr_stmt><expr><name><name>this</name><operator>.</operator><name>attributes</name></name> <operator>=</operator> <operator>new</operator> <call><name><name>ArrayList</name><argument_list type="generic">&lt;&gt;</argument_list></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><name><name>this</name><operator>.</operator><name>methods</name></name> <operator>=</operator> <operator>new</operator> <call><name><name>ArrayList</name><argument_list type="generic">&lt;&gt;</argument_list></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        <expr_stmt><expr><name><name>this</name><operator>.</operator><name>relationships</name></name> <operator>=</operator> <operator>new</operator> <call><name><name>ArrayList</name><argument_list type="generic">&lt;&gt;</argument_list></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+    }</block></constructor>
+
+    <comment type="line">//===== Getters &amp; Setters =====//</comment>
+    <function><specifier>public</specifier> <type><name>String</name></type> <name>getName</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><name>name</name></expr>;</return>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>setName</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>name</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><name><name>this</name><operator>.</operator><name>name</name></name> <operator>=</operator> <name>name</name></expr>;</expr_stmt>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>addAttribute</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>attribute</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><call><name><name>this</name><operator>.</operator><name>attributes</name><operator>.</operator><name>add</name></name><argument_list>(<argument><expr><name>attribute</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>String</name></argument>&gt;</argument_list></name></type> <name>getAttributes</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><name><name>this</name><operator>.</operator><name>attributes</name></name></expr>;</return>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>addMethod</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>method</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><call><name><name>this</name><operator>.</operator><name>methods</name><operator>.</operator><name>add</name></name><argument_list>(<argument><expr><name>method</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>String</name></argument>&gt;</argument_list></name></type> <name>getMethods</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><name><name>this</name><operator>.</operator><name>methods</name></name></expr>;</return>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>addRelationship</name><parameter_list>(<parameter><decl><type><name>XMLClass</name></type> <name>relationship</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><call><name><name>this</name><operator>.</operator><name>relationships</name><operator>.</operator><name>add</name></name><argument_list>(<argument><expr><name>relationship</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name><name>List</name><argument_list type="generic">&lt;<argument><name>XMLClass</name></argument>&gt;</argument_list></name></type> <name>getRelationships</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><name><name>this</name><operator>.</operator><name>relationships</name></name></expr>;</return>
+    }</block></function>
+
+    <function><annotation>@<name>Override</name></annotation>
+    <specifier>public</specifier> <type><name>String</name></type> <name>toString</name><parameter_list>()</parameter_list> <block>{
+        <decl_stmt><decl><type><name>String</name></type> <name>s</name> <init>= <expr><call><name><name>this</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <for>for <control>(<init><decl><type><name>String</name></type> <name>attribute</name><range>: <expr><call><name><name>this</name><operator>.</operator><name>getAttributes</name></name><argument_list>()</argument_list></call></expr></range></decl></init>)</control> <block>{
+            <expr_stmt><expr><name>s</name> <operator>+=</operator> <literal type="string">"\n"</literal> <operator>+</operator> <name>attribute</name></expr>;</expr_stmt>
+        }</block></for>
+        <for>for <control>(<init><decl><type><name>String</name></type> <name>method</name> <range>: <expr><call><name><name>this</name><operator>.</operator><name>getMethods</name></name><argument_list>()</argument_list></call></expr></range></decl></init>)</control> <block>{
+            <expr_stmt><expr><name>s</name> <operator>+=</operator> <literal type="string">"\n"</literal> <operator>+</operator> <name>method</name></expr>;</expr_stmt>
+        }</block></for>
+        <expr_stmt><expr><name>s</name> <operator>+=</operator> <literal type="string">"\n"</literal></expr>;</expr_stmt>
+        <return>return <expr><name>s</name></expr>;</return>
+    }</block></function>
+
+}</block></class>
+</unit>

@@ -25,18 +25,20 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.concurrent.TimeUnit;
 
 public class Main extends Application {
     public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
-    private static final String IP_ADDRESS_MIDDLEWARE_NODE = "";
-    private static final String IP_ADDRESS_XML_PARSER_NODE = "";
-    private static final String IP_ADDRESS_VISUALIZER_NODE = "";
+    private static final String IP_ADDRESS_MIDDLEWARE_NODE = "192.168.0.100";
+    private static final String IP_ADDRESS_XML_PARSER_NODE = "192.168.1.230";
+    private static final String IP_ADDRESS_VISUALIZER_NODE = "192.150.3.439";
 
+    private LinkedList<String> IP_LIST= new LinkedList<String>(); // 0 = middleware | 1=xml parser | 2= visualizer
     private final String IP_ADDRESS_LOCAL=InetAddress.getLocalHost().getHostAddress();
-    private static String IP_ADDRESS_NEXT_NODE = "192.168.1.178";
+    private static String IP_ADDRESS_NEXT_NODE = "localhost";
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -54,6 +56,13 @@ public class Main extends Application {
     public void init() throws Exception {
         receiver.startConnection();
         sender.startConnection();
+        IP_LIST.add(IP_ADDRESS_MIDDLEWARE_NODE);
+        IP_LIST.add(IP_ADDRESS_XML_PARSER_NODE);
+        IP_LIST.add(IP_ADDRESS_VISUALIZER_NODE);
+
+        for (int i=0;i<IP_LIST.size();i++){
+            System.out.println("IP NUMBER " + i + " ||" + IP_LIST.get(i));
+        }
     }
     @Override
     public void stop() throws Exception {
@@ -80,19 +89,21 @@ public class Main extends Application {
         return new Sender(PORT, IP_ADDRESS_NEXT_NODE, data -> {
             Platform.runLater(() -> {
                 //System.out.println("Sender: " + data);
-                System.out.println("Sender created");
+                //System.out.println("Sender created");
             });
         });
     }
-
     public void handleData(Serializable data) {
         Object object = data;
 
         // If data is String, it is a ip address.
         if (object instanceof String) {
-            //IP_ADDRESS_NEXT_NODE = (String)data;
 
-            System.out.println("Received " + (String)data);
+            if(data.equals("next?")){ //temporary
+            }
+
+            //IP_ADDRESS_NEXT_NODE = (String)data;
+            System.out.println("Received " +'"' +((String)data) + '"');
 
             //TODO Change this according to what a node does
         // If data is byte[][], it is the xml files. Do XML parsing.
@@ -240,7 +251,6 @@ public class Main extends Application {
             System.out.println(System.lineSeparator() + "sending 'LOCAL IP: "+IP_ADDRESS_LOCAL + "' to " +IP_ADDRESS_NEXT_NODE);
             sendData(encoded);
             System.out.println("sending 'encoded' to "+IP_ADDRESS_NEXT_NODE + System.lineSeparator());
-
         });
 
         // Test print the parsed XML. TODO: Remove when done.
