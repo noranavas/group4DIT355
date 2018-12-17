@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\giflib-master\src\main\java\com\teamtreehouse\giflib\controller\GifController.java"><package>package <name><name>com</name><operator>.</operator><name>teamtreehouse</name><operator>.</operator><name>giflib</name><operator>.</operator><name>controller</name></name>;</package>
+
+<import>import <name><name>com</name><operator>.</operator><name>teamtreehouse</name><operator>.</operator><name>giflib</name><operator>.</operator><name>data</name><operator>.</operator><name>GifRepository</name></name>;</import>
+<import>import <name><name>com</name><operator>.</operator><name>teamtreehouse</name><operator>.</operator><name>giflib</name><operator>.</operator><name>model</name><operator>.</operator><name>Gif</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>beans</name><operator>.</operator><name>factory</name><operator>.</operator><name>annotation</name><operator>.</operator><name>Autowired</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>stereotype</name><operator>.</operator><name>Controller</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>ui</name><operator>.</operator><name>Model</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>web</name><operator>.</operator><name>bind</name><operator>.</operator><name>annotation</name><operator>.</operator><name>PathVariable</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>springframework</name><operator>.</operator><name>web</name><operator>.</operator><name>bind</name><operator>.</operator><name>annotation</name><operator>.</operator><name>RequestMapping</name></name>;</import>
+
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>List</name></name>;</import>
+
+<class><annotation>@<name>Controller</name></annotation>
+<specifier>public</specifier> class <name>GifController</name> <block>{
+    <decl_stmt><decl><annotation>@<name>Autowired</name></annotation>
+    <specifier>private</specifier> <type><name>GifRepository</name></type> <name>gifRepository</name></decl>;</decl_stmt>
+
+    <function><annotation>@<name>RequestMapping</name><argument_list>(<argument><expr><literal type="string">"/"</literal></expr></argument>)</argument_list></annotation>
+    <specifier>public</specifier> <type><name>String</name></type> <name>listGifs</name><parameter_list>(<parameter><decl><type><name>Model</name></type> <name>model</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name><name>List</name><argument_list type="generic">&lt;<argument><name>Gif</name></argument>&gt;</argument_list></name></type> <name>allGifs</name> <init>= <expr><call><name><name>gifRepository</name><operator>.</operator><name>getAllGifs</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>model</name><operator>.</operator><name>addAttribute</name></name><argument_list>(<argument><expr><literal type="string">"gifs"</literal></expr></argument>, <argument><expr><name>allGifs</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <return>return <expr><literal type="string">"home"</literal></expr>;</return>
+    }</block></function>
+
+    <function><annotation>@<name>RequestMapping</name><argument_list>(<argument><expr><literal type="string">"/gif/{name}"</literal></expr></argument>)</argument_list></annotation>
+    <specifier>public</specifier> <type><name>String</name></type> <name>gifDetails</name><parameter_list>(<parameter><decl><type><annotation>@<name>PathVariable</name></annotation> <name>String</name></type> <name>name</name></decl></parameter>, <parameter><decl><type><name>Model</name></type> <name>model</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name>Gif</name></type> <name>gif</name> <init>= <expr><call><name><name>gifRepository</name><operator>.</operator><name>findByName</name></name><argument_list>(<argument><expr><name>name</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>model</name><operator>.</operator><name>addAttribute</name></name><argument_list>(<argument><expr><literal type="string">"gif"</literal></expr></argument>, <argument><expr><name>gif</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <return>return <expr><literal type="string">"gif-details"</literal></expr>;</return>
+    }</block></function>
+
+    <function><annotation>@<name>RequestMapping</name><argument_list>(<argument><expr><literal type="string">"/favorites"</literal></expr></argument>)</argument_list></annotation>
+    <specifier>public</specifier> <type><name>String</name></type> <name>favorites</name><parameter_list>(<parameter><decl><type><name>Model</name></type> <name>model</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name><name>List</name><argument_list type="generic">&lt;<argument><name>Gif</name></argument>&gt;</argument_list></name></type> <name>faves</name> <init>= <expr><call><name><name>gifRepository</name><operator>.</operator><name>getFavorites</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><call><name><name>model</name><operator>.</operator><name>addAttribute</name></name><argument_list>(<argument><expr><literal type="string">"gifs"</literal></expr></argument>,<argument><expr><name>faves</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <return>return <expr><literal type="string">"favorites"</literal></expr>;</return>
+    }</block></function>
+}</block></class></unit>

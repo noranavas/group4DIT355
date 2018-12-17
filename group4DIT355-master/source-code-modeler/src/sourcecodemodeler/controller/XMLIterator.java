@@ -26,12 +26,28 @@ public class XMLIterator {
     public XMLClass[] getXMLClasses() {
         return xmlClasses;
     }
+
     public String getStringifiedXMLClasses() {
         String classes = "";
         XMLClass[] xmlClasses = getXMLClasses();
         for (int i = 0; i < xmlClasses.length; i++) {
             classes += xmlClasses[i].toString();
         }
+
+        String relations = "";
+
+        for (XMLClass xmlclass : this.getXMLClasses()){
+            for (String relation : xmlclass.relationsToString()){
+
+                // make sure that this relationship hasn't been added before - to avoid duplication
+                if (!relations.contains(relation + " -- " + xmlclass.getName())){
+                    relations += xmlclass.getName() + " -- " + relation + "\n";
+                }
+
+            }
+        }
+
+        classes += relations;
         return classes;
     }
 

@@ -53,26 +53,22 @@ public class XMLClass implements Serializable {
         for (String attribute: this.getAttributes()) {
             s += attribute + "\n";
         }
-        for (String method : this.getMethods()) {
+        for (String method: this.getMethods()) {
             s += method + "\n";
         }
 
-        /*
-        if (!this.getRelationships().isEmpty()) {
-            List<XMLClass> xmlClasses = getRelationships();
-            s += "\nRelationships:";
-            for (int i = 0; i < xmlClasses.size(); i++) {
-                s += " " + xmlClasses.get(i).getName();
-                if (i < xmlClasses.size() - 1) {
-                    s += ",";
-                }
-            }
-        }
-
-        */
-
         s += "}\n";
         return s;
+    }
+
+    public ArrayList<String> relationsToString(){
+        ArrayList<String> relations = new ArrayList<>();
+
+        for (XMLClass relation: this.getRelationships()){
+            relations.add(relation.getName());
+        }
+
+        return relations;
     }
 
 }

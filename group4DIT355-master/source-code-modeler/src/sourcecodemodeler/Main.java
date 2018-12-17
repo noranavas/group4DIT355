@@ -309,6 +309,7 @@ public class Main extends Application {
                         "}\n";
                 source += xmlIterator.getStringifiedXMLClasses() +
                         "@enduml\n";
+
                 SourceStringReader reader = new SourceStringReader(source);
                 reader.generateImage(out);
                 byte[] byteData = out.toByteArray();
