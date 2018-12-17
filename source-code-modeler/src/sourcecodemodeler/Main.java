@@ -109,7 +109,7 @@ public class Main extends Application {
         } else if (object instanceof XMLClass[]) {
             System.out.println("In Visualizer node...");
             // TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.
-
+            visualize(data);
             // Send the visualization.
 
         // If data is BufferedImage (diagram), do what...?
@@ -144,14 +144,16 @@ public class Main extends Application {
     // TODO: Handle the received visualization data.
     private void visualize(Serializable data) {
         try {
+            XMLClass[] xmlClasses = (XMLClass[])data;
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-
             String source = "@startuml\n" +
                     "skinparam class {\n" +
                     "BorderColor black\n" +
                     "ArrowColor black\n" +
                     "BackgroundColor LightSkyBlue\n" +
                     "}\n";
+
+            xmlIterator.setXMLClasses(xmlClasses);
             source += xmlIterator.getStringifiedXMLClasses() +
                     "@enduml\n";
 

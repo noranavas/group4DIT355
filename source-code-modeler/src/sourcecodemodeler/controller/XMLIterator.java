@@ -26,6 +26,9 @@ public class XMLIterator {
     public XMLClass[] getXMLClasses() {
         return xmlClasses;
     }
+    public void setXMLClasses(XMLClass[] xmlClasses) {
+        this.xmlClasses = xmlClasses;
+    }
     public String getStringifiedXMLClasses() {
         String classes = "";
         XMLClass[] xmlClasses = getXMLClasses();
