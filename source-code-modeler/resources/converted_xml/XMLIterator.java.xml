@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\gusnu\Desktop\group4DIT355\source-code-modeler\src\sourcecodemodeler\controller\XMLIterator.java"><package>package <name><name>sourcecodemodeler</name><operator>.</operator><name>controller</name></name>;</package>
+
+<import>import <name><name>sourcecodemodeler</name><operator>.</operator><name>model</name><operator>.</operator><name>XMLClass</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>w3c</name><operator>.</operator><name>dom</name><operator>.</operator><name>Document</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>w3c</name><operator>.</operator><name>dom</name><operator>.</operator><name>Node</name></name>;</import>
+<import>import <name><name>org</name><operator>.</operator><name>w3c</name><operator>.</operator><name>dom</name><operator>.</operator><name>NodeList</name></name>;</import>
+
+<import>import <name><name>javax</name><operator>.</operator><name>xml</name><operator>.</operator><name>parsers</name><operator>.</operator><name>DocumentBuilder</name></name>;</import>
+<import>import <name><name>javax</name><operator>.</operator><name>xml</name><operator>.</operator><name>parsers</name><operator>.</operator><name>DocumentBuilderFactory</name></name>;</import>
+<import>import <name><name>javax</name><operator>.</operator><name>xml</name><operator>.</operator><name>parsers</name><operator>.</operator><name>ParserConfigurationException</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>File</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>io</name><operator>.</operator><name>IOException</name></name>;</import>
+<import>import <name><name>java</name><operator>.</operator><name>util</name><operator>.</operator><name>List</name></name>;</import>
+
+<comment type="block">/*
+    This class iterates over the tags of XML documents to retrieve data (data selection).
+    The data is then used to create classes that can later be displayed in the produced class diagram.
+ */</comment>
+<class><specifier>public</specifier> class <name>XMLIterator</name> <block>{
+    <decl_stmt><decl><specifier>private</specifier> <type><name><name>XMLClass</name><index>[]</index></name></type> <name>xmlClasses</name></decl>;</decl_stmt>
+
+    <comment type="line">//===== Constructor(s) =====//</comment>
+    <constructor><specifier>public</specifier> <name>XMLIterator</name><parameter_list>()</parameter_list> <block>{}</block></constructor>
+
+    <comment type="line">//===== Getters &amp; Setters =====//</comment>
+    <function><specifier>public</specifier> <type><name><name>XMLClass</name><index>[]</index></name></type> <name>getXMLClasses</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><name>xmlClasses</name></expr>;</return>
+    }</block></function>
+    <function><specifier>public</specifier> <type><name>String</name></type> <name>getStringifiedXMLClasses</name><parameter_list>()</parameter_list> <block>{
+        <decl_stmt><decl><type><name>String</name></type> <name>classes</name> <init>= <expr><literal type="string">""</literal></expr></init></decl>;</decl_stmt>
+        <decl_stmt><decl><type><name><name>XMLClass</name><index>[]</index></name></type> <name>xmlClasses</name> <init>= <expr><call><name>getXMLClasses</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name><name>xmlClasses</name><operator>.</operator><name>length</name></name></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+            <expr_stmt><expr><name>classes</name> <operator>+=</operator> <name><name>xmlClasses</name><index>[<expr><name>i</name></expr>]</index></name><operator>.</operator><call><name>toString</name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+        }</block></for>
+        <return>return <expr><name>classes</name></expr>;</return>
+    }</block></function>
+
+    <comment type="line">//===== Methods =====//</comment>
+    <function><specifier>public</specifier> <type><name>void</name></type> <name>createXMLClasses</name><parameter_list>(<parameter><decl><type><name><name>File</name><index>[]</index></name></type> <name>files</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><name><name>this</name><operator>.</operator><name>xmlClasses</name></name> <operator>=</operator> <operator>new</operator> <name><name>XMLClass</name><index>[<expr><name><name>files</name><operator>.</operator><name>length</name></name></expr>]</index></name></expr>;</expr_stmt>
+
+        <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name><init>=<expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <name><name>files</name><operator>.</operator><name>length</name></name></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+            <expr_stmt><expr><name><name>xmlClasses</name><index>[<expr><name>i</name></expr>]</index></name> <operator>=</operator> <call><name>createXMLClass</name><argument_list>(<argument><expr><name><name>files</name><index>[<expr><name>i</name></expr>]</index></name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></for>
+
+        <for>for <control>(<init><decl><type><name>XMLClass</name></type> <name>xmlClass</name> <range>: <expr><name>xmlClasses</name></expr></range></decl></init>)</control> <block>{
+            <expr_stmt><expr><call><name>discoverComposition</name><argument_list>(<argument><expr><name>xmlClass</name></expr></argument>, <argument><expr><name>xmlClasses</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></for>
+    }</block></function>
+
+    <function><specifier>private</specifier> <type><name>void</name></type> <name>discoverComposition</name><parameter_list>(<parameter><decl><type><name>XMLClass</name></type> <name>xmlClass</name></decl></parameter>, <parameter><decl><type><name><name>XMLClass</name><index>[]</index></name></type> <name>classes</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name><name>List</name><argument_list type="generic">&lt;<argument><name>String</name></argument>&gt;</argument_list></name></type> <name>attributes</name> <init>= <expr><call><name><name>xmlClass</name><operator>.</operator><name>getAttributes</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <comment type="line">//List&lt;String&gt; classes = getListOfClasses();</comment>
+
+        <for>for <control>(<init><decl><type><name>String</name></type> <name>attribute</name> <range>: <expr><name>attributes</name></expr></range></decl></init>)</control> <block>{
+            <comment type="line">// for each attribute loop over class names and check if attribute contains class name</comment>
+            <for>for <control>(<init><decl><type><name>XMLClass</name></type> <name>otherClass</name> <range>: <expr><name>classes</name></expr></range></decl></init>)</control> <block>{
+                <if>if <condition>(<expr><call><name><name>otherClass</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call> <operator>!=</operator> <literal type="null">null</literal> <operator>&amp;&amp;</operator> <call><name><name>attribute</name><operator>.</operator><name>toLowerCase</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>contains</name><argument_list>(<argument><expr><call><name><name>otherClass</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>toLowerCase</name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>)</condition><then> <block>{
+                    <comment type="line">// attribute contains class name, so make an instance of XMLClass and add it to relationships</comment>
+                    <expr_stmt><expr><call><name><name>xmlClass</name><operator>.</operator><name>addRelationship</name></name><argument_list>(<argument><expr><name>otherClass</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                }</block></then></if>
+            }</block></for>
+        }</block></for>
+    }</block></function>
+
+    <comment type="line">// Creates a class (XMLClass) that will hold the data for th visualization.</comment>
+    <function><specifier>public</specifier> <type><name>XMLClass</name></type> <name>createXMLClass</name><parameter_list>(<parameter><decl><type><name>File</name></type> <name>file</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name>XMLClass</name></type> <name>xmlClass</name> <init>= <expr><operator>new</operator> <call><name>XMLClass</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+
+        <decl_stmt><decl><type><name>DocumentBuilderFactory</name></type> <name>docBuilderFactory</name> <init>= <expr><call><name><name>DocumentBuilderFactory</name><operator>.</operator><name>newInstance</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <try>try <block>{
+            <decl_stmt><decl><type><name>DocumentBuilder</name></type> <name>docBuilder</name> <init>= <expr><call><name><name>docBuilderFactory</name><operator>.</operator><name>newDocumentBuilder</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <decl_stmt><decl><type><name>Document</name></type> <name>doc</name> <init>= <expr><call><name><name>docBuilder</name><operator>.</operator><name>parse</name></name><argument_list>(<argument><expr><name>file</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+
+            <decl_stmt><decl><type><name>NodeList</name></type> <name>nodeList</name> <init>= <expr><call><name><name>doc</name><operator>.</operator><name>getElementsByTagName</name></name><argument_list>(<argument><expr><literal type="string">"class"</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+
+            <if>if <condition>(<expr><call><name><name>nodeList</name><operator>.</operator><name>getLength</name></name><argument_list>()</argument_list></call> <operator>==</operator> <literal type="number">0</literal></expr>)</condition><then> <block>{
+                <expr_stmt><expr><name>nodeList</name> <operator>=</operator> <call><name><name>doc</name><operator>.</operator><name>getElementsByTagName</name></name><argument_list>(<argument><expr><literal type="string">"enum"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></then></if>
+
+            <if>if <condition>(<expr><call><name><name>nodeList</name><operator>.</operator><name>getLength</name></name><argument_list>()</argument_list></call> <operator>&gt;</operator> <literal type="number">0</literal></expr>)</condition><then> <block>{
+
+                <comment type="line">// Set xmlClass name to the first class we find in the xml file</comment>
+                <decl_stmt><decl><type><name>NodeList</name></type> <name>classChildNodes</name> <init>= <expr><call><name><name>nodeList</name><operator>.</operator><name>item</name></name><argument_list>(<argument><expr><literal type="number">0</literal></expr></argument>)</argument_list></call><operator>.</operator><call><name>getChildNodes</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+                <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <call><name><name>classChildNodes</name><operator>.</operator><name>getLength</name></name><argument_list>()</argument_list></call></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+                    <decl_stmt><decl><type><name>Node</name></type> <name>node</name> <init>= <expr><call><name><name>classChildNodes</name><operator>.</operator><name>item</name></name><argument_list>(<argument><expr><name>i</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+                    <if>if <condition>(<expr><call><name><name>node</name><operator>.</operator><name>getNodeName</name></name><argument_list>()</argument_list></call> <operator>==</operator> <literal type="string">"name"</literal></expr>)</condition><then> <block>{
+                        <expr_stmt><expr><call><name><name>xmlClass</name><operator>.</operator><name>setName</name></name><argument_list>(<argument><expr><call><name><name>node</name><operator>.</operator><name>getTextContent</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                        <break>break;</break>
+                    }</block></then></if>
+                }</block></for>
+
+                <comment type="line">// If there are more classes in the file, remove them to avoid inner class attributes and methods</comment>
+                <if>if <condition>(<expr><call><name><name>nodeList</name><operator>.</operator><name>getLength</name></name><argument_list>()</argument_list></call> <operator>&gt;</operator> <literal type="number">1</literal></expr>)</condition><then> <block>{
+                    <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">1</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <call><name><name>nodeList</name><operator>.</operator><name>getLength</name></name><argument_list>()</argument_list></call></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+                        <decl_stmt><decl><type><name>Node</name></type> <name>node</name> <init>= <expr><call><name><name>nodeList</name><operator>.</operator><name>item</name></name><argument_list>(<argument><expr><name>i</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+                        <expr_stmt><expr><call><name><name>node</name><operator>.</operator><name>setTextContent</name></name><argument_list>(<argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                    }</block></for>
+                }</block></then></if>
+
+                <expr_stmt><expr><call><name>setAttributes</name><argument_list>(<argument><expr><name>doc</name></expr></argument>, <argument><expr><name>xmlClass</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                <expr_stmt><expr><call><name>setMethods</name><argument_list>(<argument><expr><name>doc</name></expr></argument>, <argument><expr><name>xmlClass</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                <expr_stmt><expr><call><name>discoverInheritance</name><argument_list>(<argument><expr><name>doc</name></expr></argument>, <argument><expr><name>xmlClass</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></then></if>
+
+        }</block> <catch>catch <parameter_list>(<parameter><decl><type><name>ParserConfigurationException</name></type> | <type><name><name>org</name><operator>.</operator><name>xml</name><operator>.</operator><name>sax</name><operator>.</operator><name>SAXException</name></name></type> | <type><name>IOException</name></type> <name>e</name></decl></parameter>)</parameter_list> <block>{
+            <expr_stmt><expr><call><name><name>e</name><operator>.</operator><name>printStackTrace</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><call><name><name>System</name><operator>.</operator><name>out</name><operator>.</operator><name>println</name></name><argument_list>(<argument><expr><literal type="string">"Problem parsing XML file: "</literal> <operator>+</operator> <call><name><name>file</name><operator>.</operator><name>getName</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        }</block></catch></try>
+
+        <return>return <expr><name>xmlClass</name></expr>;</return>
+    }</block></function>
+
+    <function><specifier>private</specifier> <type><name>void</name></type> <name>discoverInheritance</name><parameter_list>(<parameter><decl><type><name>Document</name></type> <name>doc</name></decl></parameter>, <parameter><decl><type><name>XMLClass</name></type> <name>xmlClass</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name>NodeList</name></type> <name>nodeList</name> <init>= <expr><call><name><name>doc</name><operator>.</operator><name>getElementsByTagName</name></name><argument_list>(<argument><expr><literal type="string">"extends"</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt> <comment type="line">// Tag for methods.</comment>
+
+        <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <call><name><name>nodeList</name><operator>.</operator><name>getLength</name></name><argument_list>()</argument_list></call></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+            <decl_stmt><decl><type><name>Node</name></type> <name>node</name> <init>= <expr><call><name><name>nodeList</name><operator>.</operator><name>item</name></name><argument_list>(<argument><expr><name>i</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+
+            <comment type="line">// node "extends" contains node "name", so take all children and find child node "name"</comment>
+            <decl_stmt><decl><type><name>NodeList</name></type> <name>childNodes</name> <init>= <expr><call><name><name>node</name><operator>.</operator><name>getChildNodes</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <for>for <control>(<init><decl><type><name>int</name></type> <name>j</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>j</name> <operator>&lt;</operator> <call><name><name>childNodes</name><operator>.</operator><name>getLength</name></name><argument_list>()</argument_list></call></expr>;</condition> <incr><expr><name>j</name><operator>++</operator></expr></incr>)</control> <block>{
+                <decl_stmt><decl><type><name>Node</name></type> <name>child</name> <init>= <expr><call><name><name>childNodes</name><operator>.</operator><name>item</name></name><argument_list>(<argument><expr><name>j</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+                <if>if <condition>(<expr><call><name><name>child</name><operator>.</operator><name>getNodeName</name></name><argument_list>()</argument_list></call> <operator>==</operator> <literal type="string">"name"</literal></expr>)</condition><then> <block>{
+                    <expr_stmt><expr><call><name><name>xmlClass</name><operator>.</operator><name>addRelationship</name></name><argument_list>(<argument><expr><operator>new</operator> <call><name>XMLClass</name><argument_list>(<argument><expr><call><name><name>child</name><operator>.</operator><name>getTextContent</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                    <break>break;</break>
+                }</block></then></if>
+            }</block></for>
+        }</block></for>
+    }</block></function>
+
+    <comment type="line">// Iterates through the XML document to retrieve attributes.</comment>
+    <function><specifier>private</specifier> <type><name>void</name></type> <name>setAttributes</name><parameter_list>(<parameter><decl><type><name>Document</name></type> <name>doc</name></decl></parameter>, <parameter><decl><type><name>XMLClass</name></type> <name>xmlClass</name></decl></parameter>)</parameter_list> <block>{
+
+        <decl_stmt><decl><type><name>NodeList</name></type> <name>nodeList</name> <init>= <expr><call><name><name>doc</name><operator>.</operator><name>getElementsByTagName</name></name><argument_list>(<argument><expr><literal type="string">"decl_stmt"</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt> <comment type="line">// Tag for attributes.</comment>
+        <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <call><name><name>nodeList</name><operator>.</operator><name>getLength</name></name><argument_list>()</argument_list></call></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+            <decl_stmt><decl><type><name>Node</name></type> <name>node</name> <init>= <expr><call><name><name>nodeList</name><operator>.</operator><name>item</name></name><argument_list>(<argument><expr><name>i</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+            <expr_stmt><expr><name>node</name> <operator>=</operator> <call><name>removeTag</name><argument_list>(<argument><expr><name>node</name></expr></argument>, <argument><expr><literal type="string">"annotation"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><name>node</name> <operator>=</operator> <call><name>removeTag</name><argument_list>(<argument><expr><name>node</name></expr></argument>,<argument><expr><literal type="string">"init"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <expr_stmt><expr><name>node</name> <operator>=</operator> <call><name>removeTag</name><argument_list>(<argument><expr><name>node</name></expr></argument>, <argument><expr><literal type="string">"comment"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            <decl_stmt><decl><type><name>Node</name></type> <name>secondParent</name> <init>= <expr><call><name><name>node</name><operator>.</operator><name>getParentNode</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>getParentNode</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <if>if <condition>(<expr><call><name><name>secondParent</name><operator>.</operator><name>getNodeName</name></name><argument_list>()</argument_list></call> <operator>==</operator> <literal type="string">"class"</literal></expr> <comment type="block">/* &amp;&amp; GetClassName(secondParent) == xmlClass.getName()*/</comment> )</condition><then> <block>{
+                <decl_stmt><decl><type><name>String</name></type> <name>s</name> <init>= <expr><call><name><name>node</name><operator>.</operator><name>getTextContent</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+                <expr_stmt><expr><name>s</name> <operator>=</operator> <call><name>prettyString</name><argument_list>(<argument><expr><name>s</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                <expr_stmt><expr><call><name><name>xmlClass</name><operator>.</operator><name>addAttribute</name></name><argument_list>(<argument><expr><name>s</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></then></if>
+        }</block></for>
+    }</block></function>
+
+    <comment type="line">// Iterates through a XML document to retrieve methods.</comment>
+    <function><specifier>private</specifier> <type><name>void</name></type> <name>setMethods</name><parameter_list>(<parameter><decl><type><name>Document</name></type> <name>doc</name></decl></parameter>, <parameter><decl><type><name>XMLClass</name></type> <name>xmlClass</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name>NodeList</name></type> <name>nodeList</name> <init>= <expr><call><name><name>doc</name><operator>.</operator><name>getElementsByTagName</name></name><argument_list>(<argument><expr><literal type="string">"function"</literal></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt> <comment type="line">// Tag for methods.</comment>
+        <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <call><name><name>nodeList</name><operator>.</operator><name>getLength</name></name><argument_list>()</argument_list></call></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+            <decl_stmt><decl><type><name>Node</name></type> <name>node</name> <init>= <expr><call><name><name>nodeList</name><operator>.</operator><name>item</name></name><argument_list>(<argument><expr><name>i</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+
+            <comment type="line">// Skip nodes that are children of expression nodes - overridden methods will be excluded.</comment>
+            <if>if <condition>(<expr><call><name><name>node</name><operator>.</operator><name>getParentNode</name></name><argument_list>()</argument_list></call><operator>.</operator><call><name>getParentNode</name><argument_list>()</argument_list></call><operator>.</operator><call><name>getParentNode</name><argument_list>()</argument_list></call><operator>.</operator><call><name>getNodeName</name><argument_list>()</argument_list></call> <operator>!=</operator> <literal type="string">"expr"</literal></expr>)</condition><then> <block>{
+                <expr_stmt><expr><name>node</name> <operator>=</operator> <call><name>removeTag</name><argument_list>(<argument><expr><name>node</name></expr></argument>, <argument><expr><literal type="string">"annotation"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                <expr_stmt><expr><name>node</name> <operator>=</operator> <call><name>removeTag</name><argument_list>(<argument><expr><name>node</name></expr></argument>, <argument><expr><literal type="string">"throws"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                <expr_stmt><expr><name>node</name> <operator>=</operator> <call><name>removeTag</name><argument_list>(<argument><expr><name>node</name></expr></argument>, <argument><expr><literal type="string">"parameter_list"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                <expr_stmt><expr><name>node</name> <operator>=</operator> <call><name>removeTag</name><argument_list>(<argument><expr><name>node</name></expr></argument>, <argument><expr><literal type="string">"specifier"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                <expr_stmt><expr><name>node</name> <operator>=</operator> <call><name>removeTag</name><argument_list>(<argument><expr><name>node</name></expr></argument>, <argument><expr><literal type="string">"type"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                <expr_stmt><expr><name>node</name> <operator>=</operator> <call><name>removeTag</name><argument_list>(<argument><expr><name>node</name></expr></argument>, <argument><expr><literal type="string">"comment"</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+                <decl_stmt><decl><type><name>String</name></type> <name>s</name> <init>= <expr><call><name><name>node</name><operator>.</operator><name>getTextContent</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+                <decl_stmt><decl><type><name>String</name></type> <name>body</name> <init>= <expr><call><name><name>s</name><operator>.</operator><name>substring</name></name><argument_list>(<argument><expr><call><name><name>s</name><operator>.</operator><name>indexOf</name></name><argument_list>(<argument><expr><literal type="char">'{'</literal></expr></argument>)</argument_list></call></expr></argument>, <argument><expr><call><name><name>s</name><operator>.</operator><name>length</name></name><argument_list>()</argument_list></call></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+                <if>if <condition>(<expr><operator>!</operator><call><name><name>body</name><operator>.</operator><name>isEmpty</name></name><argument_list>()</argument_list></call></expr>)</condition><then> <block>{
+                    <expr_stmt><expr><name>s</name> <operator>=</operator> <call><name><name>s</name><operator>.</operator><name>replace</name></name><argument_list>(<argument><expr><name>body</name></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+                }</block></then></if>
+                <expr_stmt><expr><name>s</name> <operator>=</operator> <call><name>prettyString</name><argument_list>(<argument><expr><name>s</name></expr></argument>)</argument_list></call> <operator>+</operator> <literal type="string">"()"</literal></expr>;</expr_stmt>
+                <expr_stmt><expr><call><name><name>xmlClass</name><operator>.</operator><name>addMethod</name></name><argument_list>(<argument><expr><name>s</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></then></if>
+        }</block></for>
+    }</block></function>
+
+    <comment type="line">//----- Remove Specific Tags -----//</comment>
+    <function><specifier>private</specifier> <type><name>Node</name></type> <name>removeTag</name><parameter_list>(<parameter><decl><type><name>Node</name></type> <name>node</name></decl></parameter>, <parameter><decl><type><name>String</name></type> <name>tag</name></decl></parameter>)</parameter_list> <block>{
+        <decl_stmt><decl><type><name>NodeList</name></type> <name>childNodes</name> <init>= <expr><call><name><name>node</name><operator>.</operator><name>getChildNodes</name></name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+        <for>for <control>(<init><decl><type><name>int</name></type> <name>i</name> <init>= <expr><literal type="number">0</literal></expr></init></decl>;</init> <condition><expr><name>i</name> <operator>&lt;</operator> <call><name><name>childNodes</name><operator>.</operator><name>getLength</name></name><argument_list>()</argument_list></call></expr>;</condition> <incr><expr><name>i</name><operator>++</operator></expr></incr>)</control> <block>{
+            <decl_stmt><decl><type><name>Node</name></type> <name>childNode</name> <init>= <expr><call><name><name>childNodes</name><operator>.</operator><name>item</name></name><argument_list>(<argument><expr><name>i</name></expr></argument>)</argument_list></call></expr></init></decl>;</decl_stmt>
+
+            <comment type="line">// recursively call removeTag method to remove tag from all children</comment>
+            <if>if <condition>(<expr><call><name><name>childNode</name><operator>.</operator><name>hasChildNodes</name></name><argument_list>()</argument_list></call></expr>)</condition><then> <block>{
+                <expr_stmt><expr><name>childNode</name> <operator>=</operator> <call><name>removeTag</name><argument_list>(<argument><expr><name>childNode</name></expr></argument>, <argument><expr><name>tag</name></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></then></if>
+
+            <comment type="line">// this actually removes the tag by setting its content to empty string</comment>
+            <decl_stmt><decl><type><name>String</name></type> <name>childNodeName</name> <init>= <expr><call><name><name>childNodes</name><operator>.</operator><name>item</name></name><argument_list>(<argument><expr><name>i</name></expr></argument>)</argument_list></call><operator>.</operator><call><name>getNodeName</name><argument_list>()</argument_list></call></expr></init></decl>;</decl_stmt>
+            <if>if <condition>(<expr><call><name><name>childNodeName</name><operator>.</operator><name>equalsIgnoreCase</name></name><argument_list>(<argument><expr><name>tag</name></expr></argument>)</argument_list></call></expr>)</condition><then> <block>{
+                <expr_stmt><expr><call><name><name>childNodes</name><operator>.</operator><name>item</name></name><argument_list>(<argument><expr><name>i</name></expr></argument>)</argument_list></call><operator>.</operator><call><name>setTextContent</name><argument_list>(<argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+            }</block></then></if>
+        }</block></for>
+        <return>return <expr><name>node</name></expr>;</return>
+    }</block></function>
+
+    <function><specifier>private</specifier> <type><name>String</name></type> <name>prettyString</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>s</name></decl></parameter>)</parameter_list> <block>{
+        <comment type="line">// Remove double spaces, space before comma and semi-column.</comment>
+        <expr_stmt><expr><name>s</name> <operator>=</operator> <call><name><name>s</name><operator>.</operator><name>replaceAll</name></name><argument_list>(<argument><expr><literal type="string">"\\s\\s"</literal></expr></argument>, <argument><expr><literal type="string">" "</literal></expr></argument>)</argument_list></call>
+                <operator>.</operator><call><name>replaceAll</name><argument_list>(<argument><expr><literal type="string">"\\s,\\s+"</literal></expr></argument>, <argument><expr><literal type="string">", "</literal></expr></argument>)</argument_list></call>
+                <operator>.</operator><call><name>replaceAll</name><argument_list>(<argument><expr><literal type="string">"\\s*;"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+
+        <if>if <condition>(<expr><operator>!</operator><operator>(</operator><call><name><name>s</name><operator>.</operator><name>contains</name></name><argument_list>(<argument><expr><literal type="string">"public"</literal></expr></argument>)</argument_list></call> <operator>||</operator> <call><name><name>s</name><operator>.</operator><name>contains</name></name><argument_list>(<argument><expr><literal type="string">"private"</literal></expr></argument>)</argument_list></call> <operator>||</operator> <call><name><name>s</name><operator>.</operator><name>contains</name></name><argument_list>(<argument><expr><literal type="string">"protected"</literal></expr></argument>)</argument_list></call><operator>)</operator></expr>)</condition><then> <block>{
+            <expr_stmt><expr><name>s</name> <operator>=</operator> <literal type="string">"+ "</literal> <operator>+</operator> <call><name><name>s</name><operator>.</operator><name>trim</name></name><argument_list>()</argument_list></call></expr>;</expr_stmt> <comment type="line">// Set public as default visibility.</comment>
+        }</block></then></if>
+
+        <expr_stmt><expr><name>s</name> <operator>=</operator> <call><name><name>s</name><operator>.</operator><name>trim</name></name><argument_list>()</argument_list></call>
+                <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">"public"</literal></expr></argument>, <argument><expr><literal type="string">"+"</literal></expr></argument>)</argument_list></call>
+                <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">"private"</literal></expr></argument>, <argument><expr><literal type="string">"-"</literal></expr></argument>)</argument_list></call>
+                <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">"protected"</literal></expr></argument>, <argument><expr><literal type="string">"#"</literal></expr></argument>)</argument_list></call>
+                <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">"void"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call>
+                <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">"static"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call>
+                <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">"final"</literal></expr></argument>, <argument><expr><literal type="string">""</literal></expr></argument>)</argument_list></call>
+                <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">"   "</literal></expr></argument>, <argument><expr><literal type="string">" "</literal></expr></argument>)</argument_list></call>
+                <operator>.</operator><call><name>replace</name><argument_list>(<argument><expr><literal type="string">"  "</literal></expr></argument>, <argument><expr><literal type="string">" "</literal></expr></argument>)</argument_list></call></expr>;</expr_stmt>
+        <return>return <expr><name>s</name></expr>;</return>
+    }</block></function>
+
+}</block></class></unit>
