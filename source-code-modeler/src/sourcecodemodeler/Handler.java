@@ -38,9 +38,6 @@ public class Handler extends Application {
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static String IP_ADDRESS_LOCAL;
     private static String IP_ADDRESS_NEXT_NODE = "192.168.1.178";
-    private static final String IP_1 = "192.168.1.178";
-    private static final String IP_2 = "192.168.1.110";
-    private static final String IP_3 = "192.168.1.152";
     private boolean hasVisual = false;
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
