@@ -119,10 +119,14 @@ public class Handler extends Application {
             // Send the visualization.
             if (hasVisual) {
                 // do nothing
+                selectBTN.setDisable(true);
+                visualizeBTN.setDisable(true);
             } else {
                 visualize(data);
                 sendData(data);
                 hasVisual = true;
+                selectBTN.setDisable(true);
+                visualizeBTN.setDisable(true);
             }
         } else {
             System.out.println("Unable to recognize data: " + data.toString());
