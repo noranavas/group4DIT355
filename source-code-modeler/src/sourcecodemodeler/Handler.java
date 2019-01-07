@@ -32,12 +32,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
-public class Main extends Application {
+public class Handler extends Application {
     public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static String IP_ADDRESS_LOCAL;
     private static String IP_ADDRESS_NEXT_NODE = "192.168.1.178";
+    private static final String IP_1 = "192.168.1.178";
+    private static final String IP_2 = "192.168.1.110";
+    private static final String IP_3 = "192.168.1.152";
+    private boolean hasVisual = false;
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -100,10 +104,9 @@ public class Main extends Application {
                 e.printStackTrace();
             }
 
-            System.out.println("SENDING " + IP_ADDRESS_LOCAL);
-            sendData(IP_ADDRESS_LOCAL);
-
-            //sendData(xmlIterator.getXMLClasses());
+            System.out.println("SENDING TO " + IP_3);
+            sendData(IP_3);
+            sendData(xmlIterator.getXMLClasses());
 
         // If data is XMLClass[], it is the parsed xml. Do visualization.
         } else if (object instanceof XMLClass[]) {
@@ -111,11 +114,12 @@ public class Main extends Application {
             // TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.
             visualize(data);
             // Send the visualization.
-
-        // If data is BufferedImage (diagram), do what...?
-        } else if (object instanceof BufferedImage) {
-            // TODO: How do we send the diagram back to the first node without getting a StackOverflow error?
-
+            if (hasVisual) {
+                // do nothing
+            } else {
+                sendData(data);
+            }
+            hasVisual = true;
         } else {
             System.out.println("Unable to recognize data: " + data.toString());
         }
@@ -143,8 +147,10 @@ public class Main extends Application {
     }
     // TODO: Handle the received visualization data.
     private void visualize(Serializable data) {
+        XMLClass[] xmlClasses = (XMLClass[])data;
+        xmlIterator.setXMLClasses(xmlClasses);
         try {
-            XMLClass[] xmlClasses = (XMLClass[])data;
+            System.out.println("Trying visualization...");
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             String source = "@startuml\n" +
                     "skinparam class {\n" +
@@ -152,11 +158,8 @@ public class Main extends Application {
                     "ArrowColor black\n" +
                     "BackgroundColor LightSkyBlue\n" +
                     "}\n";
-
-            xmlIterator.setXMLClasses(xmlClasses);
             source += xmlIterator.getStringifiedXMLClasses() +
                     "@enduml\n";
-
             SourceStringReader reader = new SourceStringReader(source);
             reader.generateImage(out);
             byte[] byteData = out.toByteArray();
