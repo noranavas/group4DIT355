@@ -115,12 +115,14 @@ public class Handler extends Application {
         } else if (object instanceof XMLClass[]) {
             System.out.println("In Visualizer node...");
             // TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.
+
             // Send the visualization.
-            if (!hasVisual) {
-                visualize(data);
-                hasVisual = true;
+            if (hasVisual) {
+                // do nothing
             } else {
+                visualize(data);
                 sendData(data);
+                hasVisual = true;
             }
             selectBTN.setDisable(false);
             visualizeBTN.setDisable(false);
