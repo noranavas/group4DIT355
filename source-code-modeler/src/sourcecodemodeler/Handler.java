@@ -46,6 +46,9 @@ public class Handler extends Application {
     private NetworkConnection sender  = createSender();
     private File selectedDirectory;
 
+    Button selectBTN = new Button("Select Directory");
+    Button visualizeBTN = new Button("Visualize");
+
     //===== Network =====//
     @Override
     public void init() throws Exception {
@@ -101,9 +104,12 @@ public class Handler extends Application {
                 e.printStackTrace();
             }
 
-            System.out.println("SENDING TO " + IP_3);
-            sendData(IP_3);
+            System.out.println("SENDING TO " + IP_ADDRESS_NEXT_NODE);
+            sendData(IP_ADDRESS_NEXT_NODE);
             sendData(xmlIterator.getXMLClasses());
+
+            selectBTN.setDisable(true);
+            visualizeBTN.setDisable(true);
 
         // If data is XMLClass[], it is the parsed xml. Do visualization.
         } else if (object instanceof XMLClass[]) {
@@ -112,7 +118,8 @@ public class Handler extends Application {
             visualize(data);
             // Send the visualization.
             if (hasVisual) {
-                // do nothing
+                selectBTN.setDisable(false);
+                visualizeBTN.setDisable(false);
             } else {
                 sendData(data);
             }
@@ -175,8 +182,6 @@ public class Handler extends Application {
     public void start(Stage primaryStage) throws Exception {
         // Set JavaFX content.
         Label title = new Label("Source Code Modeler");
-        Button selectBTN = new Button("Select Directory");
-        Button visualizeBTN = new Button("Visualize");
         Label selectedDirectoryName = new Label("");
 
         // ========== Test Buttons ==========//
@@ -235,6 +240,7 @@ public class Handler extends Application {
             } catch (NullPointerException e) {
                 System.out.println("No directory was selected.");
             }
+            visualizeBTN.setDisable(false);
         });
 
         // Visualize event.
@@ -272,6 +278,8 @@ public class Handler extends Application {
             sendData(encoded);
             System.out.println("sending 'encoded' to " + IP_ADDRESS_NEXT_NODE + System.lineSeparator());
 
+            visualizeBTN.setDisable(true);
+            selectBTN.setDisable(true);
         });
 
         // Test print the parsed XML. TODO: Remove when done.
@@ -322,6 +330,7 @@ public class Handler extends Application {
             }
         });
 
+        visualizeBTN.setDisable(true);
         primaryStage.show();
     }
 
