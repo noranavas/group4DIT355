@@ -37,7 +37,7 @@ public class Handler extends Application {
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static String IP_ADDRESS_LOCAL;
-    private static String IP_ADDRESS_NEXT_NODE = "192.168.1.178";
+    private static String IP_ADDRESS_NEXT_NODE = "192.168.1.110";
     private boolean hasVisual = false;
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
@@ -115,15 +115,15 @@ public class Handler extends Application {
         } else if (object instanceof XMLClass[]) {
             System.out.println("In Visualizer node...");
             // TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.
-            visualize(data);
             // Send the visualization.
-            if (hasVisual) {
-                selectBTN.setDisable(false);
-                visualizeBTN.setDisable(false);
+            if (!hasVisual) {
+                visualize(data);
+                hasVisual = true;
             } else {
                 sendData(data);
             }
-            hasVisual = true;
+            selectBTN.setDisable(false);
+            visualizeBTN.setDisable(false);
         } else {
             System.out.println("Unable to recognize data: " + data.toString());
         }
