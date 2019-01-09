@@ -9,7 +9,7 @@ import java.io.Serializable;
     2 = Node/PC 3.
  */
 public class IPRepository implements Serializable {
-    private static int nodeNumber;
+    private int nodeNumber;
     private static final String[] IP_ADDRESS = {
             "192.168.1.152", // Node 1.
             "192.168.1.110", // Node 2.
@@ -20,7 +20,7 @@ public class IPRepository implements Serializable {
         nodeNumber = 0;
     }
 
-    public static int getNodeNumber() {
+    public int getNodeNumber() {
         return nodeNumber;
     }
     public static String[] getIpAddress() {
