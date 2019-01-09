@@ -36,7 +36,7 @@ public class Handler extends Application {
     public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
-    private static String IP_ADDRESS_NEXT_NODE = "192.168.1.110";
+    private static String IP_ADDRESS_NEXT_NODE;
     private boolean hasVisual = false;
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
@@ -53,7 +53,6 @@ public class Handler extends Application {
     @Override
     public void init() throws Exception {
         if (receiver != null) receiver.startConnection();
-        //if (sender != null) sender.startConnection();
     }
     @Override
     public void stop() throws Exception {
@@ -63,9 +62,9 @@ public class Handler extends Application {
     public void sendData(Serializable data) {
         try {
             sender.send(data);
-            System.out.println("Sending data to: " + IP_ADDRESS_NEXT_NODE);
+            System.out.println("Sending to: " + IP_ADDRESS_NEXT_NODE);
         } catch (Exception e) {
-            System.out.println("Error when sending data: " + data.toString());
+            System.out.println("Error when sending data to: " + IP_ADDRESS_NEXT_NODE);
         }
     }
     private Receiver createReceiver() {
@@ -97,23 +96,18 @@ public class Handler extends Application {
     public void handleData(Serializable data) {
         Object object = data;
 
-        // String for testing.
-        if (object instanceof String) {
-            System.out.println("Received String: " + (String)data);
-        }
         // If data is byte[][], it is the xml documents. Do XML parsing.
-        else if (object instanceof byte[][]) {
-            System.out.println("In XML Parser node...");
+        if (object instanceof byte[][]) {
             parseXML(data);
 
             try {
                 TimeUnit.SECONDS.sleep(2);
             }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            catch (InterruptedException e) {}
 
             initSender();
+            try {TimeUnit.SECONDS.sleep(1);} // Allow sender to finish creation before sending data.
+            catch (InterruptedException e) {}
             sendData(ipRepository);
             sendData(xmlIterator.getXMLClasses());
 
@@ -122,21 +116,17 @@ public class Handler extends Application {
 
         // If data is XMLClass[], it is the parsed xml. Do visualization.
         } else if (object instanceof XMLClass[]) {
-            System.out.println("In Visualizer node...");
-            // TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.
-
             // Send the visualization.
-            if (hasVisual) {
-                // do nothing
-            } else {
+            if (!hasVisual) {
                 visualize(data);
+                hasVisual = true;
                 initSender();
+                try {TimeUnit.SECONDS.sleep(1);} // Allow sender to finish creation before sending data.
+                catch (InterruptedException e) {}
                 sendData(ipRepository);
                 sendData(data);
-                hasVisual = true;
             }
         } else if (object instanceof IPRepository) {
-            System.out.println("Received IPRepository.");
             ipRepository = (IPRepository)data;
             ipRepository.incrementNodeNumber();
             int nodeNumber = ipRepository.getNodeNumber();
@@ -149,7 +139,6 @@ public class Handler extends Application {
                 nodeIPAddress = 2;
             }
             IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[nodeIPAddress];
-            System.out.println("IP Address next node: " + IP_ADDRESS_NEXT_NODE);
         } else {
             System.out.println("Unable to recognize received data: " + data.toString());
         }
@@ -282,10 +271,8 @@ public class Handler extends Application {
 
             // Allow output directory to update before doing anything else.
             try {
-                TimeUnit.SECONDS.sleep(3);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {e.printStackTrace();}
 
             File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
             byte[][] encoded = new byte[files.length][];
@@ -293,7 +280,7 @@ public class Handler extends Application {
                 try {
                     encoded[i] = Files.readAllBytes(Paths.get(files[i].getPath()));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("Problem reading code files when pressing visualize button.");
                 }
             }
             sourceCodeConverter.clearOutputDirectory();
@@ -301,6 +288,8 @@ public class Handler extends Application {
             ipRepository = new IPRepository();
             IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[1];
             initSender();
+            try {TimeUnit.SECONDS.sleep(1);} // Allow sender to finish creation before sending data.
+            catch (InterruptedException e) {}
             sendData(ipRepository);
             sendData(encoded);
 
