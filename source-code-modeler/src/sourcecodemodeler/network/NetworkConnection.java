@@ -43,6 +43,7 @@ public abstract class NetworkConnection {
             System.out.println(s + " closed.");
         } catch (Exception e) {
             System.out.println("Problem when closing " + s);
+            //e.printStackTrace();
         }
     }
 

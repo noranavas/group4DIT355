@@ -36,14 +36,14 @@ public class Handler extends Application {
     public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
-    private static String IP_ADDRESS_NEXT_NODE = "";
+    private static String IP_ADDRESS_NEXT_NODE = "192.168.0.100";
     private boolean hasVisual = false;
 
     private IPRepository ipRepository;
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
     private NetworkConnection receiver = createReceiver();
-    private NetworkConnection sender  = createSender();
+    private NetworkConnection sender = createSender();
     private File selectedDirectory;
 
     Button selectBTN = new Button("Select Directory");
@@ -290,8 +290,8 @@ public class Handler extends Application {
             sourceCodeConverter.clearOutputDirectory();
 
             ipRepository = new IPRepository();
-            IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[0];
-            sender = createSender();
+            //IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[1];
+            //sender = createSender();
             sendData(ipRepository);
             sendData(encoded);
 
