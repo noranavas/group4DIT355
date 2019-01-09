@@ -38,7 +38,6 @@ public class Handler extends Application {
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static String IP_ADDRESS_NEXT_NODE = "";
     private boolean hasVisual = false;
-    private int nodeNumber = 0;
 
     private IPRepository ipRepository;
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
@@ -95,7 +94,6 @@ public class Handler extends Application {
         // If data is byte[][], it is the xml files. Do XML parsing.
         } else if (object instanceof byte[][]) {
             System.out.println("In XML Parser node...");
-            nodeNumber = 2;
             parseXML(data);
 
             // TODO: Request ip address of next node from middleware?
@@ -115,9 +113,6 @@ public class Handler extends Application {
         // If data is XMLClass[], it is the parsed xml. Do visualization.
         } else if (object instanceof XMLClass[]) {
             System.out.println("In Visualizer node...");
-            if (nodeNumber == 0) {
-                nodeNumber = 3;
-            }
             // TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.
 
             // Send the visualization.
@@ -134,15 +129,16 @@ public class Handler extends Application {
             }
         } else if (object instanceof IPRepository) {
             System.out.println("Receiving IP adresses...");
-            IPRepository iR = (IPRepository)data;
-            if (nodeNumber == 1) {
+            ipRepository = (IPRepository)data;
+            if (ipRepository.getNodeNumber() == 1) {
                 IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[1];
-            } else if (nodeNumber == 2) {
+            } else if (ipRepository.getNodeNumber() == 2) {
                 IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[2];
-            } else if (nodeNumber == 3) {
+            } else if (ipRepository.getNodeNumber() == 3) {
                 IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[0];
             }
-            ipRepository = iR;
+            ipRepository.incrementNodeNumber();
+            createSender();
             sendData(ipRepository);
         } else {
             System.out.println("Unable to recognize data: " + data.toString());
@@ -293,10 +289,11 @@ public class Handler extends Application {
             }
             sourceCodeConverter.clearOutputDirectory();
 
-            sendData(encoded);
-            nodeNumber = 1;
             ipRepository = new IPRepository();
+            IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[0];
+            sender = createSender();
             sendData(ipRepository);
+            sendData(encoded);
 
             visualizeBTN.setDisable(true);
             selectBTN.setDisable(true);
