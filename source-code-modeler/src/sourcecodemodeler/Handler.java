@@ -128,8 +128,9 @@ public class Handler extends Application {
             }
         } else if (object instanceof IPRepository) {
             ipRepository = (IPRepository)data;
+            System.out.println("ipRepo node nr (pre incr): " + ipRepository.getNodeNumber());
             ipRepository.incrementNodeNumber();
-            System.out.println("ipRepo node nr: " + ipRepository.getNodeNumber());
+            System.out.println("ipRepo node nr (post incr): " + ipRepository.getNodeNumber());
             int nodeNumber = ipRepository.getNodeNumber();
             int nodeIPAddress = 0;
             if (nodeNumber == 0) {

@@ -9,12 +9,17 @@ import java.io.Serializable;
     2 = Node/PC 3.
  */
 public class IPRepository implements Serializable {
-    private static int nodeNumber = 0;
+    private static int nodeNumber;
     private static final String[] IP_ADDRESS = {
             "192.168.1.152", // Node 1.
             "192.168.1.110", // Node 2.
             "192.168.1.178" // Node 3.
     };
+
+    public IPRepository() {
+        nodeNumber = 0;
+    }
+
     public static int getNodeNumber() {
         return nodeNumber;
     }
@@ -22,10 +27,9 @@ public class IPRepository implements Serializable {
         return IP_ADDRESS;
     }
     public void incrementNodeNumber() {
+        nodeNumber++;
         if (nodeNumber >= 3) {
             nodeNumber = 0;
-        } else {
-            nodeNumber++;
         }
     }
 }
