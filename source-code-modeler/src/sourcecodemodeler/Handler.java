@@ -133,11 +133,11 @@ public class Handler extends Application {
             int nodeNumber = ipRepository.getNodeNumber();
             int nodeIPAddress = 0;
             if (nodeNumber == 0) {
-                nodeIPAddress = 0;
-            } else if (nodeNumber == 1) {
                 nodeIPAddress = 1;
-            } else if (nodeNumber == 2) {
+            } else if (nodeNumber == 1) {
                 nodeIPAddress = 2;
+            } else if (nodeNumber == 2) {
+                nodeIPAddress = 0;
             }
             IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[nodeIPAddress];
             System.out.println("IP Address next node: " + IP_ADDRESS_NEXT_NODE);
