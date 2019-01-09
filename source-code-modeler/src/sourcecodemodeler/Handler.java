@@ -36,7 +36,6 @@ public class Handler extends Application {
     public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
-    private static String IP_ADDRESS_LOCAL;
     private static String IP_ADDRESS_NEXT_NODE = "192.168.0.100";
     private boolean hasVisual = false;
 
@@ -126,12 +125,12 @@ public class Handler extends Application {
             ipRepository.incrementNodeNumber();
             int nodeNumber = ipRepository.getNodeNumber();
             int nodeIPAddress = 0;
-            if (nodeNumber == 2) {
-                nodeIPAddress = 3;
-            } else if (nodeNumber == 3) {
-                nodeIPAddress = 2;
+            if (nodeNumber == 0) {
+                nodeIPAddress = 0;
             } else if (nodeNumber == 1) {
                 nodeIPAddress = 1;
+            } else if (nodeNumber == 2) {
+                nodeIPAddress = 2;
             }
             IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[nodeIPAddress];
             System.out.println("IP Address next node: " + IP_ADDRESS_NEXT_NODE);
@@ -344,11 +343,6 @@ public class Handler extends Application {
 
     //===== Main =====//
     public static void main(String[] args) {
-        try {
-            IP_ADDRESS_LOCAL = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
         // Runs the start() function.
         launch(args);
     }
