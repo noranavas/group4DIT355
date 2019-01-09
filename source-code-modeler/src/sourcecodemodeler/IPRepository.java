@@ -11,9 +11,9 @@ import java.io.Serializable;
 public class IPRepository implements Serializable {
     private static int nodeNumber = 0;
     private static final String[] IP_ADDRESS = {
-            "192.168.0.103",
-            "192.168.0.100",
-            "192.168.0.102"
+            "192.168.1.152", // Node 1.
+            "192.168.1.110", // Node 2.
+            "192.168.1.178" // Node 3.
     };
     public static int getNodeNumber() {
         return nodeNumber;

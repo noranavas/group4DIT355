@@ -36,13 +36,13 @@ public class Handler extends Application {
     public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
-    private static String IP_ADDRESS_NEXT_NODE = "192.168.0.100";
+    private static String IP_ADDRESS_NEXT_NODE = "192.168.1.110";
     private boolean hasVisual = false;
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
     private NetworkConnection receiver = createReceiver();
-    private NetworkConnection sender  = createSender();
+    private NetworkConnection sender;
     private File selectedDirectory;
     private IPRepository ipRepository;
 
@@ -53,7 +53,7 @@ public class Handler extends Application {
     @Override
     public void init() throws Exception {
         if (receiver != null) receiver.startConnection();
-        if (sender != null) sender.startConnection();
+        //if (sender != null) sender.startConnection();
     }
     @Override
     public void stop() throws Exception {
@@ -83,12 +83,26 @@ public class Handler extends Application {
             });
         });
     }
+    private void initSender() {
+        if (sender == null) {
+            sender = createSender();
+        }
+        try {
+            sender.startConnection();
+        } catch (Exception e) {
+            System.out.println("Error when starting sender connection");
+        }
+    }
 
     public void handleData(Serializable data) {
         Object object = data;
 
+        // String for testing.
+        if (object instanceof String) {
+            System.out.println("Received String: " + (String)data);
+        }
         // If data is byte[][], it is the xml documents. Do XML parsing.
-        if (object instanceof byte[][]) {
+        else if (object instanceof byte[][]) {
             System.out.println("In XML Parser node...");
             parseXML(data);
 
@@ -99,6 +113,7 @@ public class Handler extends Application {
                 e.printStackTrace();
             }
 
+            initSender();
             sendData(ipRepository);
             sendData(xmlIterator.getXMLClasses());
 
@@ -115,6 +130,7 @@ public class Handler extends Application {
                 // do nothing
             } else {
                 visualize(data);
+                initSender();
                 sendData(ipRepository);
                 sendData(data);
                 hasVisual = true;
@@ -282,7 +298,10 @@ public class Handler extends Application {
             }
             sourceCodeConverter.clearOutputDirectory();
 
-            sendData(new IPRepository());
+            ipRepository = new IPRepository();
+            IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[1];
+            initSender();
+            sendData(ipRepository);
             sendData(encoded);
 
             visualizeBTN.setDisable(true);
