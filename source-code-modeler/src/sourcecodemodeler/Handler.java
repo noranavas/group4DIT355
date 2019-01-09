@@ -36,9 +36,9 @@ public class Handler extends Application {
     public static final int PORT = 5991;
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
-    private static String IP_ADDRESS_LOCAL;
-    private static String IP_ADDRESS_NEXT_NODE = "192.168.1.110";
+    private static String IP_ADDRESS_NEXT_NODE = "";
     private boolean hasVisual = false;
+    private int nodeNumber = 0;
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -94,6 +94,7 @@ public class Handler extends Application {
         // If data is byte[][], it is the xml files. Do XML parsing.
         } else if (object instanceof byte[][]) {
             System.out.println("In XML Parser node...");
+            nodeNumber = 2;
             parseXML(data);
 
             // TODO: Request ip address of next node from middleware?
@@ -105,7 +106,7 @@ public class Handler extends Application {
             }
 
             System.out.println("SENDING TO " + IP_ADDRESS_NEXT_NODE);
-            sendData(IP_ADDRESS_NEXT_NODE);
+            sendData(new IPRepository());
             sendData(xmlIterator.getXMLClasses());
 
             selectBTN.setDisable(true);
@@ -114,6 +115,9 @@ public class Handler extends Application {
         // If data is XMLClass[], it is the parsed xml. Do visualization.
         } else if (object instanceof XMLClass[]) {
             System.out.println("In Visualizer node...");
+            if (nodeNumber == 0) {
+                nodeNumber = 3;
+            }
             // TODO: Do visualization. Send visualization to middleware, middleware send to XML parser node.
 
             // Send the visualization.
@@ -124,9 +128,20 @@ public class Handler extends Application {
             } else {
                 visualize(data);
                 sendData(data);
+                sendData(new IPRepository());
                 hasVisual = true;
                 selectBTN.setDisable(true);
                 visualizeBTN.setDisable(true);
+            }
+        } else if (object instanceof IPRepository) {
+            System.out.println("Receiving IP adresses...");
+            IPRepository ipRepository = (IPRepository)data;
+            if (nodeNumber == 1) {
+                IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[1];
+            } else if (nodeNumber == 2) {
+                IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[2];
+            } else if (nodeNumber == 3) {
+                IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[0];
             }
         } else {
             System.out.println("Unable to recognize data: " + data.toString());
@@ -250,6 +265,7 @@ public class Handler extends Application {
         // Visualize event.
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
+            nodeNumber = 1;
             sourceCodeConverter.clearOutputDirectory();
             //createSender(); // No longer needed.
             // Source Code Conversion.
@@ -277,10 +293,8 @@ public class Handler extends Application {
             }
             sourceCodeConverter.clearOutputDirectory();
 
-            sendData(IP_ADDRESS_LOCAL);
-            System.out.println(System.lineSeparator() + "Sending 'LOCAL IP: " + IP_ADDRESS_LOCAL + "' to " + IP_ADDRESS_NEXT_NODE);
             sendData(encoded);
-            System.out.println("sending 'encoded' to " + IP_ADDRESS_NEXT_NODE + System.lineSeparator());
+            sendData(new IPRepository());
 
             visualizeBTN.setDisable(true);
             selectBTN.setDisable(true);
@@ -340,11 +354,6 @@ public class Handler extends Application {
 
     //===== Main =====//
     public static void main(String[] args) {
-        try {
-            IP_ADDRESS_LOCAL = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
         // Runs the start() function.
         launch(args);
     }
