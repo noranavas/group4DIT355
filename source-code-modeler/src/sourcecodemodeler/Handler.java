@@ -129,6 +129,7 @@ public class Handler extends Application {
         } else if (object instanceof IPRepository) {
             ipRepository = (IPRepository)data;
             ipRepository.incrementNodeNumber();
+            System.out.println("ipRepo node nr: " + ipRepository.getNodeNumber());
             int nodeNumber = ipRepository.getNodeNumber();
             int nodeIPAddress = 0;
             if (nodeNumber == 0) {
@@ -139,6 +140,7 @@ public class Handler extends Application {
                 nodeIPAddress = 2;
             }
             IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[nodeIPAddress];
+            System.out.println("IP Address next node: " + IP_ADDRESS_NEXT_NODE);
         } else {
             System.out.println("Unable to recognize received data: " + data.toString());
         }
