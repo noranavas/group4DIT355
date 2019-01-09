@@ -40,6 +40,7 @@ public class Handler extends Application {
     private boolean hasVisual = false;
     private int nodeNumber = 0;
 
+    private IPRepository ipRepository;
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
     private NetworkConnection receiver = createReceiver();
@@ -106,7 +107,6 @@ public class Handler extends Application {
             }
 
             System.out.println("SENDING TO " + IP_ADDRESS_NEXT_NODE);
-            sendData(new IPRepository());
             sendData(xmlIterator.getXMLClasses());
 
             selectBTN.setDisable(true);
@@ -128,14 +128,13 @@ public class Handler extends Application {
             } else {
                 visualize(data);
                 sendData(data);
-                sendData(new IPRepository());
                 hasVisual = true;
                 selectBTN.setDisable(true);
                 visualizeBTN.setDisable(true);
             }
         } else if (object instanceof IPRepository) {
             System.out.println("Receiving IP adresses...");
-            IPRepository ipRepository = (IPRepository)data;
+            IPRepository iR = (IPRepository)data;
             if (nodeNumber == 1) {
                 IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[1];
             } else if (nodeNumber == 2) {
@@ -143,6 +142,8 @@ public class Handler extends Application {
             } else if (nodeNumber == 3) {
                 IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[0];
             }
+            ipRepository = iR;
+            sendData(ipRepository);
         } else {
             System.out.println("Unable to recognize data: " + data.toString());
         }
@@ -265,7 +266,6 @@ public class Handler extends Application {
         // Visualize event.
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
-            nodeNumber = 1;
             sourceCodeConverter.clearOutputDirectory();
             //createSender(); // No longer needed.
             // Source Code Conversion.
@@ -294,7 +294,9 @@ public class Handler extends Application {
             sourceCodeConverter.clearOutputDirectory();
 
             sendData(encoded);
-            sendData(new IPRepository());
+            nodeNumber = 1;
+            ipRepository = new IPRepository();
+            sendData(ipRepository);
 
             visualizeBTN.setDisable(true);
             selectBTN.setDisable(true);
