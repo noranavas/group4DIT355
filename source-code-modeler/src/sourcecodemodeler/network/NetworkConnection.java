@@ -32,7 +32,8 @@ public abstract class NetworkConnection {
         if (connectionThread.out != null) {
             connectionThread.out.writeObject(data);
         } else {
-            System.out.println("Error: ObjectOutputStream is null.");
+            //System.out.println("Error: ObjectOutputStream is null.");
+            System.out.println("Unable to find next node.");
         }
     }
 

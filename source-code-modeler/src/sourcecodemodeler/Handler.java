@@ -37,7 +37,7 @@ public class Handler extends Application {
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static String IP_ADDRESS_LOCAL;
-    private static String IP_ADDRESS_NEXT_NODE = "192.168.1.110";
+    private static String IP_ADDRESS_NEXT_NODE = "192.168.0.100";
     private boolean hasVisual = false;
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
@@ -45,6 +45,7 @@ public class Handler extends Application {
     private NetworkConnection receiver = createReceiver();
     private NetworkConnection sender  = createSender();
     private File selectedDirectory;
+    private IPRepository ipRepository;
 
     Button selectBTN = new Button("Select Directory");
     Button visualizeBTN = new Button("Visualize");
@@ -63,6 +64,7 @@ public class Handler extends Application {
     public void sendData(Serializable data) {
         try {
             sender.send(data);
+            System.out.println("Sending data to: " + IP_ADDRESS_NEXT_NODE);
         } catch (Exception e) {
             System.out.println("Error when sending data: " + data.toString());
         }
@@ -86,17 +88,11 @@ public class Handler extends Application {
     public void handleData(Serializable data) {
         Object object = data;
 
-        // If data is String, it is a ip address.
-        if (object instanceof String) {
-            //IP_ADDRESS_NEXT_NODE = (String)data;
-            System.out.println("Data received is of type: String. Received " + object.toString());
-
-        // If data is byte[][], it is the xml files. Do XML parsing.
-        } else if (object instanceof byte[][]) {
+        // If data is byte[][], it is the xml documents. Do XML parsing.
+        if (object instanceof byte[][]) {
             System.out.println("In XML Parser node...");
             parseXML(data);
 
-            // TODO: Request ip address of next node from middleware?
             try {
                 TimeUnit.SECONDS.sleep(2);
             }
@@ -104,8 +100,7 @@ public class Handler extends Application {
                 e.printStackTrace();
             }
 
-            System.out.println("SENDING TO " + IP_ADDRESS_NEXT_NODE);
-            sendData(IP_ADDRESS_NEXT_NODE);
+            sendData(ipRepository);
             sendData(xmlIterator.getXMLClasses());
 
             selectBTN.setDisable(true);
@@ -121,11 +116,27 @@ public class Handler extends Application {
                 // do nothing
             } else {
                 visualize(data);
+                sendData(ipRepository);
                 sendData(data);
                 hasVisual = true;
             }
+        } else if (object instanceof IPRepository) {
+            System.out.println("Received IPRepository.");
+            ipRepository = (IPRepository)data;
+            ipRepository.incrementNodeNumber();
+            int nodeNumber = ipRepository.getNodeNumber();
+            int nodeIPAddress = 0;
+            if (nodeNumber == 2) {
+                nodeIPAddress = 3;
+            } else if (nodeNumber == 3) {
+                nodeIPAddress = 2;
+            } else if (nodeNumber == 1) {
+                nodeIPAddress = 1;
+            }
+            IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[nodeIPAddress];
+            System.out.println("IP Address next node: " + IP_ADDRESS_NEXT_NODE);
         } else {
-            System.out.println("Unable to recognize data: " + data.toString());
+            System.out.println("Unable to recognize received data: " + data.toString());
         }
     }
 
@@ -247,7 +258,6 @@ public class Handler extends Application {
         // TODO: Separate the tasks, and execute them separately based on current node (PC).
         visualizeBTN.setOnAction(actionEvent -> {
             sourceCodeConverter.clearOutputDirectory();
-            //createSender(); // No longer needed.
             // Source Code Conversion.
             try {
                 sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
@@ -273,10 +283,8 @@ public class Handler extends Application {
             }
             sourceCodeConverter.clearOutputDirectory();
 
-            sendData(IP_ADDRESS_LOCAL);
-            System.out.println(System.lineSeparator() + "Sending 'LOCAL IP: " + IP_ADDRESS_LOCAL + "' to " + IP_ADDRESS_NEXT_NODE);
+            sendData(new IPRepository());
             sendData(encoded);
-            System.out.println("sending 'encoded' to " + IP_ADDRESS_NEXT_NODE + System.lineSeparator());
 
             visualizeBTN.setDisable(true);
             selectBTN.setDisable(true);
