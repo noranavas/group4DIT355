@@ -86,11 +86,11 @@ public class Handler extends Application {
     private void initSender() {
         if (sender == null) {
             sender = createSender();
-        }
-        try {
-            sender.startConnection();
-        } catch (Exception e) {
-            System.out.println("Error when starting sender connection");
+            try {
+                sender.startConnection();
+            } catch (Exception e) {
+                System.out.println("Error when starting sender connection");
+            }
         }
     }
 
