@@ -10,10 +10,10 @@ import java.io.Serializable;
  */
 public class IPRepository implements Serializable {
     private int nodeNumber;
-    private static final String[] IP_ADDRESS = {
-            "192.168.1.152", // Node 1.
-            "192.168.1.110", // Node 2.
-            "192.168.1.178" // Node 3.
+    private final String[] IP_ADDRESS = {
+            "", // Node 1.
+            "", // Node 2.
+            "" // Node 3.
     };
 
     public IPRepository() {
@@ -23,7 +23,7 @@ public class IPRepository implements Serializable {
     public int getNodeNumber() {
         return nodeNumber;
     }
-    public static String[] getIpAddress() {
+    public String[] getIpAddress() {
         return IP_ADDRESS;
     }
     public void incrementNodeNumber() {
