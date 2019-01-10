@@ -15,7 +15,7 @@ public class Visualizer extends Application {
     private BufferedImage diagram;
 
     //===== Constructor(s) =====//
-    public Visualizer(BufferedImage diagram) {
+    public Visualizer(BufferedImage diagram) { //Takes a bufferedImage as parameter
         this.diagram = diagram;
         stage = new Stage();
     }
@@ -31,6 +31,7 @@ public class Visualizer extends Application {
     //===== Methods =====//
     @Override
     public void start(Stage primaryStage) {
+        //Shows the diagram as a scene in the stage.
         stage = primaryStage;
         System.out.println("In Visualiser.java");
 

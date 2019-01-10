@@ -33,11 +33,11 @@ import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 public class Handler extends Application {
-    public static final int PORT = 5991;
+    public static final int PORT = 5991; //TCP port
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static String IP_ADDRESS_NEXT_NODE;
-    private boolean hasVisual = false;
+    private boolean hasVisual = false; //Tracks whether the node has already the diagram visualization or not
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -45,7 +45,7 @@ public class Handler extends Application {
     private NetworkConnection sender;
     private File selectedDirectory;
     private IPRepository ipRepository;
-
+    //JavaFX buttons
     Button selectBTN = new Button("Select Directory");
     Button visualizeBTN = new Button("Visualize");
 
@@ -94,6 +94,7 @@ public class Handler extends Application {
     }
 
     public void handleData(Serializable data) {
+        //This method handles received data in a certain way according to its type
         Object object = data;
 
         // If data is byte[][], it is the xml documents. Do XML parsing.
@@ -108,6 +109,7 @@ public class Handler extends Application {
             initSender();
             try {TimeUnit.SECONDS.sleep(1);} // Allow sender to finish creation before sending data.
             catch (InterruptedException e) {}
+            //Send the list of IPs and the xml classes, then disable the GUI  buttons.
             sendData(ipRepository);
             sendData(xmlIterator.getXMLClasses());
 
@@ -126,7 +128,7 @@ public class Handler extends Application {
                 sendData(ipRepository);
                 sendData(data);
             }
-        } else if (object instanceof IPRepository) {
+        } else if (object instanceof IPRepository) { //if the received data is an ip repository object
             ipRepository = (IPRepository)data;
             System.out.println("ipRepo node nr (pre incr): " + ipRepository.getNodeNumber());
             ipRepository.incrementNodeNumber();
@@ -147,7 +149,7 @@ public class Handler extends Application {
         }
     }
 
-    // Node Tasks
+    //Re-create the xml sent from another node in bytes into xml Files.
     private void parseXML(Serializable data) {
         sourceCodeConverter.clearOutputDirectory();
         byte[][] encoded = (byte[][])data;
@@ -167,7 +169,6 @@ public class Handler extends Application {
             System.out.println(xmlClass[i].toString());
         }
     }
-    // TODO: Handle the received visualization data.
     private void visualize(Serializable data) {
         XMLClass[] xmlClasses = (XMLClass[])data;
         xmlIterator.setXMLClasses(xmlClasses);
@@ -203,7 +204,6 @@ public class Handler extends Application {
         Label selectedDirectoryName = new Label("");
 
         // ========== Test Buttons ==========//
-        // TODO: Remove this section when done.
         Button testXMLParse = new Button("Test XML Parse");
         HBox hBoxTestXMLParse = new HBox(testXMLParse);
         hBoxTestXMLParse.getStyleClass().add("Hbox");
@@ -261,9 +261,8 @@ public class Handler extends Application {
             visualizeBTN.setDisable(false);
         });
 
-        // Visualize event.
-        // TODO: Separate the tasks, and execute them separately based on current node (PC).
-        visualizeBTN.setOnAction(actionEvent -> {
+             // Visualize event.
+            visualizeBTN.setOnAction(actionEvent -> {
             sourceCodeConverter.clearOutputDirectory();
             // Source Code Conversion.
             try {
@@ -300,7 +299,7 @@ public class Handler extends Application {
             selectBTN.setDisable(true);
         });
 
-        // Test print the parsed XML. TODO: Remove when done.
+        // Test print the parsed XML.
         testXMLParse.setOnAction(actionEvent -> {
             sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             try {
@@ -315,7 +314,7 @@ public class Handler extends Application {
             }
         });
 
-        // Test visualization locally. TODO: Remove when done.
+        // Test visualization locally.
         testVisual.setOnAction(actionEvent -> {
             sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             try {

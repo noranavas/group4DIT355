@@ -57,6 +57,7 @@ public abstract class NetworkConnection {
 
         @Override
         public void run() {
+            //Create a sender or a receiver socket
             try (ServerSocket serverSocket = isReceiver() ? new ServerSocket(getPort()) : null;
                  Socket socket = isReceiver() ? serverSocket.accept() : new Socket(getIP(), getPort());
                  ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
@@ -67,7 +68,9 @@ public abstract class NetworkConnection {
                 socket.setTcpNoDelay(true); // Allows faster sending of messages.
                 while (true) {
                     Serializable data = (Serializable)in.readObject();
+                    //Play a sound when something is received
                     Sound.play(System.getProperty("user.dir")+"\\source-code-modeler\\resources\\sound.wav");
+                    //Receive the data
                     onReceiveCallback.accept(data);
                 }
             } catch (Exception e) {
