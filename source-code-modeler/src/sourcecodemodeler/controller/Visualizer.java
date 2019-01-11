@@ -35,15 +35,24 @@ public class Visualizer extends Application {
         System.out.println("In Visualiser.java");
 
         primaryStage.setTitle("Visualization");
+        System.out.println("A");
         ImageView imageView = new ImageView();
+        System.out.println("B");
         Image image = SwingFXUtils.toFXImage(diagram, null);
+        System.out.println("C");
         imageView.setImage(image);
+        System.out.println("D");
 
         StackPane root = new StackPane();
+        System.out.println("E");
         root.setStyle("-fx-background-color: #ffffff");
+        System.out.println("F");
         root.getChildren().add(imageView);
+        System.out.println("G");
         primaryStage.setScene(new Scene(root, 900, 600));
+        System.out.println("H");
         primaryStage.show();
+        System.out.println("I");
 
     }
 

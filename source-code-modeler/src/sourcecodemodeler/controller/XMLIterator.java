@@ -63,6 +63,7 @@ public class XMLIterator {
 
         for (XMLClass xmlClass : xmlClasses) {
             discoverComposition(xmlClass, xmlClasses);
+            //setRelationships(xmlClass);
         }
     }
 
@@ -146,6 +147,22 @@ public class XMLIterator {
             }
         }
     }
+
+    /*
+    private void setRelationships(XMLClass xmlClass) {
+        List<String> attributes = xmlClass.getAttributes();
+        // For each attribute, loop over class names and check if attribute matches class name.
+        for (String attribute : attributes) {
+            System.out.println(attribute);
+            for (int i = 0; i < xmlClasses.length; i++) {
+                if (attribute.contains(xmlClasses[i].getName())) {
+                    // If attribute contains class name, add that class to relationships.
+                    xmlClass.addRelationship(xmlClasses[i]);
+                }
+            }
+        }
+    }
+    */
 
     // Iterates through the XML document to retrieve attributes.
     private void setAttributes(Document doc, XMLClass xmlClass) {
