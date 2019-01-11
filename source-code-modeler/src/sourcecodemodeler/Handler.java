@@ -238,24 +238,14 @@ public class Handler extends Application {
         primaryStage.setTitle("Source Code Modeler");
 
         // Apply all css files in the resources/css directory to the JavaFX scene.
-        try {
-            File[] cssFiles = new File(PATH_TO_CSS).listFiles();
-            for (File cssFile : cssFiles) {
-                scene.getStylesheets()
-                        .add
-                                (
-                                        new File(PATH_TO_CSS + cssFile.getName()).toURI().toURL().toExternalForm()
-                                );
-            }
-        } catch (Exception e) {
-            System.out.println("Applying css fix");
-
+        File[] cssFiles = new File(PATH_TO_CSS).listFiles();
+        for (File cssFile : cssFiles) {
+            scene.getStylesheets()
+                    .add
+                            (
+                                    new File(PATH_TO_CSS + cssFile.getName()).toURI().toURL().toExternalForm()
+                            );
         }
-        scene.getStylesheets().add(new File(
-                System.getProperty("user.dir")
-                        + "\\source-code-modeler\\src\\sourcecodemodeler\\main.css").toURI().toURL().toExternalForm()
-        );
-
 
         // Select directory event.
         selectBTN.setOnAction(actionEvent -> {
