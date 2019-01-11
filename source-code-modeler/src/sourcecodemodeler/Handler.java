@@ -34,11 +34,11 @@ import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 public class Handler extends Application {
-    public static final int PORT = 5991;
+    public static final int PORT = 5991; // TCP Port.
     private static final String PATH_TO_CSS = System.getProperty("user.dir") + "\\source-code-modeler\\resources\\css\\";
     private static final String PATH_TO_XML_DIRECTORY = Globals.PATH_TO_XML_DIRECTORY;
     private static String IP_ADDRESS_NEXT_NODE;
-    private boolean hasVisual = false;
+    private boolean hasVisual = false; // Tracks wether the node has diagram visualization or not.
 
     private SourceCodeConverter sourceCodeConverter = new SourceCodeConverter();
     private XMLIterator xmlIterator = new XMLIterator();
@@ -47,6 +47,7 @@ public class Handler extends Application {
     private File selectedDirectory;
     private IPRepository ipRepository = new IPRepository();
 
+    // JavaFX buttons, elements etc that need to be accessed in non-local scopes.
     Button selectBTN = new Button("Select Directory");
     Button visualizeBTN = new Button("Distributed Visualization");
     Button visualLocalBTN = new Button("Local Visualization");
@@ -96,6 +97,7 @@ public class Handler extends Application {
         }
     }
 
+    // This method handles received data in a certain way depending on its type.
     public void handleData(Serializable data) {
         Object object = data;
 
@@ -111,6 +113,8 @@ public class Handler extends Application {
             initSender();
             try {TimeUnit.SECONDS.sleep(1);} // Allow sender to finish creation before sending data.
             catch (InterruptedException e) {}
+
+            // Send the list of IPs and the xml classes, then disable the GUI  buttons.
             sendData(ipRepository);
             sendData(xmlIterator.getXMLClasses());
 
@@ -129,6 +133,8 @@ public class Handler extends Application {
                 sendData(data);
                 visualize(data);
             }
+
+        // If the received data is an ip repository object, set appropriate node index.
         } else if (object instanceof IPRepository) {
             ipRepository = (IPRepository)data;
             System.out.println("ipRepo node nr (pre incr): " + ipRepository.getNodeNumber());
@@ -150,7 +156,7 @@ public class Handler extends Application {
         }
     }
 
-    // Node Tasks
+    // Re-create the xml sent from another node in bytes into xml Files.
     private void parseXML(Serializable data) {
         sourceCodeConverter.clearOutputDirectory();
         byte[][] encoded = (byte[][])data;
@@ -170,7 +176,6 @@ public class Handler extends Application {
             System.out.println(xmlClass[i].toString());
         }
     }
-    // TODO: Handle the received visualization data.
     private void visualize(Serializable data) {
         XMLClass[] xmlClasses = (XMLClass[])data;
         xmlIterator.setXMLClasses(xmlClasses);
@@ -264,7 +269,7 @@ public class Handler extends Application {
                             );
         }
 
-        // Select directory event.
+        // Select directory button event.
         selectBTN.setOnAction(actionEvent -> {
             DirectoryChooser directoryChooser = new DirectoryChooser();
             directoryChooser.setTitle("Select a directory");
@@ -279,8 +284,7 @@ public class Handler extends Application {
             visualLocalBTN.setDisable(false);
         });
 
-        // Visualize event.
-        // TODO: Separate the tasks, and execute them separately based on current node (PC).
+        // Visualize distributed button event.
         visualizeBTN.setOnAction(actionEvent -> {
             sourceCodeConverter.clearOutputDirectory();
             // Source Code Conversion.
@@ -319,7 +323,7 @@ public class Handler extends Application {
             selectBTN.setDisable(true);
         });
 
-        // Test print the parsed XML. TODO: Remove when done.
+        // Test print the parsed XML.
         testXMLParse.setOnAction(actionEvent -> {
             sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             try {
@@ -334,7 +338,7 @@ public class Handler extends Application {
             }
         });
 
-        // Do visualization locally.
+        // Do visualization locally button event.
         visualLocalBTN.setOnAction(actionEvent -> {
             sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             try {

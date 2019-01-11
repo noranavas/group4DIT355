@@ -9,6 +9,7 @@ import java.util.List;
     The instances of these classes are temporary.
  */
 public class XMLClass implements Serializable {
+    // Elements of a Class taken in consideration
     private String name;
     private List<String> attributes;
     private List<String> methods;

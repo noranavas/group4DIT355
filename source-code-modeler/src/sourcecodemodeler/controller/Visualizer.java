@@ -29,6 +29,7 @@ public class Visualizer extends Application {
     }
 
     //===== Methods =====//
+    // Shows the diagram as a scene in the stage.
     @Override
     public void start(Stage primaryStage) {
         stage = primaryStage;

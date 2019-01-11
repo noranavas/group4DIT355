@@ -38,7 +38,7 @@ public class SourceCodeConverter {
 
     }
 
-    // Converts all found files in a directory to XML documents.
+    // Converts all the files contained in the selected directory to XML documents.
     public void convertDirectoryToXML(String directoryPath) {
         // Create a file array for all files in the selected directory.
         File[] files = new File(directoryPath).listFiles();
@@ -46,7 +46,7 @@ public class SourceCodeConverter {
         // Iterate through all the files and convert files with supported file extension to XML.
         for (int i = 0; i < files.length; i++) {
 
-            // If the file is a directory, call this method recursively.
+            // If the file is a directory (a sub-directory), call this method recursively to examinate all the subfolders
             if (files[i].isDirectory()) {
                 convertDirectoryToXML(files[i].getPath());
             } else {
@@ -57,7 +57,7 @@ public class SourceCodeConverter {
                 try {
                     filter = getFileExtension(files[i].getName()).get();
                 } catch (NoSuchElementException e) {
-                    //System.out.println("Unspecified extension found for file: " + files[i].getName() + " at: " + files[i].getPath());
+                    //System.out.println("Unspecified extension found for file: " + files[i].getName() + " at: " + files[i].getPath()); // DEBUGGING.
                 }
 
                 if (filter.equalsIgnoreCase("java")) {
@@ -75,7 +75,7 @@ public class SourceCodeConverter {
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1));
     }
 
-    // Clears the output directory to prevent files from previous conversions to be included in the current process.
+    // Clears the output directory.
     public void clearOutputDirectory() {
         File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
         for (int i = 0; i < files.length; i++) {
