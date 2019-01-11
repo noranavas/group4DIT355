@@ -118,13 +118,13 @@ public class Handler extends Application {
         } else if (object instanceof XMLClass[]) {
             // Send the visualization.
             if (!hasVisual) {
-                visualize(data);
                 hasVisual = true;
                 initSender();
                 try {TimeUnit.SECONDS.sleep(1);} // Allow sender to finish creation before sending data.
                 catch (InterruptedException e) {}
                 sendData(ipRepository);
                 sendData(data);
+                visualize(data);
             }
         } else if (object instanceof IPRepository) {
             ipRepository = (IPRepository)data;
@@ -238,14 +238,24 @@ public class Handler extends Application {
         primaryStage.setTitle("Source Code Modeler");
 
         // Apply all css files in the resources/css directory to the JavaFX scene.
-        File[] cssFiles = new File(PATH_TO_CSS).listFiles();
-        for (File cssFile : cssFiles) {
-            scene.getStylesheets()
-                    .add
-                    (
-                            new File(PATH_TO_CSS + cssFile.getName()).toURI().toURL().toExternalForm()
-                    );
+        try {
+            File[] cssFiles = new File(PATH_TO_CSS).listFiles();
+            for (File cssFile : cssFiles) {
+                scene.getStylesheets()
+                        .add
+                                (
+                                        new File(PATH_TO_CSS + cssFile.getName()).toURI().toURL().toExternalForm()
+                                );
+            }
+        } catch (Exception e) {
+            System.out.println("Applying css fix");
+
         }
+        scene.getStylesheets().add(new File(
+                System.getProperty("user.dir")
+                        + "\\source-code-modeler\\src\\sourcecodemodeler\\main.css").toURI().toURL().toExternalForm()
+        );
+
 
         // Select directory event.
         selectBTN.setOnAction(actionEvent -> {
