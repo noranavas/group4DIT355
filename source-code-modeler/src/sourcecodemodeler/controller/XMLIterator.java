@@ -118,6 +118,7 @@ public class XMLIterator {
                     }
                 }
 
+                setClassName(doc, xmlClass);
                 setAttributes(doc, xmlClass);
                 setMethods(doc, xmlClass);
                 discoverInheritance(doc, xmlClass);
@@ -145,6 +146,21 @@ public class XMLIterator {
                     xmlClass.addRelationship(new XMLClass(child.getTextContent()));
                     break;
                 }
+            }
+        }
+    }
+
+    private void setClassName(Document doc, XMLClass xmlClass) {
+        NodeList nodeList = doc.getElementsByTagName("name");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            Node parent = node.getParentNode();
+            if (parent.getNodeName().equalsIgnoreCase("class") || parent.getNodeName().equalsIgnoreCase("enum")) {
+                node = removeTag(node, "annotation");
+                node = removeTag(node, "comment");
+                String s = node.getTextContent();
+                s = prettyString(s).replace("+", "").replace(" ", "");
+                xmlClass.setName(s);
             }
         }
     }
