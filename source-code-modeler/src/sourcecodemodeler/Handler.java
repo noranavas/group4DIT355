@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -44,10 +45,12 @@ public class Handler extends Application {
     private NetworkConnection receiver = createReceiver();
     private NetworkConnection sender;
     private File selectedDirectory;
-    private IPRepository ipRepository;
+    private IPRepository ipRepository = new IPRepository();
 
     Button selectBTN = new Button("Select Directory");
-    Button visualizeBTN = new Button("Visualize");
+    Button visualizeBTN = new Button("Distributed Visualization");
+    Button visualLocalBTN = new Button("Local Visualization");
+    TextField[] textFieldIP = new TextField[3];
 
     //===== Network =====//
     @Override
@@ -203,36 +206,50 @@ public class Handler extends Application {
         Label selectedDirectoryName = new Label("");
 
         // ========== Test Buttons ==========//
-        // TODO: Remove this section when done.
         Button testXMLParse = new Button("Test XML Parse");
         HBox hBoxTestXMLParse = new HBox(testXMLParse);
         hBoxTestXMLParse.getStyleClass().add("Hbox");
         hBoxTestXMLParse.setId("Hbox");
-
-        Button testVisual = new Button("Test Visual Local");
-        HBox hBoxTestVisual = new HBox(testVisual);
-        hBoxTestVisual.getStyleClass().add("Hbox");
-        hBoxTestVisual.setId("Hbox");
         //==============================//
 
-        HBox hBoxButtons = new HBox(selectBTN, visualizeBTN);
-        hBoxButtons.getStyleClass().add("Hbox");
-        hBoxButtons.setId("Hbox");
-        HBox hBoxSelectedDirectory = new HBox(selectedDirectoryName);
-        hBoxSelectedDirectory.getStyleClass().add("Hbox");
-        hBoxSelectedDirectory.setId("Hbox");
+        HBox hbVisualBTNs = new HBox(visualizeBTN, visualLocalBTN);
+        hbVisualBTNs.getStyleClass().add("Hbox");
+        hbVisualBTNs.setId("Hbox");
+
+        HBox hbSelectBTN = new HBox(selectBTN);
+        hbSelectBTN.getStyleClass().add("Hbox");
+        hbSelectBTN.setId("Hbox");
+        HBox hbSelectedDir = new HBox(selectedDirectoryName);
+        hbSelectedDir.getStyleClass().add("Hbox");
+        hbSelectedDir.setId("Hbox");
 
         Pane pane = new TilePane();
         pane.getChildren().add(title);
+        pane.getChildren().add(hbSelectBTN);
+
+        Label[] ipLabel = new Label[3];
+        HBox[] ipLabelHBox = new HBox[3];
+        for (int i = 0; i < 3; i++) {
+            textFieldIP[i] = new TextField();
+            textFieldIP[i].setPrefWidth(200);
+            ipLabel[i] = new Label("Node " + (i + 1) + " IP Address");
+            ipLabelHBox[i] = new HBox();
+            ipLabelHBox[i].getStyleClass().add("textField");
+            ipLabelHBox[i].setId("textField");
+            ipLabelHBox[i].getChildren().addAll(ipLabel[i], textFieldIP[i]);
+            pane.getChildren().add(ipLabelHBox[i]);
+        }
+
         pane.getStyleClass().add("root");
-        pane.getChildren().addAll(hBoxButtons, hBoxSelectedDirectory, hBoxTestXMLParse, hBoxTestVisual);
+        pane.getChildren().add(hbVisualBTNs);
+
         ((TilePane) pane).setAlignment(Pos.CENTER);
 
         VBox.setVgrow(pane, Priority.ALWAYS);
         VBox vbox = new VBox(pane);
         vbox.setAlignment(Pos.CENTER);
         
-        Scene scene = new Scene(vbox, 400, 300);
+        Scene scene = new Scene(vbox, 500, 400);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setTitle("Source Code Modeler");
@@ -259,6 +276,7 @@ public class Handler extends Application {
                 System.out.println("No directory was selected.");
             }
             visualizeBTN.setDisable(false);
+            visualLocalBTN.setDisable(false);
         });
 
         // Visualize event.
@@ -288,7 +306,7 @@ public class Handler extends Application {
             }
             sourceCodeConverter.clearOutputDirectory();
 
-            ipRepository = new IPRepository();
+            setIPAddresses();
             IP_ADDRESS_NEXT_NODE = ipRepository.getIpAddress()[1];
             initSender();
             try {TimeUnit.SECONDS.sleep(1);} // Allow sender to finish creation before sending data.
@@ -297,6 +315,7 @@ public class Handler extends Application {
             sendData(encoded);
 
             visualizeBTN.setDisable(true);
+            visualLocalBTN.setDisable(true);
             selectBTN.setDisable(true);
         });
 
@@ -315,8 +334,8 @@ public class Handler extends Application {
             }
         });
 
-        // Test visualization locally. TODO: Remove when done.
-        testVisual.setOnAction(actionEvent -> {
+        // Do visualization locally.
+        visualLocalBTN.setOnAction(actionEvent -> {
             sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             try {
                 TimeUnit.SECONDS.sleep(3);
@@ -349,7 +368,16 @@ public class Handler extends Application {
         });
 
         visualizeBTN.setDisable(true);
+        visualLocalBTN.setDisable(true);
         primaryStage.show();
+    }
+
+    private void setIPAddresses() {
+        String[] textFieldContent = new String[3];
+        for (int i = 0; i < 3; i++) {
+            textFieldContent[i] = textFieldIP[i].getText();
+        }
+        ipRepository.setIPAddress(textFieldContent);
     }
 
     //===== Main =====//

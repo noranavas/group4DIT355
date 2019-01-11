@@ -34,3 +34,7 @@ HBox {
 .file {
     -fx-text-fill: #F5F5F5;
 }
+
+#textField {
+    -fx-pref-width: 800;
+}
