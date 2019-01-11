@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cddf23ba-2667-4c3f-8adf-9b9191d3549d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/Visualizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/Visualizer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,18 +37,16 @@
       <file leaf-file-name="XMLIterator.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+            <state relative-caret-position="40">
+              <caret line="12" column="22" lean-forward="true" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
               <folding>
-                <element signature="e#786#787#0" expanded="true" />
-                <element signature="e#819#820#0" expanded="true" />
-                <element signature="e#1142#1143#0" expanded="true" />
-                <element signature="e#1186#1187#0" expanded="true" />
+                <element signature="method#getStringifiedXMLClasses#0;class#XMLIterator#0" />
                 <element signature="method#createXMLClasses#0;class#XMLIterator#0" />
+                <element signature="method#discoverComposition#0;class#XMLIterator#0" />
                 <element signature="method#createXMLClass#0;class#XMLIterator#0" />
+                <element signature="method#discoverInheritance#0;class#XMLIterator#0" />
                 <element signature="method#setAttributes#0;class#XMLIterator#0" />
                 <element signature="method#setMethods#0;class#XMLIterator#0" />
-                <element signature="method#setRelationships#0;class#XMLIterator#0" />
                 <element signature="method#removeTag#0;class#XMLIterator#0" />
                 <element signature="method#prettyString#0;class#XMLIterator#0" />
               </folding>
@@ -431,7 +427,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203940000" />
+    <option name="totallyTimeSpent" value="204725000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
@@ -660,9 +656,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/Visualizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#656#657#0" expanded="true" />
+            <element signature="e#684#685#0" expanded="true" />
+            <element signature="e#724#725#0" expanded="true" />
+            <element signature="e#754#755#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Handler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1793">
+        <state relative-caret-position="397">
           <caret line="326" lean-forward="true" selection-start-line="326" selection-end-line="326" />
           <folding>
             <element signature="method#init#0;class#Handler#0" />
@@ -678,34 +688,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/Visualizer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="25" column="5" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#656#657#0" expanded="true" />
-            <element signature="e#684#685#0" expanded="true" />
-            <element signature="e#724#725#0" expanded="true" />
-            <element signature="e#754#755#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+        <state relative-caret-position="40">
+          <caret line="12" column="22" lean-forward="true" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
           <folding>
-            <element signature="e#786#787#0" expanded="true" />
-            <element signature="e#819#820#0" expanded="true" />
-            <element signature="e#1142#1143#0" expanded="true" />
-            <element signature="e#1186#1187#0" expanded="true" />
+            <element signature="method#getStringifiedXMLClasses#0;class#XMLIterator#0" />
             <element signature="method#createXMLClasses#0;class#XMLIterator#0" />
+            <element signature="method#discoverComposition#0;class#XMLIterator#0" />
             <element signature="method#createXMLClass#0;class#XMLIterator#0" />
+            <element signature="method#discoverInheritance#0;class#XMLIterator#0" />
             <element signature="method#setAttributes#0;class#XMLIterator#0" />
             <element signature="method#setMethods#0;class#XMLIterator#0" />
-            <element signature="method#setRelationships#0;class#XMLIterator#0" />
             <element signature="method#removeTag#0;class#XMLIterator#0" />
             <element signature="method#prettyString#0;class#XMLIterator#0" />
           </folding>

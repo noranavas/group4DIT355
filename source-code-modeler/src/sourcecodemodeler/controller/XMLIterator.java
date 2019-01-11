@@ -26,6 +26,9 @@ public class XMLIterator {
     public XMLClass[] getXMLClasses() {
         return xmlClasses;
     }
+    public void setXMLClasses(XMLClass[] xmlClasses) {
+        this.xmlClasses = xmlClasses;
+    }
     public String getStringifiedXMLClasses() {
         String classes = "";
         XMLClass[] xmlClasses = getXMLClasses();
@@ -34,134 +37,158 @@ public class XMLIterator {
         }
 
         String relations = "";
+
         for (XMLClass xmlclass : this.getXMLClasses()){
             for (String relation : xmlclass.relationsToString()){
+
                 // make sure that this relationship hasn't been added before - to avoid duplication
                 if (!relations.contains(relation + " -- " + xmlclass.getName())){
                     relations += xmlclass.getName() + " -- " + relation + "\n";
                 }
+
             }
         }
-        classes += relations;
 
+        classes += relations;
         return classes;
-    }
-    public void setXMLClasses(XMLClass[] xmlClasses) {
-        this.xmlClasses = xmlClasses;
     }
 
     //===== Methods =====//
     public void createXMLClasses(File[] files) {
-        xmlClasses = new XMLClass[files.length];
-        for (int i = 0; i < xmlClasses.length; i++) {
+        this.xmlClasses = new XMLClass[files.length];
+
+        for (int i=0; i < files.length; i++) {
             xmlClasses[i] = createXMLClass(files[i]);
         }
-        for (int i = 0; i < xmlClasses.length; i++) {
-            setRelationships(xmlClasses[i]);
+
+        for (XMLClass xmlClass : xmlClasses) {
+            discoverComposition(xmlClass, xmlClasses);
+        }
+    }
+
+    private void discoverComposition(XMLClass xmlClass, XMLClass[] classes) {
+        List<String> attributes = xmlClass.getAttributes();
+        //List<String> classes = getListOfClasses();
+
+        for (String attribute : attributes) {
+            // for each attribute loop over class names and check if attribute contains class name
+            for (XMLClass otherClass : classes) {
+                if (xmlClass != otherClass && attribute != null && otherClass.getName() != null) {
+                    if (otherClass.getName() != null && attribute.toLowerCase().contains(otherClass.getName().toLowerCase())) {
+                        // attribute contains class name, so make an instance of XMLClass and add it to relationships
+                        xmlClass.addRelationship(otherClass);
+                    }
+                }
+            }
         }
     }
 
     // Creates a class (XMLClass) that will hold the data for th visualization.
-    private XMLClass createXMLClass(File file) {
+    public XMLClass createXMLClass(File file) {
         XMLClass xmlClass = new XMLClass();
-        setClassName(file, xmlClass);
-        setAttributes(file, xmlClass);
-        setMethods(file, xmlClass);
-        return xmlClass;
-    }
 
-    // Iterates through the XML document to retrieve the class name.
-    private void setClassName(File file, XMLClass xmlClass) {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(file);
-            NodeList nodeList = doc.getElementsByTagName("name");
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
-                Node parent = node.getParentNode();
-                if (parent.getNodeName().equalsIgnoreCase("class") || parent.getNodeName().equalsIgnoreCase("enum")) {
-                    node = removeTag(node, "annotation");
-                    node = removeTag(node, "comment");
-                    String s = node.getTextContent();
-                    s = prettyString(s).replace("+", "").replace(" ", "");
-                    xmlClass.setName(s);
-                }
+
+            NodeList nodeList = doc.getElementsByTagName("class");
+
+            if (nodeList.getLength() == 0) {
+                nodeList = doc.getElementsByTagName("enum");
             }
+
+            if (nodeList.getLength() > 0) {
+
+                // Set xmlClass name to the first class we find in the xml file
+                NodeList classChildNodes = nodeList.item(0).getChildNodes();
+                for (int i = 0; i < classChildNodes.getLength(); i++) {
+                    Node node = classChildNodes.item(i);
+                    if (node.getNodeName() == "name") {
+                        xmlClass.setName(node.getTextContent());
+                        break;
+                    }
+                }
+
+                // If there are more classes in the file, remove them to avoid inner class attributes and methods
+                if (nodeList.getLength() > 1) {
+                    for (int i = 1; i < nodeList.getLength(); i++) {
+                        Node node = nodeList.item(i);
+                        node.setTextContent("");
+                    }
+                }
+
+                setAttributes(doc, xmlClass);
+                setMethods(doc, xmlClass);
+                discoverInheritance(doc, xmlClass);
+            }
+
         } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
             e.printStackTrace();
             System.out.println("Problem parsing XML file: " + file.getName());
+        }
+
+        return xmlClass;
+    }
+
+    private void discoverInheritance(Document doc, XMLClass xmlClass) {
+        NodeList nodeList = doc.getElementsByTagName("extends"); // Tag for methods.
+
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+
+            // node "extends" contains node "name", so take all children and find child node "name"
+            NodeList childNodes = node.getChildNodes();
+            for (int j = 0; j < childNodes.getLength(); j++) {
+                Node child = childNodes.item(j);
+                if (child.getNodeName() == "name") {
+                    xmlClass.addRelationship(new XMLClass(child.getTextContent()));
+                    break;
+                }
+            }
         }
     }
 
     // Iterates through the XML document to retrieve attributes.
-    private void setAttributes(File file, XMLClass xmlClass) {
-        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-        try {
-            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse(file);
-            NodeList nodeList = doc.getElementsByTagName("decl_stmt"); // Tag for attributes.
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
-                node = removeTag(node, "annotation");
-                node = removeTag(node,"init");
-                node = removeTag(node, "comment");
-                Node secondParent = node.getParentNode().getParentNode();
-                if (secondParent.getNodeName() == "class") {
-                    String s = node.getTextContent();
-                    s = prettyString(s);
-                    xmlClass.addAttribute(s);
-                }
+    private void setAttributes(Document doc, XMLClass xmlClass) {
+
+        NodeList nodeList = doc.getElementsByTagName("decl_stmt"); // Tag for attributes.
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            node = removeTag(node, "annotation");
+            node = removeTag(node,"init");
+            node = removeTag(node, "comment");
+            Node secondParent = node.getParentNode().getParentNode();
+            if (secondParent.getNodeName() == "class" /* && GetClassName(secondParent) == xmlClass.getName()*/ ) {
+                String s = node.getTextContent();
+                s = prettyString(s);
+                xmlClass.addAttribute(s);
             }
-        } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
-            e.printStackTrace();
-            System.out.println("Problem parsing XML file: " + file.getName());
         }
     }
 
     // Iterates through a XML document to retrieve methods.
-    private void setMethods(File file, XMLClass xmlClass) {
-        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-        try {
-            DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse(file);
-            NodeList nodeList = doc.getElementsByTagName("function"); // Tag for methods.
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
+    private void setMethods(Document doc, XMLClass xmlClass) {
+        NodeList nodeList = doc.getElementsByTagName("function"); // Tag for methods.
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+
+            // Skip nodes that are children of expression nodes - overridden methods will be excluded.
+            if (node.getParentNode().getParentNode().getParentNode().getNodeName() != "expr") {
                 node = removeTag(node, "annotation");
                 node = removeTag(node, "throws");
                 node = removeTag(node, "parameter_list");
                 node = removeTag(node, "specifier");
                 node = removeTag(node, "type");
                 node = removeTag(node, "comment");
-                // Skip nodes that are children of expression nodes - overridden methods will be excluded.
-                if (node.getParentNode().getParentNode().getParentNode().getNodeName() != "expr") {
-                    String s = node.getTextContent();
-                    String body = s.substring(s.indexOf('{'), s.length());
-                    if (!body.isEmpty()) {
-                        s = s.replace(body, "");
-                    }
-                    s = prettyString(s) + "()";
-                    xmlClass.addMethod(s);
-                }
-            }
-        } catch (ParserConfigurationException | org.xml.sax.SAXException | IOException e) {
-            e.printStackTrace();
-            System.out.println("Problem parsing XML file: " + file.getName());
-        }
-    }
 
-    private void setRelationships(XMLClass xmlClass) {
-        List<String> attributes = xmlClass.getAttributes();
-        // For each attribute, loop over class names and check if attribute matches class name.
-        for (String attribute : attributes) {
-            for (int i = 0; i < xmlClasses.length; i++) {
-                if (xmlClass != xmlClasses[i] && attribute != null && xmlClasses[i].getName() != null) {
-                    if (attribute.toLowerCase().contains(xmlClasses[i].getName().toLowerCase())) {
-                        // If attribute contains class name, add that class to relationships.
-                        xmlClass.addRelationship(xmlClasses[i]);
-                    }
+                String s = node.getTextContent();
+                String body = s.substring(s.indexOf('{'), s.length());
+                if (!body.isEmpty()) {
+                    s = s.replace(body, "");
                 }
+                s = prettyString(s) + "()";
+                xmlClass.addMethod(s);
             }
         }
     }
@@ -171,9 +198,13 @@ public class XMLIterator {
         NodeList childNodes = node.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node childNode = childNodes.item(i);
+
+            // recursively call removeTag method to remove tag from all children
             if (childNode.hasChildNodes()) {
                 childNode = removeTag(childNode, tag);
             }
+
+            // this actually removes the tag by setting its content to empty string
             String childNodeName = childNodes.item(i).getNodeName();
             if (childNodeName.equalsIgnoreCase(tag)) {
                 childNodes.item(i).setTextContent("");
@@ -199,7 +230,6 @@ public class XMLIterator {
                 .replace("void", "")
                 .replace("static", "")
                 .replace("final", "")
-                .replace("    ", " ")
                 .replace("   ", " ")
                 .replace("  ", " ");
         return s;
