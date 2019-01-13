@@ -12,18 +12,30 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 - A computer with Windows installed.
+- intellij installed.
 - A router (It doesn’t work on public networks)
 - Windows firewall needs to be turned off before running the program.
 - In order to produce the visualization, Graphviz needs to be previously installed locally. Link: https://graphviz.gitlab.io/ 
 
-### Installing
+### How to run it
 
 
-- Pull the latest version.
+- Pull the latest version of the program.
 - Connect to the router. All the different nodes should be connected to the same router.
 - Turn off windows firewall.
-- Provide the 3 Ip addresses of the different 3 nodes on the class IPRepository.java.
-- Run the Handler.java class
+- Open Intellij and run the handler.java class.
+- Select directory of the java project.
+- Provide the 3 Ip addresses of the different 3 nodes in the user interface.
+- Click the button distributed visualization.
+- Close the program when you want to visualize another directory and repeat the steps.
+
+- If the visualization is local and not distributed:
+    - Pull the latest version of the program.
+    - Connect to the router.
+    - Turn off windows firewall.
+    - Open Intellij and run the handler.java class.
+    - Select the directory of the java project to visualize.
+    - Click on local visualization button.
 
 ## Built With
 
