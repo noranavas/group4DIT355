@@ -231,6 +231,7 @@ public class Handler extends Application {
         Pane pane = new TilePane();
         pane.getChildren().add(title);
         pane.getChildren().add(hbSelectBTN);
+        pane.getChildren().add(hbSelectedDir);
 
         Label[] ipLabel = new Label[3];
         HBox[] ipLabelHBox = new HBox[3];
@@ -254,7 +255,7 @@ public class Handler extends Application {
         VBox vbox = new VBox(pane);
         vbox.setAlignment(Pos.CENTER);
         
-        Scene scene = new Scene(vbox, 500, 400);
+        Scene scene = new Scene(vbox, 500, 435);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setTitle("Source Code Modeler");
@@ -340,6 +341,7 @@ public class Handler extends Application {
 
         // Do visualization locally button event.
         visualLocalBTN.setOnAction(actionEvent -> {
+            sourceCodeConverter.clearOutputDirectory();
             sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
             try {
                 TimeUnit.SECONDS.sleep(3);

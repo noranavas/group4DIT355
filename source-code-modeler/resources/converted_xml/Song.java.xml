@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit xmlns="http://www.srcML.org/srcML/src" revision="0.9.5" language="Java" filename="C:\Users\Fabian\Desktop\Karaoke\src\com\teamtreehouse\model\Song.java"><package>package <name><name>com</name><operator>.</operator><name>teamtreehouse</name><operator>.</operator><name>model</name></name>;</package>
+
+<class><specifier>public</specifier> class <name>Song</name> <block>{
+    <decl_stmt><decl><specifier>protected</specifier> <type><name>String</name></type> <name>mArtist</name></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>protected</specifier> <type><name>String</name></type> <name>mTitle</name></decl>;</decl_stmt>
+    <decl_stmt><decl><specifier>protected</specifier> <type><name>String</name></type> <name>mVideoUrl</name></decl>;</decl_stmt>
+
+    <constructor><specifier>public</specifier> <name>Song</name><parameter_list>(<parameter><decl><type><name>String</name></type> <name>artist</name></decl></parameter>, <parameter><decl><type><name>String</name></type> <name>title</name></decl></parameter>, <parameter><decl><type><name>String</name></type> <name>videoUrl</name></decl></parameter>)</parameter_list> <block>{
+        <expr_stmt><expr><name>mArtist</name> <operator>=</operator> <name>artist</name></expr>;</expr_stmt>
+        <expr_stmt><expr><name>mTitle</name> <operator>=</operator> <name>title</name></expr>;</expr_stmt>
+        <expr_stmt><expr><name>mVideoUrl</name> <operator>=</operator> <name>videoUrl</name></expr>;</expr_stmt>
+    }</block></constructor>
+
+    <function><specifier>public</specifier> <type><name>String</name></type> <name>getTitle</name><parameter_list>()</parameter_list> <block>{<return>return <expr><name>mTitle</name></expr>;</return>}</block></function>
+    <function><specifier>public</specifier> <type><name>String</name></type> <name>getArtist</name><parameter_list>()</parameter_list> <block>{<return>return <expr><name>mArtist</name></expr>;</return>}</block></function>
+    <function><specifier>public</specifier> <type><name>String</name></type> <name>getVideoUrl</name><parameter_list>()</parameter_list> <block>{<return>return <expr><name>mVideoUrl</name></expr>;</return>}</block></function>
+
+    <function><annotation>@<name>Override</name></annotation>
+    <specifier>public</specifier> <type><name>boolean</name></type> <name>equals</name><parameter_list>(<parameter><decl><type><name>Object</name></type> <name>o</name></decl></parameter>)</parameter_list> <block>{
+        <if>if <condition>(<expr><name>this</name> <operator>==</operator> <name>o</name></expr>)</condition><then> <block type="pseudo"><return>return <expr><literal type="boolean">true</literal></expr>;</return></block></then></if>
+        <if>if <condition>(<expr><name>o</name> <operator>==</operator> <literal type="null">null</literal> <operator>||</operator> <call><name>getClass</name><argument_list>()</argument_list></call> <operator>!=</operator> <call><name><name>o</name><operator>.</operator><name>getClass</name></name><argument_list>()</argument_list></call></expr>)</condition><then> <block type="pseudo"><return>return <expr><literal type="boolean">false</literal></expr>;</return></block></then></if>
+
+        <decl_stmt><decl><type><name>Song</name></type> <name>song</name> <init>= <expr><operator>(</operator><name>Song</name><operator>)</operator> <name>o</name></expr></init></decl>;</decl_stmt>
+
+        <if>if <condition>(<expr><ternary><condition><expr><name>mArtist</name> <operator>!=</operator> <literal type="null">null</literal></expr> ?</condition><then> <expr><operator>!</operator><call><name><name>mArtist</name><operator>.</operator><name>equals</name></name><argument_list>(<argument><expr><name><name>song</name><operator>.</operator><name>mArtist</name></name></expr></argument>)</argument_list></call></expr> </then><else>: <expr><name><name>song</name><operator>.</operator><name>mArtist</name></name> <operator>!=</operator> <literal type="null">null</literal></expr></else></ternary></expr>)</condition><then> <block type="pseudo"><return>return <expr><literal type="boolean">false</literal></expr>;</return></block></then></if>
+        <if>if <condition>(<expr><ternary><condition><expr><name>mTitle</name> <operator>!=</operator> <literal type="null">null</literal></expr> ?</condition><then> <expr><operator>!</operator><call><name><name>mTitle</name><operator>.</operator><name>equals</name></name><argument_list>(<argument><expr><name><name>song</name><operator>.</operator><name>mTitle</name></name></expr></argument>)</argument_list></call></expr> </then><else>: <expr><name><name>song</name><operator>.</operator><name>mTitle</name></name> <operator>!=</operator> <literal type="null">null</literal></expr></else></ternary></expr>)</condition><then> <block type="pseudo"><return>return <expr><literal type="boolean">false</literal></expr>;</return></block></then></if>
+        <return>return <expr><ternary><condition><expr><name>mVideoUrl</name> <operator>!=</operator> <literal type="null">null</literal></expr> ?</condition><then> <expr><call><name><name>mVideoUrl</name><operator>.</operator><name>equals</name></name><argument_list>(<argument><expr><name><name>song</name><operator>.</operator><name>mVideoUrl</name></name></expr></argument>)</argument_list></call></expr> </then><else>: <expr><name><name>song</name><operator>.</operator><name>mVideoUrl</name></name> <operator>==</operator> <literal type="null">null</literal></expr></else></ternary></expr>;</return>
+    }</block></function>
+
+    <function><annotation>@<name>Override</name></annotation>
+    <specifier>public</specifier> <type><name>int</name></type> <name>hashCode</name><parameter_list>()</parameter_list> <block>{
+        <decl_stmt><decl><type><name>int</name></type> <name>result</name> <init>= <expr><ternary><condition><expr><name>mArtist</name> <operator>!=</operator> <literal type="null">null</literal></expr> ?</condition><then> <expr><call><name><name>mArtist</name><operator>.</operator><name>hashCode</name></name><argument_list>()</argument_list></call></expr> </then><else>: <expr><literal type="number">0</literal></expr></else></ternary></expr></init></decl>;</decl_stmt>
+        <expr_stmt><expr><name>result</name> <operator>=</operator> <literal type="number">31</literal> <operator>*</operator> <name>result</name> <operator>+</operator> <operator>(</operator><ternary><condition><expr><name>mTitle</name> <operator>!=</operator> <literal type="null">null</literal></expr> ?</condition><then> <expr><call><name><name>mTitle</name><operator>.</operator><name>hashCode</name></name><argument_list>()</argument_list></call></expr> </then><else>: <expr><literal type="number">0</literal></expr></else></ternary><operator>)</operator></expr>;</expr_stmt>
+        <expr_stmt><expr><name>result</name> <operator>=</operator> <literal type="number">31</literal> <operator>*</operator> <name>result</name> <operator>+</operator> <operator>(</operator><ternary><condition><expr><name>mVideoUrl</name> <operator>!=</operator> <literal type="null">null</literal></expr> ?</condition><then> <expr><call><name><name>mVideoUrl</name><operator>.</operator><name>hashCode</name></name><argument_list>()</argument_list></call></expr> </then><else>: <expr><literal type="number">0</literal></expr></else></ternary><operator>)</operator></expr>;</expr_stmt>
+        <return>return <expr><name>result</name></expr>;</return>
+    }</block></function>
+
+    <function><annotation>@<name>Override</name></annotation>
+    <specifier>public</specifier> <type><name>String</name></type> <name>toString</name><parameter_list>()</parameter_list> <block>{
+        <return>return <expr><call><name><name>String</name><operator>.</operator><name>format</name></name><argument_list>(<argument><expr><literal type="string">"Song:  %s by %s"</literal></expr></argument>, <argument><expr><name>mTitle</name></expr></argument>, <argument><expr><name>mArtist</name></expr></argument>)</argument_list></call></expr>;</return>
+    }</block></function>
+}</block></class></unit>
