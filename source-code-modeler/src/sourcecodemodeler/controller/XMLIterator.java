@@ -39,10 +39,13 @@ public class XMLIterator {
         String relations = "";
 
         for (XMLClass xmlclass : this.getXMLClasses()){
-            for (String relation : xmlclass.relationsToString()){
-
+            for (String relation : xmlclass.relationsToString()) {
                 // make sure that this relationship hasn't been added before - to avoid duplication
                 if (!relations.contains(relation + " -- " + xmlclass.getName())){
+                    relation = relation.replaceAll("<[^>]*>", "");
+                    if (relation.contains(">")) {
+                        relation = relation.replace(">", "");
+                    }
                     relations += xmlclass.getName() + " -- " + relation + "\n";
                 }
 
@@ -87,7 +90,6 @@ public class XMLIterator {
 
                             // attribute contains class name, so make an instance of XMLClass and add it to relationships
                             xmlClass.addRelationship(otherClass);
-
                         }
                     }
                 }
@@ -172,6 +174,7 @@ public class XMLIterator {
                 node = removeTag(node, "comment");
                 String s = node.getTextContent();
                 s = prettyString(s).replace("+", "").replace(" ", "");
+                s = s.replaceAll("<[^>]*>", "");
                 xmlClass.setName(s);
             }
         }
@@ -202,21 +205,23 @@ public class XMLIterator {
             Node node = nodeList.item(i);
 
             // Skip nodes that are children of expression nodes - overridden methods will be excluded.
-            if (node.getParentNode().getParentNode().getParentNode().getNodeName() != "expr") {
-                node = removeTag(node, "annotation");
-                node = removeTag(node, "throws");
-                node = removeTag(node, "parameter_list");
-                node = removeTag(node, "specifier");
-                node = removeTag(node, "type");
-                node = removeTag(node, "comment");
+            if (node.getParentNode().getParentNode().getParentNode() != null) {
+                if (node.getParentNode().getParentNode().getParentNode().getNodeName() != "expr") {
+                    node = removeTag(node, "annotation");
+                    node = removeTag(node, "throws");
+                    node = removeTag(node, "parameter_list");
+                    node = removeTag(node, "specifier");
+                    node = removeTag(node, "type");
+                    node = removeTag(node, "comment");
 
-                String s = node.getTextContent();
-                String body = s.substring(s.indexOf('{'), s.length());
-                if (!body.isEmpty()) {
-                    s = s.replace(body, "");
+                    String s = node.getTextContent();
+                    String body = s.substring(s.indexOf('{'), s.length());
+                    if (!body.isEmpty()) {
+                        s = s.replace(body, "");
+                    }
+                    s = prettyString(s) + "()";
+                    xmlClass.addMethod(s);
                 }
-                s = prettyString(s) + "()";
-                xmlClass.addMethod(s);
             }
         }
     }
