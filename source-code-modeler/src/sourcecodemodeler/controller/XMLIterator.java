@@ -71,12 +71,24 @@ public class XMLIterator {
         //List<String> classes = getListOfClasses();
 
         for (String attribute : attributes) {
-            // for each attribute loop over class names and check if attribute contains class name
-            for (XMLClass otherClass : classes) {
-                if (xmlClass != otherClass && attribute != null && otherClass.getName() != null) {
-                    if (otherClass.getName() != null && attribute.toLowerCase().contains(otherClass.getName().toLowerCase())) {
-                        // attribute contains class name, so make an instance of XMLClass and add it to relationships
-                        xmlClass.addRelationship(otherClass);
+            if (attribute != null && attribute.length() > 0) {
+                // extract only type from attribute string. Start from index 2 to avoid visibility (+ -)
+                String type = attribute.substring(2, attribute.lastIndexOf(' '));
+                // for each attribute loop over class names and check if attribute contains class name
+                for (XMLClass otherClass : classes) {
+                    if (xmlClass != otherClass && otherClass.getName() != null) {
+                        if (type.trim().equals(otherClass.getName().trim())) {
+                            // attribute equals class name, so make an instance of XMLClass and add it to relationships
+                            xmlClass.addRelationship(otherClass);
+                        }
+                        // for cases like List<Class> and complex type with comma
+                        else if (type.replace(" ", "").contains('<' + otherClass.getName() + '>') ||
+                                    type.replace(" ", "").contains(otherClass.getName() + ',')) {
+
+                            // attribute contains class name, so make an instance of XMLClass and add it to relationships
+                            xmlClass.addRelationship(otherClass);
+
+                        }
                     }
                 }
             }
