@@ -66,7 +66,7 @@ public class Visualizer extends Application {
         // Button for zooming out of the diagram
         Button but1 = new Button("+");
         but1.setOnAction((ActionEvent event) -> {
-            scale*=2;
+            scale*=1.1;
             pane.setScaleX(scale);
             pane.setScaleY(scale);
 
@@ -75,7 +75,7 @@ public class Visualizer extends Application {
         // Button for zooming in the diagram
         Button but2 = new Button("-");
         but2.setOnAction((ActionEvent event) -> {
-            scale/=2;
+            scale*=0.9;
             pane.setScaleX(scale);
             pane.setScaleY(scale);
 
