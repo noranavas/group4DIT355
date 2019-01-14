@@ -105,6 +105,7 @@ public class Handler extends Application {
         if (object instanceof byte[][]) {
             parseXML(data);
 
+
             try {
                 TimeUnit.SECONDS.sleep(2);
             }
@@ -365,7 +366,9 @@ public class Handler extends Application {
 
     private void visualizeLocal() {
         sourceCodeConverter.clearOutputDirectory();
-        sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
+        if (ipRepository.getNodeNumber() != 1) {
+            sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
+        }
         try {
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
