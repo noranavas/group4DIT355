@@ -9,7 +9,10 @@
     <list default="true" id="cddf23ba-2667-4c3f-8adf-9b9191d3549d" name="Default" comment="">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+>>>>>>> parent of 05afae0... last
 =======
 >>>>>>> parent of 05afae0... last
 =======
@@ -46,6 +49,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="XMLIterator.java" pinned="false" current-in-tab="false">
@@ -89,6 +93,13 @@
             <state relative-caret-position="150">
               <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
 >>>>>>> parent of 05afae0... last
+=======
+      <file leaf-file-name="Handler.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Handler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
+>>>>>>> parent of 05afae0... last
               <folding>
                 <element signature="method#init#0;class#Handler#0" />
                 <element signature="method#stop#0;class#Handler#0" />
@@ -98,7 +109,10 @@
                 <element signature="method#initSender#0;class#Handler#0" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 05afae0... last
 =======
 >>>>>>> parent of 05afae0... last
                 <element signature="method#handleData#0;class#Handler#0" />
@@ -113,6 +127,7 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="XMLClass.java" pinned="false" current-in-tab="false">
@@ -130,6 +145,8 @@
           </provider>
         </entry>
       </file>
+=======
+>>>>>>> parent of 05afae0... last
 =======
 >>>>>>> parent of 05afae0... last
 =======
@@ -480,8 +497,12 @@
       <workItem from="1547199242363" duration="2128000" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <workItem from="1547453462899" duration="3726000" />
       <workItem from="1547467021194" duration="972000" />
+=======
+      <workItem from="1547453462899" duration="2198000" />
+>>>>>>> parent of 05afae0... last
 =======
       <workItem from="1547453462899" duration="2198000" />
 >>>>>>> parent of 05afae0... last
@@ -517,7 +538,11 @@
   <component name="TimeTrackingManager">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="230749000" />
+=======
+    <option name="totallyTimeSpent" value="228249000" />
+>>>>>>> parent of 05afae0... last
 =======
     <option name="totallyTimeSpent" value="228249000" />
 >>>>>>> parent of 05afae0... last
@@ -541,6 +566,7 @@
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.3286517" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3511236" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Capture Tool" order="6" />
@@ -549,12 +575,17 @@
 =======
 =======
 >>>>>>> parent of 05afae0... last
+=======
+>>>>>>> parent of 05afae0... last
       <window_info anchor="bottom" id="Run" order="2" weight="0.3511236" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22751679" />
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 05afae0... last
+=======
 >>>>>>> parent of 05afae0... last
 =======
 >>>>>>> parent of 05afae0... last
@@ -733,6 +764,7 @@
     </entry>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/IPRepository.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -754,6 +786,8 @@
 >>>>>>> parent of 05afae0... last
 =======
 >>>>>>> parent of 05afae0... last
+=======
+>>>>>>> parent of 05afae0... last
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/XMLClass.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
@@ -771,9 +805,12 @@
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <state relative-caret-position="240">
           <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
 =======
+=======
+>>>>>>> parent of 05afae0... last
 =======
 >>>>>>> parent of 05afae0... last
         <state relative-caret-position="183">
@@ -816,8 +853,13 @@
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <state relative-caret-position="199">
           <caret line="370" column="9" lean-forward="true" selection-start-line="370" selection-start-column="9" selection-end-line="370" selection-end-column="9" />
+=======
+        <state relative-caret-position="150">
+          <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
+>>>>>>> parent of 05afae0... last
 =======
         <state relative-caret-position="150">
           <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
@@ -835,7 +877,10 @@
             <element signature="method#initSender#0;class#Handler#0" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 05afae0... last
 =======
 >>>>>>> parent of 05afae0... last
             <element signature="method#handleData#0;class#Handler#0" />

@@ -372,9 +372,7 @@ public class Handler extends Application {
 
     private void visualizeLocal() {
         sourceCodeConverter.clearOutputDirectory();
-        if (ipRepository.getNodeNumber() != 1) {
-            sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
-        }
+        sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
         try {
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
