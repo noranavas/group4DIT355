@@ -316,8 +316,15 @@ public class Handler extends Application {
             initSender();
             try {TimeUnit.SECONDS.sleep(1);} // Allow sender to finish creation before sending data.
             catch (InterruptedException e) {}
-            sendData(ipRepository);
-            sendData(encoded);
+
+            if (sender.canConnectToNextNode()) {
+                System.out.println("Connection OK. Sending data to next node.");
+                sendData(ipRepository);
+                sendData(encoded);
+            } else {
+                System.out.println("Next node not found. Doing local visualization.");
+                visualizeLocal();
+            }
 
             visualizeBTN.setDisable(true);
             visualLocalBTN.setDisable(true);
@@ -341,36 +348,7 @@ public class Handler extends Application {
 
         // Do visualization locally button event.
         visualLocalBTN.setOnAction(actionEvent -> {
-            sourceCodeConverter.clearOutputDirectory();
-            sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
-            try {
-                TimeUnit.SECONDS.sleep(3);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            xmlIterator.createXMLClasses(new File(PATH_TO_XML_DIRECTORY).listFiles());
-
-            try {
-                System.out.println("Trying visualization...");
-                ByteArrayOutputStream out = new ByteArrayOutputStream();
-                String source = "@startuml\n" +
-                        "skinparam class {\n" +
-                        "BorderColor black\n" +
-                        "ArrowColor black\n" +
-                        "BackgroundColor LightSkyBlue\n" +
-                        "}\n";
-                source += xmlIterator.getStringifiedXMLClasses() +
-                        "@enduml\n";
-                SourceStringReader reader = new SourceStringReader(source);
-                reader.generateImage(out);
-                byte[] byteData = out.toByteArray();
-                InputStream in = new ByteArrayInputStream(byteData);
-                BufferedImage diagram = ImageIO.read(in);
-                Visualizer visualiser = new Visualizer(diagram);
-                visualiser.start(Visualizer.getStage());
-            } catch (IOException e) {
-                System.out.println("Error in visualize() in Main.");
-            }
+            visualizeLocal();
         });
 
         visualizeBTN.setDisable(true);
@@ -378,10 +356,47 @@ public class Handler extends Application {
         primaryStage.show();
     }
 
+    private void visualizeLocal() {
+        sourceCodeConverter.clearOutputDirectory();
+        sourceCodeConverter.convertDirectoryToXML(selectedDirectory.getPath());
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        xmlIterator.createXMLClasses(new File(PATH_TO_XML_DIRECTORY).listFiles());
+
+        try {
+            System.out.println("Trying visualization...");
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            String source = "@startuml\n" +
+                    "skinparam class {\n" +
+                    "BorderColor black\n" +
+                    "ArrowColor black\n" +
+                    "BackgroundColor LightSkyBlue\n" +
+                    "}\n";
+            source += xmlIterator.getStringifiedXMLClasses() +
+                    "@enduml\n";
+            SourceStringReader reader = new SourceStringReader(source);
+            reader.generateImage(out);
+            byte[] byteData = out.toByteArray();
+            InputStream in = new ByteArrayInputStream(byteData);
+            BufferedImage diagram = ImageIO.read(in);
+            Visualizer visualiser = new Visualizer(diagram);
+            visualiser.start(Visualizer.getStage());
+        } catch (IOException e) {
+            System.out.println("Error in visualize() in Main.");
+        }
+    }
+
     private void setIPAddresses() {
         String[] textFieldContent = new String[3];
         for (int i = 0; i < 3; i++) {
-            textFieldContent[i] = textFieldIP[i].getText();
+            if (textFieldIP[i].getText().isEmpty()) {
+                textFieldContent[i] = "No IP";
+            } else {
+                textFieldContent[i] = textFieldIP[i].getText();
+            }
         }
         ipRepository.setIPAddress(textFieldContent);
     }

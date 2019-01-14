@@ -37,6 +37,15 @@ public abstract class NetworkConnection {
         }
     }
 
+    public boolean canConnectToNextNode() {
+        try {
+            if (connectionThread.out != null) {
+                return true;
+            }
+        } catch (Exception e) {}
+        return false;
+    }
+
     public void closeConnection() throws Exception {
         String s = isReceiver() ? "Receiver" : "Sender";
         try {
@@ -76,7 +85,7 @@ public abstract class NetworkConnection {
             } catch (Exception e) {
                 onReceiveCallback.accept("Connection closed. Retrying in a few seconds...");
                 //e.printStackTrace();
-                run(); // No longer needed.
+                //run(); // No longer needed.
             }
         }
     }
