@@ -114,9 +114,15 @@ public class Handler extends Application {
             try {TimeUnit.SECONDS.sleep(1);} // Allow sender to finish creation before sending data.
             catch (InterruptedException e) {}
 
-            // Send the list of IPs and the xml classes, then disable the GUI  buttons.
-            sendData(ipRepository);
-            sendData(xmlIterator.getXMLClasses());
+            if (sender.canConnectToNextNode()) {
+                System.out.println("Connection OK. Sending data to next node.");
+                // Send the list of IPs and the xml classes, then disable the GUI  buttons.
+                sendData(ipRepository);
+                sendData(xmlIterator.getXMLClasses());
+            } else {
+                System.out.println("Next node not found. Doing local visualization.");
+                visualizeLocal();
+            }
 
             selectBTN.setDisable(true);
             visualizeBTN.setDisable(true);
@@ -129,8 +135,15 @@ public class Handler extends Application {
                 initSender();
                 try {TimeUnit.SECONDS.sleep(1);} // Allow sender to finish creation before sending data.
                 catch (InterruptedException e) {}
-                sendData(ipRepository);
-                sendData(data);
+
+                if (sender.canConnectToNextNode()) {
+                    System.out.println("Connection OK. Sending data to next node.");
+                    sendData(ipRepository);
+                    sendData(data);
+                } else {
+                    System.out.println("Next node not found. Doing local visualization.");
+                }
+
                 visualize(data);
             }
 

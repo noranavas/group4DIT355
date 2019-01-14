@@ -8,7 +8,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cddf23ba-2667-4c3f-8adf-9b9191d3549d" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Handler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/network/NetworkConnection.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -43,8 +42,8 @@
       <file leaf-file-name="Handler.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Handler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2260">
-              <caret line="288" column="48" selection-start-line="288" selection-start-column="48" selection-end-line="288" selection-end-column="48" />
+            <state relative-caret-position="150">
+              <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
               <folding>
                 <element signature="method#init#0;class#Handler#0" />
                 <element signature="method#stop#0;class#Handler#0" />
@@ -55,8 +54,8 @@
                 <element signature="method#handleData#0;class#Handler#0" />
                 <element signature="method#parseXML#0;class#Handler#0" />
                 <element signature="method#visualize#0;class#Handler#0" />
+                <element signature="method#start#0;class#Handler#0" />
                 <element signature="e#10822#11438#0" />
-                <element signature="e#11522#13191#0" />
                 <element signature="e#13173#13745#0" />
                 <element signature="e#13834#15328#0" />
                 <element signature="method#visualizeLocal#0;class#Handler#0" />
@@ -140,7 +139,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="240" />
     <option name="y" value="20" />
     <option name="width" value="1400" />
@@ -411,7 +410,7 @@
       <workItem from="1544292220979" duration="13859000" />
       <workItem from="1545083507112" duration="430000" />
       <workItem from="1547199242363" duration="2128000" />
-      <workItem from="1547453462899" duration="1752000" />
+      <workItem from="1547453462899" duration="2198000" />
     </task>
     <servers />
   </component>
@@ -439,7 +438,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="227803000" />
+    <option name="totallyTimeSpent" value="228249000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
@@ -455,7 +454,7 @@
       <window_info anchor="right" id="Maven Projects" order="7" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.3286517" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3511236" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3511236" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
@@ -685,8 +684,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Handler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2260">
-          <caret line="288" column="48" selection-start-line="288" selection-start-column="48" selection-end-line="288" selection-end-column="48" />
+        <state relative-caret-position="150">
+          <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
           <folding>
             <element signature="method#init#0;class#Handler#0" />
             <element signature="method#stop#0;class#Handler#0" />
@@ -697,8 +696,8 @@
             <element signature="method#handleData#0;class#Handler#0" />
             <element signature="method#parseXML#0;class#Handler#0" />
             <element signature="method#visualize#0;class#Handler#0" />
+            <element signature="method#start#0;class#Handler#0" />
             <element signature="e#10822#11438#0" />
-            <element signature="e#11522#13191#0" />
             <element signature="e#13173#13745#0" />
             <element signature="e#13834#15328#0" />
             <element signature="method#visualizeLocal#0;class#Handler#0" />
