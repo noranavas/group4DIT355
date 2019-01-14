@@ -8,7 +8,10 @@
   <component name="ChangeListManager">
     <list default="true" id="cddf23ba-2667-4c3f-8adf-9b9191d3549d" name="Default" comment="">
 <<<<<<< HEAD
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+>>>>>>> parent of 05afae0... last
 =======
 >>>>>>> parent of 05afae0... last
       <change beforePath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Handler.java" afterDir="false" />
@@ -44,6 +47,7 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
 <<<<<<< HEAD
+<<<<<<< HEAD
       <file leaf-file-name="XMLIterator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -78,6 +82,13 @@
             <state relative-caret-position="150">
               <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
 >>>>>>> parent of 05afae0... last
+=======
+      <file leaf-file-name="Handler.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Handler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
+>>>>>>> parent of 05afae0... last
               <folding>
                 <element signature="method#init#0;class#Handler#0" />
                 <element signature="method#stop#0;class#Handler#0" />
@@ -86,7 +97,10 @@
                 <element signature="method#createSender#0;class#Handler#0" />
                 <element signature="method#initSender#0;class#Handler#0" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 05afae0... last
                 <element signature="method#handleData#0;class#Handler#0" />
                 <element signature="method#parseXML#0;class#Handler#0" />
 >>>>>>> parent of 05afae0... last
@@ -99,6 +113,7 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
 <<<<<<< HEAD
       <file leaf-file-name="XMLClass.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/XMLClass.java">
@@ -115,6 +130,8 @@
           </provider>
         </entry>
       </file>
+=======
+>>>>>>> parent of 05afae0... last
 =======
 >>>>>>> parent of 05afae0... last
       <file leaf-file-name="NetworkConnection.java" pinned="false" current-in-tab="false">
@@ -462,8 +479,12 @@
       <workItem from="1545083507112" duration="430000" />
       <workItem from="1547199242363" duration="2128000" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <workItem from="1547453462899" duration="3726000" />
       <workItem from="1547467021194" duration="972000" />
+=======
+      <workItem from="1547453462899" duration="2198000" />
+>>>>>>> parent of 05afae0... last
 =======
       <workItem from="1547453462899" duration="2198000" />
 >>>>>>> parent of 05afae0... last
@@ -495,7 +516,11 @@
   </component>
   <component name="TimeTrackingManager">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="230749000" />
+=======
+    <option name="totallyTimeSpent" value="228249000" />
+>>>>>>> parent of 05afae0... last
 =======
     <option name="totallyTimeSpent" value="228249000" />
 >>>>>>> parent of 05afae0... last
@@ -515,17 +540,23 @@
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.3286517" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3511236" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23087248" />
 =======
+=======
+>>>>>>> parent of 05afae0... last
       <window_info anchor="bottom" id="Run" order="2" weight="0.3511236" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22751679" />
+<<<<<<< HEAD
+>>>>>>> parent of 05afae0... last
+=======
 >>>>>>> parent of 05afae0... last
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286517" />
@@ -701,6 +732,7 @@
       </provider>
     </entry>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/IPRepository.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -720,6 +752,8 @@
     </entry>
 =======
 >>>>>>> parent of 05afae0... last
+=======
+>>>>>>> parent of 05afae0... last
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/model/XMLClass.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
@@ -736,9 +770,12 @@
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/controller/XMLIterator.java">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <state relative-caret-position="240">
           <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
 =======
+=======
+>>>>>>> parent of 05afae0... last
         <state relative-caret-position="183">
           <caret line="22" column="27" lean-forward="true" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
 >>>>>>> parent of 05afae0... last
@@ -778,8 +815,13 @@
     <entry file="file://$PROJECT_DIR$/source-code-modeler/src/sourcecodemodeler/Handler.java">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <state relative-caret-position="199">
           <caret line="370" column="9" lean-forward="true" selection-start-line="370" selection-start-column="9" selection-end-line="370" selection-end-column="9" />
+=======
+        <state relative-caret-position="150">
+          <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
+>>>>>>> parent of 05afae0... last
 =======
         <state relative-caret-position="150">
           <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
@@ -792,7 +834,10 @@
             <element signature="method#createSender#0;class#Handler#0" />
             <element signature="method#initSender#0;class#Handler#0" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 05afae0... last
             <element signature="method#handleData#0;class#Handler#0" />
             <element signature="method#parseXML#0;class#Handler#0" />
 >>>>>>> parent of 05afae0... last
