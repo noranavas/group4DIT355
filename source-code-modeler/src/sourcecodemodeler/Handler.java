@@ -183,6 +183,12 @@ public class Handler extends Application {
         }
         File[] files = new File(PATH_TO_XML_DIRECTORY).listFiles();
         xmlIterator.createXMLClasses(files);
+
+        // Test print
+        XMLClass[] xmlClass = xmlIterator.getXMLClasses();
+        for (int i = 0; i < xmlClass.length; i++) {
+            System.out.println(xmlClass[i].toString());
+        }
     }
     private void visualize(Serializable data) {
         XMLClass[] xmlClasses = (XMLClass[])data;
